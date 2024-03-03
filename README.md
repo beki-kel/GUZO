@@ -54,4 +54,6 @@ Deployment: Netlify || Vercel
 
 👥 Meet the Team
 
+   https://github.com/beki-kel
+
 Feel free to explore our profiles and connect with us! 🌐👋
