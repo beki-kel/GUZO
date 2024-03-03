@@ -1,10 +1,11 @@
-GUZO: Your Ultimate Travel Extension ✈️🌍
+# **GUZO: Your Ultimate Travel Extension** ✈️🌍
 
-🌟 Overview
+
+### 🌟 Overview
 
    Welcome to GUZO, an innovative travel extension amplifying your exploration experience beyond Expedia. Seamlessly plan your day with personalized itineraries, local insights, and a plethora of activities. Discover, customize, and embark on unforgettable adventures—all within the GUZO ecosystem. 🗺️💼
 
-✨ Key Features
+### ✨ Key Features
 
 
 1. Search and Booking:
@@ -42,7 +43,7 @@ GUZO: Your Ultimate Travel Extension ✈️🌍
 
    GUZO includes an admin panel to monitor user data, bookings, and overall platform performance. 📊
 
-⚙️ Tech Stack
+### ⚙️ Tech Stack
 
 Frontend: React.js
 
@@ -52,8 +53,10 @@ Database: MongoDB
 
 Deployment: Netlify || Vercel
 
-👥 Meet the Team
+## 👥 Meet the Team
 
-   https://github.com/beki-kel
+- [Bereket Kelay](https://github.com/beki-kel)
+- [Baslael Workineh](https://mrbasketo.vercel.app/)
 
-Feel free to explore our profiles and connect with us! 🌐👋
+# Feel free to explore our profiles and connect with us! 🌐👋
+
