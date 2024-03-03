@@ -1,43 +1,46 @@
-🌍 GUZO - Your Ultimate Travel Companion 🛫
+🌍 GUZO - Your Ultimate Travel Companion 🛫 
 
-Welcome to GUZO, where seamless travel planning meets unparalleled exploration. GUZO is designed to make your journey unforgettable, offering a range of features to plan, book, and enhance your travel experience.
+Welcome to GUZO, where seamless travel planning meets unparalleled exploration. GUZO is designed to make your journey unforgettable, offering a range of features to plan, book, and enhance your travel experience. 
 
-🚀 Getting Started
-To get started with GUZO, follow these steps:
+🚀 Getting Started 
 
-Installation: Clone the repository and install dependencies.
+To get started with GUZO, follow these steps: 
 
-bash
-Copy code
-git clone https://github.com/your-username/guzo.git
-cd guzo
-npm install
+Installation: Clone the repository and install dependencies. 
 
-Configuration: Set up your environment variables.
+bashCopy code 
 
-bash
-Copy code
-cp .env.example .env
+git clone https://github.com/your-username/guzo.git 
+cd guzo 
+npm install 
+ 
 
-Run the Server: Start the backend server.
+Configuration: Set up your environment variables. 
 
-bash
-Copy code
-npm start
+bashCopy code 
 
-Explore the API: Visit http://localhost:3000/api to explore the available routes.
+cp .env.example .env 
+ 
 
+Run the Server: Start the backend server. 
 
-📚 API Documentation
-Refer to the API Documentation for detailed information about each route, including request/response formats and examples.
+bashCopy code 
 
+npm start 
+ 
 
-🤝 Contribution Guidelines
-We welcome contributions from the community. Check out our Contribution Guidelines for details on how to get involved.
+Explore the API: Visit http://localhost:3000/api to explore the available routes. 
 
+📚 API Documentation 
 
-📜 License
-GUZO is licensed under the MIT License.
+Refer to the API Documentation for detailed information about each route, including request/response formats and examples. 
 
+🤝 Contribution Guidelines 
 
-Happy travels with GUZO! 🌍✈️
+We welcome contributions from the community. Check out our Contribution Guidelines for details on how to get involved. 
+
+📜 License 
+
+GUZO is licensed under the MIT License. 
+
+Happy travels with GUZO! 🌍✈️ 
