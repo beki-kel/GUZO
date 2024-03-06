@@ -4,7 +4,7 @@
   "description": "Travel Guide",
   "main": "server.js",
   "scripts": {
-    "guzo": "npm start --prefix guzo",
+    "client": "npm start --prefix frontend",
     "server": "nodemon backend/server.js",
     "dev": "concurrently \"npm run server\" \"npm run guzo\""
   },
