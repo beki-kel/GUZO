@@ -11,6 +11,5 @@ const app = express();
 app.use('/api/flights/serach', require('./routes/searchRoutes')); // Correct the typo in the endpoint path
 
 app.listen(port, () => {
-
-  console.log(`Server started on ${port}`);
+    console.log(`Server started on ${port}`);
 });
