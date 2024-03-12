@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Notification = require('../config/models/NotificationsModel'); // Import your Notification model
-const User = require('../config/models/userModel');
+const Notification = require('../models/NotificationsModel'); // Import your Notification model
+const User = require('../models/userModel');
 
 router.get('/notifications/:userId', async (req, res) => {
     try {

@@ -9,7 +9,9 @@ const bookFlightRoutes = require('./routes/bookFlight')
 const bookAccommodations = require('./routes/bookAccommodations')
 const subscribe = require('./routes/subscribe')
 const notification = require('./routes/notifications')
-const register = require('./routes/register')
+
+//bk's Imports
+const authRoute = require('./routes/auth.JS')
 
 const bodyParser = require('body-parser');
 
@@ -22,7 +24,20 @@ app.use('/', bookFlightRoutes)
 app.use('/', bookAccommodations)
 app.use('/', subscribe)
 app.use('/', notification)
-app.use('/', register)
+app.use('/auth/register', authRoute)
+
+
+//error handler middleware
+app.use( (err,req,res,next) => {
+    const errorStatus=err.status || 500
+    const errorMsg=err.message || "Something went wrong"
+    return res.status(errorStatus).json({
+        success:false,
+        status:errorStatus,
+        message: errorMsg,
+        stack:err.stack,
+})
+})
 
 app.listen(port, () => {
     console.log(`Server started on ${port}`);

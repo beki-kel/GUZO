@@ -24,11 +24,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+},
+    {timestamps : true});
 
 //don't change the 'User' name cause i have used it in the notificationsModel
 const User = mongoose.model('User', userSchema);
