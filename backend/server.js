@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 const colors = require('colors');
 const connectDB = require('./config/db');
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8800;
 
 //baslael's import
 const bookFlightRoutes = require('./routes/bookFlight')
@@ -12,19 +12,23 @@ const notification = require('./routes/notifications')
 
 //bk's Imports
 const authRoute = require('./routes/auth.JS')
+const cookieParser=require('cookie-parser')
+const accommodationRoute=require('./routes/Accommodations')
 
 const bodyParser = require('body-parser');
 
 connectDB()
 
 const app = express();
+
+app.use(cookieParser())
 app.use(bodyParser.json());
 
 app.use('/', bookFlightRoutes)
-app.use('/', bookAccommodations)
+app.use('/', accommodationRoute)
 app.use('/', subscribe)
 app.use('/', notification)
-app.use('/auth/register', authRoute)
+app.use('/', authRoute)
 
 
 //error handler middleware
