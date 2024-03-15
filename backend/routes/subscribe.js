@@ -1,5 +1,4 @@
 const express = require('express');
-const { route } = require('./bookFlight');
 const router = express.Router();
 
 router.post('/subscribe', (req, res)=>{
