@@ -1,21 +1,36 @@
-const User = require('../models/userModel')
+const User = require('../models/userModel');
+const bcrypt = require('bcryptjs');
 
-const itinerary = async (req, res)=> {
-    const user = await User.findById(req.params.userId)
-    const newUserData = req.body;
+const itinerary = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
 
-    if(!user){
-        res.status(400).json({error: "User not found!"})
+        if (!user) {
+            return res.status(404).json({ error: "User not found!" });
+        }
+
+        if (user.id !== req.params.userId) {
+            return res.status(403).json({ error: "Unauthorized action!" });
+        }
+
+        const newUserData = req.body;
+
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(req.body.password, salt);
+
+        newUserData.password = hash;
+
+        const updatedUser = await User.findByIdAndUpdate(req.params.userId, newUserData, { new: true });
+
+        if (!updatedUser) {
+            return res.status(500).json({ error: "Failed to update user!" });
+        }
+
+        res.json({ message: "Data updated!", body: updatedUser });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error!" });
     }
+};
 
-    if(user.id === req.params.userId){
-
-        User.findByIdAndUpdate(req.params.userId, newUserData, {new:true})
-        res.json({message:"Data updated!"})
-    }
-    else{
-       res.status(404).json({error:"Data Not Updated!"})
-    }
-}
-
-module.exports = itinerary
+module.exports = itinerary;
