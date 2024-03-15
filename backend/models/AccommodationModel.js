@@ -3,9 +3,29 @@ const mongoose = require('mongoose');
 
 const hotelSchema = new mongoose.Schema({
   externalId: { type: String, unique: true },
-  name: String,
-  location: String,
-  accommodationType: String
+  name: {type:String,required:true,unique: true},
+  city:{type:String,required:true},
+  location: {type:String,required:true},
+  accommodationType: {type:String,required:true},
+  description: {type:String,required:true},
+  image: {
+    data: Buffer,
+    contentType: String
+  },
+  rating: {type:Number,
+    min:0,
+    max:5,
+    required:true},
+  rooms:{type:[String]},
+  featured:{
+    type:Boolean,
+    default:false,
+  },
+  userRating:{
+    type:Number,
+    min:1,
+    max:10,
+  }
 });
 
 const Hotel = mongoose.model('Hotel', hotelSchema);
