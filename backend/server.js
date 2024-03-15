@@ -9,6 +9,7 @@ const bookFlightRoutes = require('./routes/bookFlight')
 const bookAccommodations = require('./routes/bookAccommodations')
 const subscribe = require('./routes/subscribe')
 const notification = require('./routes/notifications')
+const itinerary = require('./routes/itinerary')
 
 //bk's Imports
 const authRoute = require('./routes/auth.JS')
@@ -28,8 +29,8 @@ app.use('/', bookFlightRoutes)
 app.use('/', accommodationRoute)
 app.use('/', subscribe)
 app.use('/', notification)
+app.use('/', itinerary)
 app.use('/', authRoute)
-
 
 //error handler middleware
 app.use( (err,req,res,next) => {
