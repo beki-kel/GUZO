@@ -1,4 +1,3 @@
-const express = require('express');
 const Hotel = require('../models/AccommodationModel');
 const hotelApiService = require('./externalAccommodationController');
 

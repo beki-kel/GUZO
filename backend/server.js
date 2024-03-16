@@ -15,6 +15,8 @@ const authRoute = require('./routes/auth.JS')
 
 const accommodationRoute=require('./routes/Accommodations')
 
+const transportRoute = require('./routes/transportation')
+
 const bodyParser = require('body-parser');
 
 connectDB()
@@ -28,6 +30,7 @@ app.use('/', subscribe)
 app.use('/', notification)
 app.use('/', itinerary)
 app.use('/', authRoute)
+app.use('/', transportRoute)
 
 //error handler middleware
 app.use( (err,req,res,next) => {
