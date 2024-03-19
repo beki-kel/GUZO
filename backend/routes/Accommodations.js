@@ -7,9 +7,9 @@ const {deleteAccommodation} = require('../controller/accommodationController');
 
 const router = express.Router();
 
-router.get('/search/filter', searchFilter);
+router.get('/search/filter/Accomadation', searchFilter);
 router.post('/add/Accommodation', addAccommodation);
-router.put('/update/rating/:id', updateRating);
+router.put('/update/Accomdation/rating/:id', updateRating);
 router.put('/update/accommodation/:id', updateAccommodation);
 router.delete('/delete/accommodation/:id', deleteAccommodation);
 module.exports = router;
