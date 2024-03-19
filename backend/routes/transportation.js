@@ -1,6 +1,6 @@
 const express=require('express');
 const router = express.Router();
-const {distanceController}=require('../controller/mapBoxDistance')
+const distanceController=require('../controller/mapBoxDistance')
 
 router.get('/', )
 router.put('/', )

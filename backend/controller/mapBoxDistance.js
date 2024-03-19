@@ -1,72 +1,113 @@
+// Assuming you're using Express for your backend
 const axios = require('axios');
 
-const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN;
-
-// Function to convert location name to coordinates using Mapbox Geocoding API
-async function geocodeLocation(locationName) {
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(locationName)}.json?access_token=${MAPBOX_ACCESS_TOKEN}`;
-    
-    try {
-        const response = await axios.get(url);
-        const data = response.data;
-        
-        // Extract coordinates from the response
-        const coordinates = data.features[0].geometry.coordinates; // [longitude, latitude]
-        return coordinates;
-    } catch (error) {
-        console.error('Error geocoding location:', error);
-        return null;
-    }
-}
-
-// Function to calculate distance using Mapbox Directions API
-async function calculateDistance(origin, destination) {
-    const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${origin};${destination}?access_token=${MAPBOX_ACCESS_TOKEN}`;
-    
-    try {
-        const response = await axios.get(url);
-        const data = response.data;
-        
-        // Extract distance from the response
-        const distance = data.routes[0].distance; // Distance in meters
-        
-        // Convert distance to miles
-        const distanceInMiles = distance * 0.000621371; // Conversion factor from meters to miles
-        
-        return distanceInMiles;
-    } catch (error) {
-        console.error('Error calculating distance:', error);
-        return null;
-    }
-}
-
+// Route to handle distance calculation
+// Route to handle distance calculation
 const distanceController = async (req, res) => {
+    const { currentLocation, destination } = req.body;
+
     try {
-        const { originName, destinationName } = req.body;
-        
-        // Geocode origin and destination names to get coordinates
-        const originCoordinates = await geocodeLocation(originName);
-        const destinationCoordinates = await geocodeLocation(destinationName);
-        
-        if (originCoordinates && destinationCoordinates) {
-            // Calculate distance between coordinates
-            const distance = await calculateDistance(originCoordinates.join(','), destinationCoordinates.join(','));
-            
-            // Prepare JSON response
-            const jsonResponse = {
-                origin: originName,
-                destination: destinationName,
-                distance: distance.toFixed(2) + ' miles'
-            };
-            
-            // Return JSON response
-            res.json(jsonResponse);
-        } else {
-            res.status(400).json({ error: 'Unable to geocode one or both locations' });
+        if (!currentLocation || !destination) {
+            throw new Error('Please provide both currentLocation and destination.');
         }
+
+        // Get coordinates for current location
+        const currentLocationCoords = await getLocationCoordinates(currentLocation);
+        // Get coordinates for destination
+        const destinationCoords = await getLocationCoordinates(destination);
+
+        // Calculate distance between coordinates using Haversine formula
+        const straightLineDistance = calculateDistance(currentLocationCoords, destinationCoords);
+
+        // Calculate road distance and travel time using Mapbox Directions API
+        const { roadDistance, travelTime } = await calculateRoadDistanceAndTime(currentLocationCoords, destinationCoords);
+
+        const Price= priceCalculator(roadDistance)
+
+        // Send response to the client
+        res.json({ 
+            straightLineDistance,
+            roadDistance,
+            travelTime,
+            Price,
+        });
     } catch (error) {
-        console.error('Error handling request:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error calculating distance:', error.message);
+        if (error.response && error.response.data && error.response.data.message) {
+            // If the error is from the Mapbox API response
+            res.status(400).json({ error: error.response.data.message });
+        } else {
+            // For other errors
+            res.status(500).json({ error: 'Failed to calculate distance' });
+        }
     }
 }
-module.exports = { distanceController };
+
+// Function to calculate road distance and travel time using Mapbox Directions API
+async function calculateRoadDistanceAndTime(originCoords, destinationCoords) {
+    const apiKey = process.env.MAPBOX_ACCESS_TOKEN;
+    const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${originCoords.longitude},${originCoords.latitude};${destinationCoords.longitude},${destinationCoords.latitude}?access_token=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+        const route = response.data.routes[0];
+        const roadDistance = route.distance / 1000; // Convert meters to kilometers
+        const travelTime = route.duration / 3600; // Convert seconds to minutes
+        return { roadDistance, travelTime };
+    } catch (error) {
+        throw new Error('Failed to calculate road distance and travel time: ' + error.message);
+    }
+}
+
+// Function to get coordinates from Mapbox API
+async function getLocationCoordinates(location) {
+    const apiKey = process.env.MAPBOX_ACCESS_TOKEN;
+    const encodedLocation = encodeURIComponent(location.trim()); // Trim whitespace and encode URI
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedLocation}.json?bbox=32.997734,-4.070008,47.982379,14.959431&access_token=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+        const features = response.data.features;
+        if (features.length === 0) {
+            throw new Error('Location not found');
+        }
+
+        // Assume the first result is the most relevant one
+        const [longitude, latitude] = features[0].center;
+        return { latitude, longitude };
+    } catch (error) {
+        throw new Error('Failed to get coordinates: ' + error.message);
+    }
+}
+
+
+// Function to calculate distance between two coordinates using Haversine formula
+function calculateDistance(coord1, coord2) {
+    const earthRadius = 6371; // Radius of the Earth in kilometers
+    const { latitude: lat1, longitude: lon1 } = coord1;
+    const { latitude: lat2, longitude: lon2 } = coord2;
+
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(lon2 - lon1);
+
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = earthRadius * c;
+    return distance;
+}
+
+function toRadians(degrees) {
+    return degrees * Math.PI / 180;
+}
+
+function priceCalculator(distance){
+    const price=distance*5
+    return price
+}
+
+module.exports = distanceController;
