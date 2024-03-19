@@ -3,9 +3,6 @@ const axios = require('axios');
 
 const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN;
 
-// Express router
-const router = express.Router();
-
 // Function to convert location name to coordinates using Mapbox Geocoding API
 async function geocodeLocation(locationName) {
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(locationName)}.json?access_token=${MAPBOX_ACCESS_TOKEN}`;
