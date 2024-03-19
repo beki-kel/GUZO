@@ -1,8 +1,5 @@
-// Assuming you're using Express for your backend
 const axios = require('axios');
 
-// Route to handle distance calculation
-// Route to handle distance calculation
 const distanceController = async (req, res) => {
     const { currentLocation, destination } = req.body;
 
