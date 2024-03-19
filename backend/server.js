@@ -9,6 +9,7 @@ const cookieParser=require('cookie-parser')
 const subscribe = require('./routes/subscribe')
 const notification = require('./routes/notifications')
 const itinerary = require('./routes/itinerary')
+const promotion = require('./routes/promotion')
 
 //bk's Imports
 const authRoute = require('./routes/auth.JS')
@@ -31,6 +32,7 @@ app.use('/', notification)
 app.use('/', itinerary)
 app.use('/', authRoute)
 app.use('/', transportRoute)
+app.use('/', promotion)
 
 //error handler middleware
 app.use( (err,req,res,next) => {

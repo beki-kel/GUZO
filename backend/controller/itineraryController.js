@@ -45,8 +45,10 @@ const createItinerary = async (req, res)=>{
             dates: dates,
             customPlans: customPlans
         })
-        res.status(201).json({ message: 'Itinerary created successfully', itinerary: newItinerary });
+        
         await newItinerary.save()
+        res.status(201).json({ message: 'Itinerary created successfully', itinerary: newItinerary });
+        
     }catch(error){
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
