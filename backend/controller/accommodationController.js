@@ -1,4 +1,5 @@
 const Hotel = require('../models/AccommodationModel');
+const Restaurant = require('../models/diningModel');
 const hotelApiService = require('./externalAccommodationController');
 
 const searchFilter = async (req, res) => {
@@ -8,21 +9,27 @@ const searchFilter = async (req, res) => {
     const minPrice = req.body.minPrice;
     const maxPrice = req.body.maxPrice;
 
-    // Build the search query based on the user's input
-    const searchQuery = {
+    const localResults = await Hotel.find({
       ...(query && { name: { $regex: query, $options: 'i' } }),
       ...(accommodationType && { accommodationType }),
-      ...(minPrice && maxPrice && { 'pricing.amount': { $gte: minPrice, $lte: maxPrice } }),
-    };
+    });
 
-    // Search local database for matching hotels
-    const localResults = await Hotel.find(searchQuery);
 
     // Retrieve real-time pricing and availability information from external API
     const resultsWithDetails = await hotelApiService.getHotelPrices(localResults);
 
+    const filteredResults = resultsWithDetails.filter(hotel => {
+      if (minPrice !== undefined && minPrice !== null && hotel.pricing.amount < minPrice) {
+        return false;
+      }
+      if (minPrice !== undefined && minPrice !== null && hotel.pricing.amount > maxPrice) {
+        return false;
+      }
+      return true;
+    });
+
     // Send the combined results to the client
-    res.json(resultsWithDetails);
+    res.json(filteredResults);
   } catch (error) {
     console.error('Error searching hotels:', error);
     res.status(500).json({ error: error.message || 'Internal Server Error' });

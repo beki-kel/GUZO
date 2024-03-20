@@ -18,7 +18,11 @@ const accommodationRoute=require('./routes/Accommodations')
 
 const transportRoute = require('./routes/transportation')
 
+const dinningRoute=require('./routes/dining')
+
 const bodyParser = require('body-parser');
+
+
 
 connectDB()
 
@@ -33,6 +37,7 @@ app.use('/', itinerary)
 app.use('/', authRoute)
 app.use('/', transportRoute)
 app.use('/', promotion)
+app.use('/', dinningRoute)
 
 //error handler middleware
 app.use( (err,req,res,next) => {
