@@ -22,7 +22,10 @@ const restaurantSchema = new Schema({
       state: { type: String, required: true }, // State of the restaurant
       zip: { type: String, required: true } // Zip code of the restaurant
     },
-    rating: { type: Number, default: 0 }, // Average rating of the restaurant
+    rating: {     type: Number,
+      min: 0,
+      max: 10,
+      default: 0 }, // Average rating of the restaurant
     openingHours: {
       // Opening hours of the restaurant
       monday: { type: { open: String, close: String } },
@@ -33,6 +36,7 @@ const restaurantSchema = new Schema({
       saturday: { type: { open: String, close: String } },
       sunday: { type: { open: String, close: String } }
     },
+    totalratings: {type: Number,default: 0 },
     createdAt: { type: Date, default: Date.now } // Timestamp of when the restaurant was created
   });
   

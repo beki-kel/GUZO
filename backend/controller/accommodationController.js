@@ -1,5 +1,4 @@
 const Hotel = require('../models/AccommodationModel');
-const Restaurant = require('../models/diningModel');
 const hotelApiService = require('./externalAccommodationController');
 
 const searchFilter = async (req, res) => {
