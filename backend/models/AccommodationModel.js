@@ -25,9 +25,11 @@ const hotelSchema = new mongoose.Schema({
   },
   userRating: {
     type: Number,
-    min: 1,
+    min: 0,
     max: 10,
-  }
+    default: 0
+  },
+  totalratings: {type: Number,default: 0 }
 });
 
 const Hotel = mongoose.model('Hotel', hotelSchema);

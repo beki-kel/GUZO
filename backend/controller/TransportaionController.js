@@ -1,3 +1,4 @@
+const Hotel = require('../models/AccommodationModel');
 const Car = require('../models/transportationModel');
 const getRidePrices = require('./externalTransportController');
 const distanceController = require('./mapBoxDistance');
@@ -29,7 +30,7 @@ const searchRide = async (req, res) => {
         console.error('Error searching ride:', error.message);
         res.status(500).json({ error: 'Failed to search ride' });
     }
-}
+};
 
 const searchFilter = (filterParams, cars) => {
     const { Passengers, minPrice, maxPrice,minRating} = filterParams;
@@ -51,7 +52,76 @@ const searchFilter = (filterParams, cars) => {
     }
 
     return filteredResults;
+};
+
+const addTransportaion= async (req, res,next) =>{
+    try{
+        const newTransportaion= new Car({
+            externalId : req.body.externalId ,
+            brand: req.body.brand, 
+            owner: req.body.owner,
+            plateNo: req.body.plateNo,
+            color:req.body.color,
+            capacity: req.body.capacity,
+            numberOfPassengers:req.body.numberOfPassengers,
+            driverID:req.body.driverID,
+            drivername:req.body.drivername,
+        })
+    
+        await newTransportaion.save()
+        res.status(201).json({ message: 'transportaion added successfully', transportaion:newTransportaion })
+    }catch(error){
+        next(error)
+    }
+
+};
+
+const updateDriverRating = async (req, res, next) => {
+    try {
+        const car = await Car.findById(req.params.id);
+        const oldRatingSum = car.driverrating * car.totalratings;
+        const userRating = req.body.userRating;
+        
+        // Update total ratings and rating sum
+        car.totalratings += 1;
+        car.driverrating = (oldRatingSum + userRating) / car.totalratings;
+        
+        await car.save();
+        
+        res.status(200).json({ message: 'Driver rating updated successfully', car });
+    } catch (error) {
+        next(error);
+    }
+}
+
+const updateTransportation= async (req,res,next) => {
+try{
+    const car =await Car.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body},
+        { new: true })
+
+        res.status(200).json({message:'Transoprtation Updated Successfully', car})
+}catch(error) {
+    next(error)
+}
+}
+
+const deleteTransportation=async (req, res, next) => {
+    try {
+        const car = await Car.findByIdAndDelete(req.params.id);
+        res.status(200).json({message:'transportaion deleted successfully'})
+    } catch (error) {
+        next(error);
+    }
 }
 
 
-module.exports = searchRide
+
+module.exports = {
+    searchRide,
+    addTransportaion,
+    updateDriverRating,
+    updateTransportation,
+    deleteTransportation
+}

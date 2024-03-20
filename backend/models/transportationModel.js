@@ -13,8 +13,9 @@ const carSchema= new mongoose.Schema({
     numberOfPassengers:{type:Number},
     driverID:{type:String, required:true},
     drivername:{type:String , required:true},
-    driverrating:{type: Number,min: 1,max: 10},
+    driverrating:{type: Number,min: 0,max: 10,default: 0},
     finalPrice: Number,
+    totalratings: {type: Number,default: 0 }
 })
 
 const Car= mongoose.model('Car', carSchema);

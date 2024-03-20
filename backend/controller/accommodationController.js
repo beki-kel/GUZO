@@ -49,12 +49,16 @@ const addAccommodation = async (req, res,next) => {
  }
 };
 
-const updateRating=async(req,res,next) =>{
+const updateHotelRating=async(req,res,next) =>{
   try{
     const hotel = await Hotel.findById(req.params.id);
-    hotel.userRating = req.body.userRating;
+    const oldRatingSum = hotel.userRating * hotel.totalratings;
+    const newUserRating = req.body.userRating;
+
+    hotel.totalratings += 1;
+    hotel.userRating = (oldRatingSum + newUserRating) / hotel.totalratings;
     await hotel.save();
-    res.status(200).json({message:'rating updated successfully',hotel})
+    res.status(200).json({message:'Hotel rating updated successfully',hotel})
   }catch(error){
     next(error)
   }
@@ -72,7 +76,7 @@ const updateAccommodation=async (req,res,next)=>{
   }
 }
 
-const deleteAccommodation = (req, res) =>{
+const deleteAccommodation = (req, res,next) =>{
   try{
     Hotel.findByIdAndDelete(req.params.id);
     res.status(200).json({message:'hotel deleted successfully'})
@@ -85,7 +89,7 @@ const deleteAccommodation = (req, res) =>{
 module.exports = {
   searchFilter,
   addAccommodation,
-  updateRating,
+  updateHotelRating,
   updateAccommodation,
   deleteAccommodation,
 };
