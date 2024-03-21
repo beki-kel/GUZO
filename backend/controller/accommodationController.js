@@ -8,6 +8,8 @@ const searchFilter = async (req, res) => {
     const minPrice = req.body.minPrice;
     const maxPrice = req.body.maxPrice;
 
+    // it filters the Hotel data. if query has been received from the body it will check and 
+    // make comparision without case sensetivity option: "i" and regex is for normal comparision of strings
     const localResults = await Hotel.find({
       ...(query && { name: { $regex: query, $options: 'i' } }),
       ...(accommodationType && { accommodationType }),
