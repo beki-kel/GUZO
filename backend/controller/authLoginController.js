@@ -12,7 +12,6 @@ const login = async (req, res,next) => {
         if(!isPasswordCorrect) return res.status(400).json({ message: 'Wrong password' })
         //this generates a token when the user loges in based on .env file
         const token=jwt.sign({id:user.id,isAdmin:user.isAdmin},process.env.JWT)
-        console.log("from backend", token)
         //it removes sensetive info from the object
         const {password,isAdmin,...otherDetails}= user._doc;
         //it sends response status excluding password and isAdmin
