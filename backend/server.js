@@ -20,6 +20,8 @@ const transportRoute = require('./routes/transportation')
 
 const dinningRoute=require('./routes/dining')
 
+const userRoute=require('./routes/users')
+
 const bodyParser = require('body-parser');
 
 
@@ -38,6 +40,7 @@ app.use('/', authRoute)
 app.use('/', transportRoute)
 app.use('/', promotion)
 app.use('/', dinningRoute)
+app.use('/', userRoute)
 
 //error handler middleware
 app.use( (err,req,res,next) => {

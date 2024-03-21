@@ -4,12 +4,13 @@ const {addAccommodation} = require('../controller/accommodationController');
 const {updateHotelRating} = require('../controller/accommodationController');
 const {updateAccommodation} = require('../controller/accommodationController');
 const {deleteAccommodation} = require('../controller/accommodationController');
+const {verifyUser,verifyAdmin} = require('../utils/verifyToken');
 
 const router = express.Router();
 
-router.get('/search/filter/Accomadation', searchFilter);
-router.post('/add/Accommodation', addAccommodation);
-router.put('/update/Accomdation/rating/:id', updateHotelRating);
-router.put('/update/accommodation/:id', updateAccommodation);
-router.delete('/delete/accommodation/:id', deleteAccommodation);
+router.get('/search/filter/Accomadation',verifyUser,  searchFilter);
+router.post('/add/Accommodation',verifyAdmin, addAccommodation);
+router.put('/update/Accomdation/rating/:id',verifyUser, updateHotelRating);
+router.put('/update/accommodation/:id',verifyAdmin, updateAccommodation);
+router.delete('/delete/accommodation/:id',verifyAdmin, deleteAccommodation);
 module.exports = router;
