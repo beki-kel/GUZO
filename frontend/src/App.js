@@ -7,33 +7,23 @@ import Login from '../src/pages/Login';
 import Home from '../src/pages/Home';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(null); // Set initial state to null
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // If token exists, set isLoggedIn to true
       setIsLoggedIn(true);
-      console.log("token found", isLoggedIn)
-      // Set the default Authorization header for axios requests
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
-      console.log("token not found")
-      // If token doesn't exist, set isLoggedIn to false
       setIsLoggedIn(false);
-      // Remove the default Authorization header for axios requests
       delete axios.defaults.headers.common['Authorization'];
     }
   }, []);
 
-  const handleLogout = () => {
-    // Remove token from localStorage
-    localStorage.removeItem('token');
-    // Set isLoggedIn to false
-    setIsLoggedIn(false);
-    // Remove the default Authorization header for axios requests
-    delete axios.defaults.headers.common['Authorization'];
-  };
+  // Render a loading indicator until authentication check is complete
+  if (isLoggedIn === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
