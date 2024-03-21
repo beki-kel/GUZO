@@ -13,11 +13,13 @@ const Login = () => {
     try {
       const response = await axios.post('/auth/login', { username, password });
       if (response.status === 201) {
-        const user = response.data;
-        console.log('Logged in user:', user);
+        const { token } = response.data;
+        // Save the token in localStorage
+        localStorage.setItem('token', token);
+        console.log("this is the token: ", token)
+        // Redirect to home page
         navigate('/');
-      } else if (response.status === 400 || response.status === 404) {
-        alert("User does not exist");
+
       }
     } catch (error) {
       if (error.response) {
