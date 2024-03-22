@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Nav from "../components/Nav"
 import SearchAndFilter from '../components/SearchAndFilter';
 import CardSlider from '../components/CardSlider';
+import Promotion from '../components/Promotion';
 function Home() {
   const navigate = useNavigate()
   // Function to remove JWT token from browser storage
@@ -21,6 +22,7 @@ const handleLogout = () => {
       <Nav />
       <SearchAndFilter/>
       <CardSlider/>
+      <Promotion/>
       <h2>Dashboard</h2>
       <Link to="/login">
         <button>Login</button>

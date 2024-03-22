@@ -26,4 +26,18 @@ const promotionCtr = async (req, res) => {
     }
 }
 
-module.exports = promotionCtr;
+const promotionfetchCtr = async (req, res) => {
+    try {
+        // Fetch all promotion documents from the database
+        const promotions = await Promotion.find();
+
+        // Respond with the fetched promotion data
+        return res.status(200).json({ promotions });
+    } catch (error) {
+        // Handle any errors that occur during the fetching process
+        console.error(error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+module.exports = {promotionCtr,promotionfetchCtr};
