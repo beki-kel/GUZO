@@ -54,7 +54,7 @@ const searchFilter = (filterParams, cars) => {
     return filteredResults;
 };
 
-const addTransportaion= async (req, res,next) =>{
+const addTransportation= async (req, res,next) =>{
     try{
         const newTransportaion= new Car({
             externalId : req.body.externalId ,
@@ -120,7 +120,7 @@ const deleteTransportation=async (req, res, next) => {
 
 module.exports = {
     searchRide,
-    addTransportaion,
+    addTransportation,
     updateDriverRating,
     updateTransportation,
     deleteTransportation
