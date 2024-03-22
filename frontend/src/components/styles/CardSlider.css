@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+
+.slider-container{
+   
+    margin: 50px;
+}
+
+.slider-container h2{
+    color: white;
+}
+.slider-container img{
+    padding: 10px;
+    height: 300px;
+    border: 1px solid white;
+    z-index: 10;
+    border-radius: 30px;
+}
