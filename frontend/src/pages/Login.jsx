@@ -21,6 +21,9 @@ const Login = () => {
         navigate('/');
 
       }
+      else{
+        console.log("Cant login")
+      }
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message || 'An error occurred during login');
