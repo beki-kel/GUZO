@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import Nav from "../components/Nav"
 function Home() {
   const navigate = useNavigate()
   // Function to remove JWT token from browser storage
@@ -16,6 +16,7 @@ const handleLogout = () => {
 };
   return (
     <div>
+      <Nav />
       <h2>Dashboard</h2>
       <Link to="/login">
         <button>Login</button>

@@ -1,0 +1,117 @@
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo{
+    margin-right: 40px;
+  }
+
+  .app-button {
+    border: 1px solid #cccccc;
+    background-color: transparent;
+    color: #333333;
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .app-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .download-icon {
+    margin-right: 5px;
+  }
+  
+  .language-dropdown {
+    position: relative;
+  }
+  
+  .language-select {
+    padding: 8px 30px 8px 8px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #333333;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+  }
+  
+  .language-select:focus {
+    outline: none;
+  }
+  
+  .globe-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .dropdown-button {
+    border: none;
+    background: none;
+    color: #333333;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: #333333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .list-property-button,
+  .support-button,
+  .trips-button,
+  .notification-button,
+  .sign-in-button {
+    border: none;
+    background: none;
+    color: #333333;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  
+  .notification-button:hover,
+  .sign-in-button:hover {
+    color: #007bff;
+  }
+  
