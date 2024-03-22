@@ -19,6 +19,9 @@ const App = () => {
       delete axios.defaults.headers.common['Authorization'];
     }
   }, []);
+  const handleLogin = ()=> {
+      setIsLoggedIn(true);
+  }
 
   // Render a loading indicator until authentication check is complete
   if (isLoggedIn === null) {
@@ -29,7 +32,7 @@ const App = () => {
     <div>
       <Router>
         <Routes>
-          <Route path="/login" element={<Login isLoggedIn={isLoggedIn} />} />
+          <Route path="/login" element={<Login isLoggedIn={isLoggedIn} handleLogin={handleLogin} />} />
           <Route path="/register" element={<Register />} />
           {/* Private Route for Home */}
           <Route

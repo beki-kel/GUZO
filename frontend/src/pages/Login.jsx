@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ handleLogin }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('/auth/login', { username, password });
@@ -17,12 +17,11 @@ const Login = () => {
         // Save the token in localStorage
         localStorage.setItem('token', token);
         console.log("this is the token: ", token)
+        handleLogin(); // Call the handleLogin function passed as prop
         // Redirect to home page
         navigate('/');
-
-      }
-      else{
-        console.log("Cant login")
+      } else {
+        console.log("Can't login")
       }
     } catch (error) {
       if (error.response) {
@@ -37,7 +36,7 @@ const Login = () => {
     <div>
       <h2>Login</h2>
       {errorMessage && <div>{errorMessage}</div>}
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>Username:</label>
           <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
