@@ -8,7 +8,7 @@ const Promotion = () => {
     // Function to fetch promotion data from the server
     const fetchPromotions = async () => {
         try {
-            const response = await axios.get('/promotions'); // Assuming endpoint is '/api/promotions'
+            const response = await axios.get('https://guzo-backend.vercel.app/promotions'); // Assuming endpoint is '/api/promotions'
             setPromotions(response.data.promotions);
         } catch (error) {
             console.error('Error fetching promotions:', error);
@@ -20,19 +20,24 @@ const Promotion = () => {
         fetchPromotions();
     }, []); // Empty dependency array ensures fetchPromotions is only called once
 
+    // Render the promotion section only if promotions array is not empty
     return (
         <div className="promotion-container">
-            <h1>This is promotion</h1>
-            {promotions.map(promotion => (
-                <div className="promotion" key={promotion._id}>
-                    <div className="promotion-image"></div>
-                    <div className="promotion-details">
-                        <img src={promotion.imageUrl}/>
-                        <h2>{promotion.title}</h2>
-                        <p>{promotion.description}</p>
-                    </div>
-                </div>
-            ))}
+            {promotions.length > 0 && (
+                <>
+                    <h1>This is promotion</h1>
+                    {promotions.map(promotion => (
+                        <div className="promotion" key={promotion._id}>
+                            <div className="promotion-image"></div>
+                            <div className="promotion-details">
+                                <img src={promotion.imageUrl} alt={promotion.title} />
+                                <h2>{promotion.title}</h2>
+                                <p>{promotion.description}</p>
+                            </div>
+                        </div>
+                    ))}
+                </>
+            )}
         </div>
     );
 };
