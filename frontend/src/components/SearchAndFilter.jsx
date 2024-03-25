@@ -52,7 +52,7 @@ const SearchAndFilter = () => {
         if (!showflightOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions) {
             try {
                 setLoading(true);
-                const response = await axios.post('/search/filter/Accomadation', {
+                const response = await axios.post('https://guzo-backend.vercel.app/search/filter/Accomadation', {
                     name: location,
                     minPrice: minPrice,
                     maxPrice: maxPrice
