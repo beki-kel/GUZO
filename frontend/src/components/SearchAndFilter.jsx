@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import '../components/styles/searchAndFilter.css'; // Import the CSS file
+import axios from 'axios';
 
 const SearchAndFilter = () => {
     const [location, setLocation] = useState('');
     const [date, setDate] = useState('');
     const [travelers, setTravelers] = useState(1);
-    const [addFlight, setAddFlight] = useState(false);
+    const [addflight, setAddflight] = useState(false);
     const [addCar, setAddCar] = useState(false);
-    const [showFlightOptions, setShowFlightOptions] = useState(false); // State to manage visibility of flight options
+    const [showflightOptions, setShowflightOptions] = useState(false); // State to manage visibility of flight options
     const [showCarOptions, setShowCarOptions] = useState(false); // State to manage visibility of car options
     const [showPackageOptions, setShowPackageOptions] = useState(false); // State to manage visibility of package options
     const [showThingsToDoOptions, setShowThingsToDoOptions] = useState(false); // State to manage visibility of Things to Do options
     const [showCruiseOptions, setShowCruiseOptions] = useState(false); // State to manage visibility of Cruise options
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [loading, setLoading] = useState(false);
 
 
     const handleServiceSelection = (service) => {
         // Logic to handle service selection
-        setShowFlightOptions(false); // Hide flight options by default
+        setShowflightOptions(false); // Hide flight options by default
         setShowCarOptions(false); // Hide car options by default
         setShowPackageOptions(false); // Hide package options by default
         setShowThingsToDoOptions(false); // Hide Things to Do options by default
@@ -24,7 +29,7 @@ const SearchAndFilter = () => {
 
         switch (service) {
             case 'flights':
-                setShowFlightOptions(true);
+                setShowflightOptions(true);
                 break;
             case 'cars':
                 setShowCarOptions(true);
@@ -43,29 +48,44 @@ const SearchAndFilter = () => {
         }
     };
 
-    const handleSearch = () => {
-        // Logic to handle search
+    const handleSearch = async () => {
+        if (!showflightOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions) {
+            try {
+                setLoading(true);
+                const response = await axios.post('/search/filter/Accomadation', {
+                    name: location,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice
+                });
+                setSearchResults(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error searching hotels:', error);
+                // Handle error here
+                setLoading(false);
+            }
+        }
     };
 
     return (
         <div className="search-container">
             <div className="service-buttons">
                 <button onClick={() => handleServiceSelection('stays')}>Stays</button>
-                <button onClick={() => handleServiceSelection('flights')}>Flights</button>
+                <button onClick={() => handleServiceSelection('flights')}>flights</button>
                 <button onClick={() => handleServiceSelection('cars')}>Cars</button>
                 <button onClick={() => handleServiceSelection('packages')}>Packages</button>
                 <button onClick={() => handleServiceSelection('thingsToDo')}>Things to Do</button>
                 <button onClick={() => handleServiceSelection('cruises')}>Cruises</button>
             </div>
             <div className="search-inputs">
-                {!showFlightOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions && (
+                {!showflightOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions && (
                     <>
                         <input type="text" placeholder="Going to" value={location} onChange={(e) => setLocation(e.target.value)} />
                         <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
                         <input type="number" value={travelers} onChange={(e) => setTravelers(e.target.value)} />
                     </>
                 )}
-                {showFlightOptions && (
+                {showflightOptions && (
                     <>
                         {/* Place your flight options buttons and inputs here */}
                         <div>
@@ -95,7 +115,7 @@ const SearchAndFilter = () => {
                                 <button>Button 2</button>
                                 <button>Button 3</button>
                             </div>
-                            <div style={{display:'flex'}}>
+                            <div style={{ display: 'flex' }}>
                                 <select>
                                     <option>Select</option>
                                     <option>Option 1</option>
@@ -120,7 +140,7 @@ const SearchAndFilter = () => {
                                 <button>Button 1</button>
                                 <button>Button 2</button>
                             </div>
-                            <div style={{display:'flex'}}>
+                            <div style={{ display: 'flex' }}>
                                 <input type="text" placeholder="Input 1" />
                                 <input type="text" placeholder="Input 2" />
                                 <input type="text" placeholder="Input 3" />
@@ -151,7 +171,7 @@ const SearchAndFilter = () => {
             </div>
             <div className="add-options">
                 <label>
-                    <input type="checkbox" checked={addFlight} onChange={() => setAddFlight(!addFlight)} />
+                    <input type="checkbox" checked={addflight} onChange={() => setAddflight(!addflight)} />
                     Add a flight
                 </label>
                 <label>

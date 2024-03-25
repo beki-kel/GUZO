@@ -4,6 +4,7 @@ const colors = require('colors');
 const connectDB = require('./config/db');
 const port = process.env.PORT || 8800;
 const cookieParser=require('cookie-parser')
+const cors = require('cors')
 
 //baslael's import
 const subscribe = require('./routes/subscribe')
@@ -29,6 +30,16 @@ const bodyParser = require('body-parser');
 connectDB()
 
 const app = express();
+
+app.use(cors({
+    origin:[],
+    methods:["POST","GET","PUT","DELETE"],
+    credentials: true
+}))
+
+app.get("/",(req,res)=>{
+    res.json("Server is running");
+})
 
 app.use(cookieParser())
 app.use(bodyParser.json());
