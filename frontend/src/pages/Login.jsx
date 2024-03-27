@@ -13,12 +13,10 @@ const Login = ({ handleLogin }) => {
     try {
       const response = await axios.post('https://guzo-backend.vercel.app/auth/login', { username, password });
       if (response.status === 201) {
-        const { token } = response.data;
-        // Save the token in localStorage
+        const { token } = response.data; // Access the token from response data
         localStorage.setItem('token', token);
-        console.log("this is the token: ", token)
-        handleLogin(); // Call the handleLogin function passed as prop
-        // Redirect to home page
+        console.log("this is the response data: ", response.data.token)
+        handleLogin();
         navigate('/');
       } else {
         console.log("Can't login")

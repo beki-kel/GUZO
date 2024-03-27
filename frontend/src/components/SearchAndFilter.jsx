@@ -56,7 +56,7 @@ const SearchAndFilter = () => {
         if (!showdinningOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions) {
             try {
                 setLoading(true);
-                const response = await axios.post('/search/filter/Accomadation', {
+                const response = await axios.post('https://guzo-backend.vercel.app/search/filter/Accomadation', {
                     location: location,
                     accommodationType:accommodationType,
                     minPrice: minPrice,
@@ -140,12 +140,6 @@ const SearchAndFilter = () => {
                     <>
                         {/* Place your dinning options buttons and inputs here */}
                         <div>
-                            <div>
-                                <button>Button 1</button>
-                                <button>Button 2</button>
-                                <button>Button 3</button>
-                                <button>Button 4</button>
-                            </div>
                             <div style={{ display: "flex" }}>
                                 <input type="text" placeholder="cuisineType" value={cuisineType} onChange={(e) => setCuisineType(e.target.value)} />
                                 <input type="text" placeholder='Minimun Price' value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />

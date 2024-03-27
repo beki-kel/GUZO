@@ -4,6 +4,7 @@ import Nav from "../components/Nav"
 import SearchAndFilter from '../components/SearchAndFilter';
 import CardSlider from '../components/CardSlider';
 import Promotion from '../components/Promotion';
+import Subscribe from '../components/Subscribe';
 function Home() {
   const navigate = useNavigate()
   // Function to remove JWT token from browser storage
@@ -28,6 +29,7 @@ const handleLogout = () => {
         <button>Login</button>
       </Link>
       <button onClick={handleLogout}>Logout</button>
+      <Subscribe/>
     </div>
   );
 }

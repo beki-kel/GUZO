@@ -11,6 +11,7 @@ const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    
     if (token) {
       setIsLoggedIn(true);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
