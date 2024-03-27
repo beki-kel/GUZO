@@ -5,13 +5,20 @@ const distanceController = require('./mapBoxDistance');
 
 const searchRide = async (req, res) => {
     try {
-        const cars = await Car.find(); // Example query, adjust as needed
+        const { currentLocation, destination } = req.body;
+        
+        const cars = await Car.find({
+            $and: [
+                { pickUp: currentLocation },
+                { dropOff: destination }
+            ]
+        });
 
         // Ensure cars is an array
         if (!Array.isArray(cars)) {
             throw new Error('Cars is not an array');
         }
-        const { currentLocation, destination } = req.body;
+        
 
         if (!currentLocation || !destination) {
             throw new Error('Please provide both currentLocation and destination.');

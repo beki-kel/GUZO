@@ -3,12 +3,14 @@ import '../components/styles/searchAndFilter.css'; // Import the CSS file
 import axios from 'axios';
 
 const SearchAndFilter = () => {
+    const [name, setName] = useState('');
     const [location, setLocation] = useState('');
+    const [destination, setDestination] = useState('');
     const [date, setDate] = useState('');
     const [travelers, setTravelers] = useState(1);
-    const [addflight, setAddflight] = useState(false);
+    const [adddinning, setAdddinning] = useState(false);
     const [addCar, setAddCar] = useState(false);
-    const [showflightOptions, setShowflightOptions] = useState(false);
+    const [showdinningOptions, setShowdinningOptions] = useState(false);
     const [showCarOptions, setShowCarOptions] = useState(false);
     const [showPackageOptions, setShowPackageOptions] = useState(false);
     const [showThingsToDoOptions, setShowThingsToDoOptions] = useState(false);
@@ -16,21 +18,22 @@ const SearchAndFilter = () => {
     const [accommodationType, setAccommodationType] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [cuisineType, setCuisineType] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
 
     const handleServiceSelection = (service) => {
-        setShowflightOptions(false);
+        setShowdinningOptions(false);
         setShowCarOptions(false);
         setShowPackageOptions(false);
         setShowThingsToDoOptions(false);
         setShowCruiseOptions(false);
 
         switch (service) {
-            case 'flights':
-                setShowflightOptions(true);
+            case 'dinnings':
+                setShowdinningOptions(true);
                 break;
             case 'cars':
                 setShowCarOptions(true);
@@ -50,7 +53,7 @@ const SearchAndFilter = () => {
     };
 
     const handleSearch = async () => {
-        if (!showflightOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions) {
+        if (!showdinningOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions) {
             try {
                 setLoading(true);
                 const response = await axios.post('/search/filter/Accomadation', {
@@ -67,7 +70,41 @@ const SearchAndFilter = () => {
                 setLoading(false);
             }
         }
-        
+        else if(showdinningOptions)
+        {
+            try {
+                setLoading(true);
+                const response = await axios.post('/search/filter/Dinning', {
+                    name: name,
+                    cuisineType:cuisineType,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice
+                });
+
+                setSearchResults(response.data);
+                setLoading(false);
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error searching hotels:', error);
+                setLoading(false);
+            }
+        }
+        else if(showCarOptions){
+            try {
+                setLoading(true);
+                const response = await axios.post('/search/Transportation', {
+                    currentLocation:location,
+                    destination:destination
+                });
+
+                setSearchResults(response.data);
+                setLoading(false);
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error searching hotels:', error);
+                setLoading(false);
+            }
+        }
     };
 
     const openModal = (item) => {
@@ -84,14 +121,14 @@ const SearchAndFilter = () => {
         <div className="search-container">
             <div className="service-buttons">
                 <button onClick={() => handleServiceSelection('stays')}>Stays</button>
-                <button onClick={() => handleServiceSelection('flights')}>flights</button>
+                <button onClick={() => handleServiceSelection('dinnings')}>dinnings</button>
                 <button onClick={() => handleServiceSelection('cars')}>Cars</button>
                 <button onClick={() => handleServiceSelection('packages')}>Packages</button>
                 <button onClick={() => handleServiceSelection('thingsToDo')}>Things to Do</button>
                 <button onClick={() => handleServiceSelection('cruises')}>Cruises</button>
             </div>
             <div className="search-inputs">
-                {!showflightOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions && (
+                {!showdinningOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions && (
                     <>
                         <input type="text" placeholder="Going to" value={location} onChange={(e) => setLocation(e.target.value)} />
                         <input type="text" placeholder="Accommodation Type" value={accommodationType} onChange={(e) => setAccommodationType(e.target.value)} />
@@ -99,9 +136,9 @@ const SearchAndFilter = () => {
                         <input type="text" placeholder='Maximum Price' value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
                     </>
                 )}
-                {showflightOptions && (
+                {showdinningOptions && (
                     <>
-                        {/* Place your flight options buttons and inputs here */}
+                        {/* Place your dinning options buttons and inputs here */}
                         <div>
                             <div>
                                 <button>Button 1</button>
@@ -110,10 +147,9 @@ const SearchAndFilter = () => {
                                 <button>Button 4</button>
                             </div>
                             <div style={{ display: "flex" }}>
-                                <input type="text" placeholder="Input 1" />
-                                <input type="text" placeholder="Input 2" />
-                                <input type="text" placeholder="Input 3" />
-                                <input type="text" placeholder="Input 4" />
+                                <input type="text" placeholder="cuisineType" value={cuisineType} onChange={(e) => setCuisineType(e.target.value)} />
+                                <input type="text" placeholder='Minimun Price' value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
+                                <input type="text" placeholder='Maximum Price' value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
                             </div>
                         </div>
 
@@ -150,16 +186,9 @@ const SearchAndFilter = () => {
                     <>
                         {/* Place your car options buttons and inputs here */}
                         <div>
-                            <div>
-                                <button>Button 1</button>
-                                <button>Button 2</button>
-                            </div>
                             <div style={{ display: 'flex' }}>
-                                <input type="text" placeholder="Input 1" />
-                                <input type="text" placeholder="Input 2" />
-                                <input type="text" placeholder="Input 3" />
-                                <input type="text" placeholder="Input 4" />
-                                <input type="text" placeholder="Input 5" />
+                                <input type="text" placeholder="Current Location" value={location} onChange={(e)=>setLocation(e.target.value)}/>
+                                <input type="text" placeholder="Destination" value={destination} onChange={(e)=>setDestination(e.target.value)}/>
                             </div>
                         </div>
 
@@ -185,8 +214,8 @@ const SearchAndFilter = () => {
             </div>
             <div className="add-options">
                 <label>
-                    <input type="checkbox" checked={addflight} onChange={() => setAddflight(!addflight)} />
-                    Add a flight
+                    <input type="checkbox" checked={adddinning} onChange={() => setAdddinning(!adddinning)} />
+                    Add a dinning
                 </label>
                 <label>
                     <input type="checkbox" checked={addCar} onChange={() => setAddCar(!addCar)} />
