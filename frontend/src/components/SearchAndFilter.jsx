@@ -54,19 +54,20 @@ const SearchAndFilter = () => {
             try {
                 setLoading(true);
                 const response = await axios.post('/search/filter/Accomadation', {
-                    name: location,
+                    location: location,
                     accommodationType:accommodationType,
                     minPrice: minPrice,
                     maxPrice: maxPrice
                 });
                 setSearchResults(response.data);
-                console.log("this is the data i found",response.data)
                 setLoading(false);
+                console.log(response.data)
             } catch (error) {
                 console.error('Error searching hotels:', error);
                 setLoading(false);
             }
         }
+        
     };
 
     const openModal = (item) => {

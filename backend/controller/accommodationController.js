@@ -5,9 +5,9 @@ const searchFilter = async (req, res) => {
   try {
     const query = req.body.name;
     const accommodationType = req.body.accommodationType;
-    const minPrice = req.body.minPrice;
-    const maxPrice = req.body.maxPrice;
-
+    const minPrice = parseInt(req.body.minPrice, 10); // Parse minPrice to integer with radix 10
+    const maxPrice = parseInt(req.body.maxPrice, 10); // Parse maxPrice to integer with radix 10
+    
     // it filters the Hotel data. if query has been received from the body it will check and 
     // make comparision without case sensetivity option: "i" and regex is for normal comparision of strings
     const localResults = await Hotel.find({
@@ -15,7 +15,7 @@ const searchFilter = async (req, res) => {
       ...(accommodationType && { accommodationType }),
     });
 
-
+    
     // Retrieve real-time pricing and availability information from external API
     const resultsWithDetails = await hotelApiService.getHotelPrices(localResults);
 
