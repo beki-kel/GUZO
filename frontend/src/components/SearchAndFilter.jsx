@@ -8,24 +8,25 @@ const SearchAndFilter = () => {
     const [travelers, setTravelers] = useState(1);
     const [addflight, setAddflight] = useState(false);
     const [addCar, setAddCar] = useState(false);
-    const [showflightOptions, setShowflightOptions] = useState(false); // State to manage visibility of flight options
-    const [showCarOptions, setShowCarOptions] = useState(false); // State to manage visibility of car options
-    const [showPackageOptions, setShowPackageOptions] = useState(false); // State to manage visibility of package options
-    const [showThingsToDoOptions, setShowThingsToDoOptions] = useState(false); // State to manage visibility of Things to Do options
-    const [showCruiseOptions, setShowCruiseOptions] = useState(false); // State to manage visibility of Cruise options
+    const [showflightOptions, setShowflightOptions] = useState(false);
+    const [showCarOptions, setShowCarOptions] = useState(false);
+    const [showPackageOptions, setShowPackageOptions] = useState(false);
+    const [showThingsToDoOptions, setShowThingsToDoOptions] = useState(false);
+    const [showCruiseOptions, setShowCruiseOptions] = useState(false);
+    const [accommodationType, setAccommodationType] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const [showModal, setShowModal] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
 
     const handleServiceSelection = (service) => {
-        // Logic to handle service selection
-        setShowflightOptions(false); // Hide flight options by default
-        setShowCarOptions(false); // Hide car options by default
-        setShowPackageOptions(false); // Hide package options by default
-        setShowThingsToDoOptions(false); // Hide Things to Do options by default
-        setShowCruiseOptions(false); // Hide Cruise options by default
+        setShowflightOptions(false);
+        setShowCarOptions(false);
+        setShowPackageOptions(false);
+        setShowThingsToDoOptions(false);
+        setShowCruiseOptions(false);
 
         switch (service) {
             case 'flights':
@@ -52,19 +53,30 @@ const SearchAndFilter = () => {
         if (!showflightOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions) {
             try {
                 setLoading(true);
-                const response = await axios.post('https://guzo-backend.vercel.app/search/filter/Accomadation', {
+                const response = await axios.post('/search/filter/Accomadation', {
                     name: location,
+                    accommodationType:accommodationType,
                     minPrice: minPrice,
                     maxPrice: maxPrice
                 });
                 setSearchResults(response.data);
+                console.log("this is the data i found",response.data)
                 setLoading(false);
             } catch (error) {
                 console.error('Error searching hotels:', error);
-                // Handle error here
                 setLoading(false);
             }
         }
+    };
+
+    const openModal = (item) => {
+        setSelectedItem(item);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setSelectedItem(null);
     };
 
     return (
@@ -81,8 +93,9 @@ const SearchAndFilter = () => {
                 {!showflightOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions && (
                     <>
                         <input type="text" placeholder="Going to" value={location} onChange={(e) => setLocation(e.target.value)} />
-                        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-                        <input type="number" value={travelers} onChange={(e) => setTravelers(e.target.value)} />
+                        <input type="text" placeholder="Accommodation Type" value={accommodationType} onChange={(e) => setAccommodationType(e.target.value)} />
+                        <input type="text" placeholder='Minimun Price' value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
+                        <input type="text" placeholder='Maximum Price' value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
                     </>
                 )}
                 {showflightOptions && (
@@ -179,6 +192,17 @@ const SearchAndFilter = () => {
                     Add a car
                 </label>
             </div>
+            {showModal && selectedItem && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        {/* Render details of selectedItem here */}
+                        <p>{selectedItem.name}</p>
+                        <p>{selectedItem.description}</p>
+                        {/* Add more details as needed */}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
