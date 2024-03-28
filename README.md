@@ -45,7 +45,7 @@
 
 ### ⚙️ Tech Stack
 
-Frontend: React.js
+Frontend: React.js, Redux
 
 Backend: Node.js, Express.js
 
