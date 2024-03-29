@@ -45,11 +45,6 @@ const addPackage = async (req, res) => {
     }
 };
 
-module.exports = { addPackage };
-
-
-const Package = require('../models/packageModel');
-
 const fetchPackage = async (req, res) => {
     try {
         const { destination, startDate, endDate, minPrice, maxPrice } = req.query;
@@ -74,8 +69,5 @@ const fetchPackage = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
-
-module.exports = { fetchPackage };
-
 
 module.exports = {addPackage , fetchPackage}
