@@ -108,7 +108,7 @@ const SearchAndFilter = () => {
         else if (showPackageOptions) {
             try {
                 setLoading(true);
-                const response = await axios.post('https://guzo-backend.vercel.app/search/packages', {
+                const response = await axios.get('https://guzo-backend.vercel.app/search/packages', {
                     destination: destination,
                     startDate: startDate,
                     endDate: endDate,
@@ -127,7 +127,7 @@ const SearchAndFilter = () => {
         else if (showThingsToDoOptions) {
             try {
                 setLoading(true);
-                const response = await axios.post('https://guzo-backend.vercel.app/search/things-to-do', {
+                const response = await axios.get('https://guzo-backend.vercel.app/search/things-to-do', {
                     currentLocation: location,
                     destination: destination
                 });
