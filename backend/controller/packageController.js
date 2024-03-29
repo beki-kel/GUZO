@@ -49,7 +49,13 @@ const fetchPackage = async (req, res) => {
     try {
         const { destination, startDate, endDate, minPrice, maxPrice } = req.query;
 
+        
+        if(!destination || !startDate || !endDate || !minPrice || !maxPrice){
+            res.status(400).status({message:'Please Enter all the Fields'})
+        }
+
         const query = {};
+        
         if (destination) {
             query.destinations = destination;
         }

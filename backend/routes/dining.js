@@ -7,7 +7,7 @@ const { deleteRestaurant }= require('../controller/dinningController')
 const {verifyUser,verifyAdmin} = require('../utils/verifyToken')
 
 const router = express.Router();
-router.post('/search/filter/Dinning',searchFilterDinning);
+router.get('/search/filter/Dinning',searchFilterDinning);
 router.post('/add/Restaurant',verifyAdmin,addRestaurant);
 router.put('/update/Restaurant/rating/:id',verifyUser ,updateRestaurantRating);
 router.put('/update/Restaurant/:id',verifyAdmin ,updateRestaurant);

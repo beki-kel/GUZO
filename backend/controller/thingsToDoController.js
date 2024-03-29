@@ -39,6 +39,10 @@ const fetchThingsToDo = async (req, res) => {
     try {
         const { location, category, minPrice, maxPrice } = req.body;
 
+        if(!location || !category || !minPrice || !maxPrice){
+            res.status(400).status({message:'Please Enter all the Fields'})
+        }
+
         const query = {};
         if (location) {
             query.location = location;

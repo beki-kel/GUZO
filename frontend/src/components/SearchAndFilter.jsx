@@ -53,7 +53,7 @@ const SearchAndFilter = () => {
         if (!showdinningOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions) {
             try {
                 setLoading(true);
-                const response = await axios.post('https://guzo-backend.vercel.app/search/filter/Accomadation', {
+                const response = await axios.get('https://guzo-backend.vercel.app/search/filter/Accomadation', {
                     location: location,
                     accommodationType: accommodationType,
                     minPrice: minPrice,
@@ -70,7 +70,7 @@ const SearchAndFilter = () => {
         else if (showdinningOptions) {
             try {
                 setLoading(true);
-                const response = await axios.post('https://guzo-backend.vercel.app/search/filter/Dinning', {
+                const response = await axios.get('https://guzo-backend.vercel.app/search/filter/Dinning', {
                     name: name,
                     cuisineType: cuisineType,
                     minPrice: minPrice,
@@ -88,7 +88,7 @@ const SearchAndFilter = () => {
         else if (showCarOptions) {
             try {
                 setLoading(true);
-                const response = await axios.post('https://guzo-backend.vercel.app/search/Transportation', {
+                const response = await axios.get('https://guzo-backend.vercel.app/search/Transportation', {
                     currentLocation: location,
                     destination: destination
                 });
