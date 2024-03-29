@@ -18,10 +18,11 @@ const SearchAndFilter = () => {
     const [accommodationType, setAccommodationType] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const [cuisineType, setCuisineType] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [showModal, setShowModal] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
 
     const handleServiceSelection = (service) => {
@@ -58,7 +59,7 @@ const SearchAndFilter = () => {
                 setLoading(true);
                 const response = await axios.post('https://guzo-backend.vercel.app/search/filter/Accomadation', {
                     location: location,
-                    accommodationType:accommodationType,
+                    accommodationType: accommodationType,
                     minPrice: minPrice,
                     maxPrice: maxPrice
                 });
@@ -70,13 +71,12 @@ const SearchAndFilter = () => {
                 setLoading(false);
             }
         }
-        else if(showdinningOptions)
-        {
+        else if (showdinningOptions) {
             try {
                 setLoading(true);
-                const response = await axios.post('/search/filter/Dinning', {
+                const response = await axios.post('https://guzo-backend.vercel.app/search/filter/Dinning', {
                     name: name,
-                    cuisineType:cuisineType,
+                    cuisineType: cuisineType,
                     minPrice: minPrice,
                     maxPrice: maxPrice
                 });
@@ -89,12 +89,12 @@ const SearchAndFilter = () => {
                 setLoading(false);
             }
         }
-        else if(showCarOptions){
+        else if (showCarOptions) {
             try {
                 setLoading(true);
-                const response = await axios.post('/search/Transportation', {
-                    currentLocation:location,
-                    destination:destination
+                const response = await axios.post('https://guzo-backend.vercel.app/search/Transportation', {
+                    currentLocation: location,
+                    destination: destination
                 });
 
                 setSearchResults(response.data);
@@ -105,16 +105,41 @@ const SearchAndFilter = () => {
                 setLoading(false);
             }
         }
-    };
+        else if (showPackageOptions) {
+            try {
+                setLoading(true);
+                const response = await axios.post('https://guzo-backend.vercel.app/search/packages', {
+                    destination: destination,
+                    startDate: startDate,
+                    endDate: endDate,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice
+                });
 
-    const openModal = (item) => {
-        setSelectedItem(item);
-        setShowModal(true);
-    };
+                setSearchResults(response.data);
+                setLoading(false);
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error searching Packages:', error);
+                setLoading(false);
+            }
+        }
+        else if (showThingsToDoOptions) {
+            try {
+                setLoading(true);
+                const response = await axios.post('https://guzo-backend.vercel.app/search/things-to-do', {
+                    currentLocation: location,
+                    destination: destination
+                });
 
-    const closeModal = () => {
-        setShowModal(false);
-        setSelectedItem(null);
+                setSearchResults(response.data);
+                setLoading(false);
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error searching thingstodo:', error);
+                setLoading(false);
+            }
+        }
     };
 
     return (
@@ -154,21 +179,12 @@ const SearchAndFilter = () => {
                     <>
                         {/* Place your package options buttons and inputs here */}
                         <div>
-                            <div>
-                                <button>Button 1</button>
-                                <button>Button 2</button>
-                                <button>Button 3</button>
-                            </div>
                             <div style={{ display: 'flex' }}>
-                                <select>
-                                    <option>Select</option>
-                                    <option>Option 1</option>
-                                    <option>Option 2</option>
-                                </select>
-                                <input type="text" placeholder="Input 1" />
-                                <input type="text" placeholder="Input 2" />
-                                <input type="text" placeholder="Input 3" />
-                                <input type="text" placeholder="Input 4" />
+                                <input type="text" placeholder="Destination" value={destination} onChange={(e)=> setDestination(e.target.value)}/>
+                                <input type="date" placeholder="StartDate" value={startDate} onChange={(e)=>{setStartDate(e.target.value)}}/>
+                                <input type="date" placeholder="EndDate" value={endDate} onChange={(e)=>{setEndDate(e.target.value)}}/>
+                                <input type="text" placeholder='Minimun Price' value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
+                                <input type="text" placeholder='Maximum Price' value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
                             </div>
 
                         </div>
@@ -181,8 +197,8 @@ const SearchAndFilter = () => {
                         {/* Place your car options buttons and inputs here */}
                         <div>
                             <div style={{ display: 'flex' }}>
-                                <input type="text" placeholder="Current Location" value={location} onChange={(e)=>setLocation(e.target.value)}/>
-                                <input type="text" placeholder="Destination" value={destination} onChange={(e)=>setDestination(e.target.value)}/>
+                                <input type="text" placeholder="Current Location" value={location} onChange={(e) => setLocation(e.target.value)} />
+                                <input type="text" placeholder="Destination" value={destination} onChange={(e) => setDestination(e.target.value)} />
                             </div>
                         </div>
 
@@ -191,6 +207,11 @@ const SearchAndFilter = () => {
                 )}
                 {showThingsToDoOptions && (
                     <>
+                        <select>
+                            <option>Select</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                        </select>
                         <input type="text" placeholder="Input 1" />
                         <input type="text" placeholder="Input 2" />
                     </>
@@ -216,17 +237,6 @@ const SearchAndFilter = () => {
                     Add a car
                 </label>
             </div>
-            {showModal && selectedItem && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={closeModal}>&times;</span>
-                        {/* Render details of selectedItem here */}
-                        <p>{selectedItem.name}</p>
-                        <p>{selectedItem.description}</p>
-                        {/* Add more details as needed */}
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

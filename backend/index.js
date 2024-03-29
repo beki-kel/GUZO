@@ -11,18 +11,16 @@ const subscribe = require('./routes/subscribe')
 const notification = require('./routes/notifications')
 const itinerary = require('./routes/itinerary')
 const promotion = require('./routes/promotion')
+const thingsToDo = require('./routes/thingsToDo')
+const packages = require('./routes/packages')
 
 //bk's Imports
 const authRoute = require('./routes/auth.JS')
-
 const accommodationRoute=require('./routes/Accommodations')
-
 const transportRoute = require('./routes/transportation')
-
 const dinningRoute=require('./routes/dining')
 
 const userRoute=require('./routes/users')
-
 const bodyParser = require('body-parser');
 
 
@@ -49,6 +47,8 @@ app.use('/', transportRoute)
 app.use('/', promotion)
 app.use('/', dinningRoute)
 app.use('/', userRoute)
+app.use('/', packages)
+app.use('/', thingsToDo)
 
 //error handler middleware
 app.use( (err,req,res,next) => {
