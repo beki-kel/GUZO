@@ -14,7 +14,6 @@ const SearchAndFilter = () => {
     const [showCarOptions, setShowCarOptions] = useState(false);
     const [showPackageOptions, setShowPackageOptions] = useState(false);
     const [showThingsToDoOptions, setShowThingsToDoOptions] = useState(false);
-    const [showCruiseOptions, setShowCruiseOptions] = useState(false);
     const [accommodationType, setAccommodationType] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
@@ -31,7 +30,6 @@ const SearchAndFilter = () => {
         setShowCarOptions(false);
         setShowPackageOptions(false);
         setShowThingsToDoOptions(false);
-        setShowCruiseOptions(false);
 
         switch (service) {
             case 'dinnings':
@@ -46,16 +44,13 @@ const SearchAndFilter = () => {
             case 'thingsToDo':
                 setShowThingsToDoOptions(true);
                 break;
-            case 'cruises':
-                setShowCruiseOptions(true);
-                break;
             default:
                 break;
         }
     };
 
     const handleSearch = async () => {
-        if (!showdinningOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions) {
+        if (!showdinningOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions) {
             try {
                 setLoading(true);
                 const response = await axios.post('https://guzo-backend.vercel.app/search/filter/Accomadation', {
@@ -155,7 +150,7 @@ const SearchAndFilter = () => {
                 <button onClick={() => handleServiceSelection('thingsToDo')}>Things to Do</button>
             </div>
             <div className="search-inputs">
-                {!showdinningOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions && (
+                {!showdinningOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && (
                     <>
                         <input type="text" placeholder="Going to" value={location} onChange={(e) => setLocation(e.target.value)} />
                         <input type="text" placeholder="Accommodation Type" value={accommodationType} onChange={(e) => setAccommodationType(e.target.value)} />
