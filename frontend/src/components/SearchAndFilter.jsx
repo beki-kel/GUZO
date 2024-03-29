@@ -18,6 +18,7 @@ const SearchAndFilter = () => {
     const [accommodationType, setAccommodationType] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [category, setCategory] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [cuisineType, setCuisineType] = useState('');
@@ -128,8 +129,10 @@ const SearchAndFilter = () => {
             try {
                 setLoading(true);
                 const response = await axios.get('https://guzo-backend.vercel.app/search/things-to-do', {
-                    currentLocation: location,
-                    destination: destination
+                    location: location,
+                    category: category, 
+                    minPrice: minPrice, 
+                    maxPrice: maxPrice
                 });
 
                 setSearchResults(response.data);
@@ -150,7 +153,6 @@ const SearchAndFilter = () => {
                 <button onClick={() => handleServiceSelection('cars')}>Cars</button>
                 <button onClick={() => handleServiceSelection('packages')}>Packages</button>
                 <button onClick={() => handleServiceSelection('thingsToDo')}>Things to Do</button>
-                <button onClick={() => handleServiceSelection('cruises')}>Cruises</button>
             </div>
             <div className="search-inputs">
                 {!showdinningOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions && !showCruiseOptions && (
@@ -207,20 +209,16 @@ const SearchAndFilter = () => {
                 )}
                 {showThingsToDoOptions && (
                     <>
-                        <select>
-                            <option>Select</option>
-                            <option>Option 1</option>
-                            <option>Option 2</option>
+                        <input type="text" placeholder="Where ?" value={location} onChange={(e) => setLocation(e.target.value)} />
+                        <select value={category} onChange={(e)=>{setCategory(e.target.value)}}>
+                            <option>Category</option>
+                            <option>HighLand</option>
+                            <option>RiftVally</option>
+                            <option>GameZone</option>
+                            <option>Gliding</option>
                         </select>
-                        <input type="text" placeholder="Input 1" />
-                        <input type="text" placeholder="Input 2" />
-                    </>
-                )}
-                {showCruiseOptions && (
-                    <>
-                        <input type="text" placeholder="Input 1" />
-                        <input type="text" placeholder="Input 2" />
-                        <input type="text" placeholder="Input 3" />
+                        <input type="text" placeholder='Minimun Price' value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
+                        <input type="text" placeholder='Maximum Price' value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
                     </>
                 )}
             </div>
