@@ -55,7 +55,7 @@ const fetchPackage = async (req, res) => {
         }
 
         const query = {};
-        
+
         if (destination) {
             query.destinations = destination;
         }
@@ -69,7 +69,7 @@ const fetchPackage = async (req, res) => {
 
         const packages = await Package.find(query);
 
-        res.status(200).json({ packages });
+        res.status(200).json({ packages:`this is the package ${packages}` });
     } catch (error) {
         console.error('Error fetching packages:', error);
         res.status(500).json({ error: 'Internal server error' });
