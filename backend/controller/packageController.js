@@ -49,9 +49,9 @@ const fetchPackage = async (req, res) => {
     try {
         const { destination, startDate, endDate, minPrice, maxPrice } = req.query;
 
-        
         if(!destination || !startDate || !endDate || !minPrice || !maxPrice){
-            res.status(400).status({message:'Please Enter all the Fields'})
+            res.status(400).json({ message: 'Please provide all the required fields' });
+            return;
         }
 
         const query = {};
@@ -76,4 +76,31 @@ const fetchPackage = async (req, res) => {
     }
 };
 
-module.exports = {addPackage , fetchPackage}
+const updatePackage = async (req, res) => {
+    try {
+        const packageId = req.params.id;
+        const updateFields = req.body;
+
+        const updatedPackage = await Package.findByIdAndUpdate(packageId, updateFields, { new: true });
+
+        res.status(200).json({ message: 'Package updated successfully', package: updatedPackage });
+    } catch (error) {
+        console.error('Error updating package:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+const deletePackage = async (req, res) => {
+    try {
+        const packageId = req.params.id;
+
+        await Package.findByIdAndDelete(packageId);
+
+        res.status(200).json({ message: 'Package deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting package:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+module.exports = { addPackage, fetchPackage, updatePackage, deletePackage };

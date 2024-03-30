@@ -2,6 +2,10 @@
 
 import React, { useState } from 'react';
 import './Admin.css'; // Import CSS for styling
+import AccommodationForm from './AdminPages/AccommodationAdmin';
+import HotelForm from './AdminPages/HotelAdmin';
+import TransportationForm from './AdminPages/TransportationAdmin';
+import PackageForm from './AdminPages/PackagesAdmin';
 
 const AdminDashboard = () => {
     const [showHomeOptions, setShowHomeOptions] = useState(true); // Set to true by default
@@ -81,6 +85,7 @@ const AdminDashboard = () => {
                     <div>
                         {/* Content for Accommodation Options */}
                         <h3>Accommodation Options</h3>
+                        <AccommodationForm />
                         {/* Add your specific content for accommodation options here */}
                     </div>
                 )}
@@ -88,6 +93,7 @@ const AdminDashboard = () => {
                     <div>
                         {/* Content for Dining Options */}
                         <h3>Dining Options</h3>
+                        <HotelForm />
                         {/* Add your specific content for dining options here */}
                     </div>
                 )}
@@ -95,6 +101,7 @@ const AdminDashboard = () => {
                     <div>
                         {/* Content for Car Options */}
                         <h3>Car Options</h3>
+                        <TransportationForm />
                         {/* Add your specific content for car options here */}
                     </div>
                 )}
@@ -102,6 +109,7 @@ const AdminDashboard = () => {
                     <div>
                         {/* Content for Package Options */}
                         <h3>Package Options</h3>
+                        <PackageForm />
                         {/* Add your specific content for package options here */}
                     </div>
                 )}

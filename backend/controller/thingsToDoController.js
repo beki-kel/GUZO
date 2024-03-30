@@ -63,5 +63,36 @@ const fetchThingsToDo = async (req, res) => {
     }
 };
 
+const updateThingsToDo = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedData = req.body;
 
-module.exports = {addThingsToDo , fetchThingsToDo}
+        const updatedThingToDo = await ThingsToDo.findByIdAndUpdate(id, updatedData, { new: true });
+
+        res.status(200).json({ message: 'Thing to do updated successfully', updatedThingToDo });
+    } catch (error) {
+        console.error('Error updating thing to do:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+const deleteThingsToDo = async (req, res) => {
+    try {
+        // Extracting the thing to do ID from request parameters
+        const { id } = req.params;
+
+        // Finding the thing to do by ID and deleting it
+        const deletedThingToDo = await ThingsToDo.findByIdAndDelete(id);
+
+        if (!deletedThingToDo) {
+            return res.status(404).json({ message: 'Thing to do not found' });
+        }
+
+        res.status(200).json({ message: 'Thing to do deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting thing to do:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+module.exports = { addThingsToDo, fetchThingsToDo, updateThingsToDo, deleteThingsToDo };

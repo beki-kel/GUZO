@@ -88,7 +88,7 @@ const SearchAndFilter = () => {
         else if (showCarOptions) {
             try {
                 setLoading(true);
-                const response = await axios.get('/search/Transportation', {
+                const response = await axios.get('/search/transportation', {
                     currentLocation: location,
                     destination: destination
                 });
@@ -125,8 +125,8 @@ const SearchAndFilter = () => {
                 setLoading(true);
                 const response = await axios.get('/search/things-to-do', {
                     location: location,
-                    category: category, 
-                    minPrice: minPrice, 
+                    category: category,
+                    minPrice: minPrice,
                     maxPrice: maxPrice
                 });
 
@@ -160,7 +160,6 @@ const SearchAndFilter = () => {
                 )}
                 {showdinningOptions && (
                     <>
-                        {/* Place your dinning options buttons and inputs here */}
                         <div>
                             <div style={{ display: "flex" }}>
                                 <input type="text" placeholder="cuisineType" value={cuisineType} onChange={(e) => setCuisineType(e.target.value)} />
@@ -169,17 +168,15 @@ const SearchAndFilter = () => {
                             </div>
                         </div>
 
-
                     </>
                 )}
                 {showPackageOptions && (
                     <>
-                        {/* Place your package options buttons and inputs here */}
                         <div>
                             <div style={{ display: 'flex' }}>
-                                <input type="text" placeholder="Destination" value={destination} onChange={(e)=> setDestination(e.target.value)}/>
-                                <input type="date" placeholder="StartDate" value={startDate} onChange={(e)=>{setStartDate(e.target.value)}}/>
-                                <input type="date" placeholder="EndDate" value={endDate} onChange={(e)=>{setEndDate(e.target.value)}}/>
+                                <input type="text" placeholder="Destination" value={destination} onChange={(e) => setDestination(e.target.value)} />
+                                <input type="date" placeholder="StartDate" value={startDate} onChange={(e) => { setStartDate(e.target.value) }} />
+                                <input type="date" placeholder="EndDate" value={endDate} onChange={(e) => { setEndDate(e.target.value) }} />
                                 <input type="text" placeholder='Minimun Price' value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
                                 <input type="text" placeholder='Maximum Price' value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
                             </div>
@@ -191,7 +188,6 @@ const SearchAndFilter = () => {
                 )}
                 {showCarOptions && (
                     <>
-                        {/* Place your car options buttons and inputs here */}
                         <div>
                             <div style={{ display: 'flex' }}>
                                 <input type="text" placeholder="Current Location" value={location} onChange={(e) => setLocation(e.target.value)} />
@@ -205,7 +201,7 @@ const SearchAndFilter = () => {
                 {showThingsToDoOptions && (
                     <>
                         <input type="text" placeholder="Where ?" value={location} onChange={(e) => setLocation(e.target.value)} />
-                        <select value={category} onChange={(e)=>{setCategory(e.target.value)}}>
+                        <select value={category} onChange={(e) => { setCategory(e.target.value) }}>
                             <option>Category</option>
                             <option>HighLand</option>
                             <option>RiftVally</option>
