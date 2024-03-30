@@ -53,7 +53,7 @@ const SearchAndFilter = () => {
         if (!showdinningOptions && !showCarOptions && !showPackageOptions && !showThingsToDoOptions) {
             try {
                 setLoading(true);
-                const response = await axios.get('https://guzo-backend.vercel.app/search/filter/Accomadation', {
+                const response = await axios.get('/search/filter/Accomadation', {
                     location: location,
                     accommodationType: accommodationType,
                     minPrice: minPrice,
@@ -70,7 +70,7 @@ const SearchAndFilter = () => {
         else if (showdinningOptions) {
             try {
                 setLoading(true);
-                const response = await axios.get('https://guzo-backend.vercel.app/search/filter/Dinning', {
+                const response = await axios.get('/search/filter/Dinning', {
                     name: name,
                     cuisineType: cuisineType,
                     minPrice: minPrice,
@@ -88,7 +88,7 @@ const SearchAndFilter = () => {
         else if (showCarOptions) {
             try {
                 setLoading(true);
-                const response = await axios.get('https://guzo-backend.vercel.app/search/Transportation', {
+                const response = await axios.get('/search/Transportation', {
                     currentLocation: location,
                     destination: destination
                 });
@@ -104,7 +104,7 @@ const SearchAndFilter = () => {
         else if (showPackageOptions) {
             try {
                 setLoading(true);
-                const response = await axios.get('https://guzo-backend.vercel.app/search/packages', {
+                const response = await axios.get('/search/packages', {
                     destination: destination,
                     startDate: startDate,
                     endDate: endDate,
@@ -123,7 +123,7 @@ const SearchAndFilter = () => {
         else if (showThingsToDoOptions) {
             try {
                 setLoading(true);
-                const response = await axios.get('https://guzo-backend.vercel.app/search/things-to-do', {
+                const response = await axios.get('/search/things-to-do', {
                     location: location,
                     category: category, 
                     minPrice: minPrice, 

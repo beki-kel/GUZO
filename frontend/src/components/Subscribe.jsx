@@ -27,7 +27,7 @@ function Subscribe() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = await axios.post(`https://guzo-backend.vercel.app/subscribe/${userId}`, {
+        const result = await axios.post(`/subscribe/${userId}`, {
             email: email
         })
         console.log("Subscirbed succesfully with email", result)

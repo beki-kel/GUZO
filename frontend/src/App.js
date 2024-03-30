@@ -22,6 +22,7 @@ const App = () => {
         const decodedToken = jwtDecode(token);
         if (decodedToken && decodedToken.isAdmin) {
           setIsAdmin(true);
+          console.log("isadmin: ",isAdmin,"decoded:",token)
         }
       } catch (err) {
         console.log("Can not decode the token: ", err);

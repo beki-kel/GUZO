@@ -8,7 +8,7 @@ const Promotion = () => {
     // Function to fetch promotion data from the server
     const fetchPromotions = async () => {
         try {
-            const response = await axios.get('https://guzo-backend.vercel.app/promotions'); // Assuming endpoint is '/api/promotions'
+            const response = await axios.get('/promotions'); // Assuming endpoint is '/api/promotions'
             setPromotions(response.data.promotions);
         } catch (error) {
             console.error('Error fetching promotions:', error);
