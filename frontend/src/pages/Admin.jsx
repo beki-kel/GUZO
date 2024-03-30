@@ -6,6 +6,7 @@ import AccommodationForm from './AdminPages/AccommodationAdmin';
 import HotelForm from './AdminPages/HotelAdmin';
 import TransportationForm from './AdminPages/TransportationAdmin';
 import PackageForm from './AdminPages/PackagesAdmin';
+import ThingsToDoForm from './AdminPages/ThingsToDoAdmin';
 
 const AdminDashboard = () => {
     const [showHomeOptions, setShowHomeOptions] = useState(true); // Set to true by default
@@ -117,6 +118,7 @@ const AdminDashboard = () => {
                     <div>
                         {/* Content for Things to Do Options */}
                         <h3>Things to Do Options</h3>
+                        <ThingsToDoForm/>
                         {/* Add your specific content for things to do options here */}
                     </div>
                 )}
