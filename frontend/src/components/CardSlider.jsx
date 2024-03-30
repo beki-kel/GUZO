@@ -11,7 +11,7 @@ function CardSlider() {
         infinite: true,
         speed: 500,
         slidesToShow: 4,
-        slidesToScroll: 1,
+        slidesToScroll: 0,
         arrows: true,
         centerMode: true,
         adaptiveHeight: true,
@@ -21,7 +21,7 @@ function CardSlider() {
                 breakpoint: 1024,
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 1,
+                    slidesToScroll: 0,
                     infinite: true,
                     dots: true
                 }

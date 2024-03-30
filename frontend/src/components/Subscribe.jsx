@@ -9,10 +9,11 @@ function Subscribe() {
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        console.log("the token id: ", token)
+        console.log("the token: ", token)
         try {
             if (token) {
-              const decodedToken = jwtDecode("token");
+              const decodedToken = jwtDecode(token);
+              console.log('the decoded token is: ', decodedToken)
               if (decodedToken && decodedToken.id) {
                 setUserId(decodedToken.id);
               }
