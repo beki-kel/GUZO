@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import './styles/register.css';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://guzo-backend.vercel.app/auth/register', formData);
+      const response = await axios.post('http://localhost:3000/auth/register', formData);
       if (response.status === 201) {
         console.log(response.data);
         navigate('/');
@@ -36,9 +37,19 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className='registerPage'>
+   <div>
+   <p className='Brand'> 
+    <span className='firstSliceName'>Me</span>
+    <span className='secondSliceName'>he</span>
+    <span className='thirdSliceName'>ja</span>
+    <span className='domain'>.com</span></p>
+   </div>
+
+    <form onSubmit={handleSubmit} className='registerForm'>
       <input
         type="text"
+        className='inputField'
         name="username"
         placeholder="Username"
         value={formData.username}
@@ -47,6 +58,7 @@ const Register = () => {
       />
       <input
         type="text"
+        className='inputField'
         name="fname"
         placeholder="First Name"
         value={formData.fname}
@@ -55,6 +67,7 @@ const Register = () => {
       />
       <input
         type="text"
+        className='inputField'
         name="lname"
         placeholder="Last Name"
         value={formData.lname}
@@ -64,6 +77,7 @@ const Register = () => {
       <input
         type="email"
         name="email"
+        className='inputField'
         placeholder="Email"
         value={formData.email}
         onChange={handleChange}
@@ -72,16 +86,19 @@ const Register = () => {
       <input
         type="password"
         name="password"
+        className='inputField'
         placeholder="Password"
         value={formData.password}
         onChange={handleChange}
         required
       />
-      <button type="submit">Register</button>
-      <Link to="/login">
-        <button>Login</button>
+      <button type="submit" className='buttons'>Register</button>
+      <Link to="/login" className='anchor'>
+        <button className='buttons'>Login</button>
       </Link>
     </form>
+    </div>
+
   );
 };
 

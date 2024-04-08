@@ -1,7 +1,7 @@
 // AdminDashboard.js
 
 import React, { useState } from 'react';
-import './Admin.css'; // Import CSS for styling
+import './styles/Admin.css'; // Import CSS for styling
 import AccommodationForm from './AdminPages/AccommodationAdmin';
 import HotelForm from './AdminPages/HotelAdmin';
 import TransportationForm from './AdminPages/TransportationAdmin';
