@@ -31,21 +31,27 @@ const Login = ({ handleLogin }) => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      {errorMessage && <div>{errorMessage}</div>}
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className='loginPage'> 
+        <p className='Brand'> 
+          <span className='firstSliceName'>Me</span>
+          <span className='secondSliceName'>he</span>
+          <span className='thirdSliceName'>ja</span>
+          <span className='domain'>.com</span>
+        </p>
+
+      <form onSubmit={handleSubmit} className='registerForm'>
+      {errorMessage && <div className='errorDisplay'>{errorMessage}</div>}
+        <div className='loginField'>
           <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} className='loginInputField' />
         </div>
-        <div>
+        <div className='loginField'>
           <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className='loginInputField'/>
         </div>
-        <button type="submit">Login</button>
-        <Link to="/register">
-          <button>Signup</button>
+        <button type="submit" className='buttons'>Login</button>
+        <Link to="/register" className='anchor'>
+          <button className='buttons'> Signup</button>
         </Link>
       </form>
     </div>

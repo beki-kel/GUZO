@@ -1,0 +1,110 @@
+.body{
+    margin: 0%;
+    padding: 0%;
+}
+.registerPage, .loginPage{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: url(../../assets/meheja.jpg);
+    width: 100%;
+    min-height:140vh ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-bottom: 14%;
+}
+
+.Brand{
+    font-size: 100px;
+    font-weight:800;
+    width: 100%;
+    padding-left: auto;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.domain{
+    font-size: 50px;
+}
+
+.firstSliceName{
+    color: #00933B;
+}
+.secondSliceName{
+    color: #F1C40F;
+}
+
+.thirdSliceName{
+    color: #D7141A;
+}
+
+.registerForm{
+    background: transparent;
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    border: 3px solid rgb(255, 255, 255);
+    padding: 80px;
+}
+
+.inputField {
+    width: 150%;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    border: none;
+    outline: none;
+    padding: 10%; 
+}
+
+.loginInputField{
+    width: 100%;
+    padding:10%;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    border: none;
+    outline: none;
+}
+
+.inputField:focus {
+    border: 1px solid white; 
+}
+
+.loginField label{
+    font-size: 20px;
+    font-weight: 900;
+    color: #ffffff;
+}
+
+.buttons{
+    color: aliceblue;
+    background-color: black;
+    padding: 8%;
+    border-radius: 60px;
+    border: none;
+    font-weight: 600;
+    margin-bottom: 5%;
+    width: 100%;
+}
+button:hover{
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+}
+
+.anchor{
+    width: 100%;
+}
+
+.errorDisplay{
+    margin-bottom: 20px;
+    font-size: larger;
+    font-weight: 700;
+    color: #c30006;
+}
+
+
