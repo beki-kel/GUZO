@@ -19,7 +19,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://guzo-backend.vercel.app/auth/register', formData);
+      const response = await axios.post('/auth/register', formData);
       if (response.status === 201) {
         console.log(response.data);
         navigate('/');

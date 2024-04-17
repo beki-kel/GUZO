@@ -2,7 +2,7 @@
   "name": "Guzo",
   "version": "1.0.0",
   "description": "Travel Guide",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "client": "npm start --prefix frontend",
     "server": "nodemon backend/index.js",
@@ -16,7 +16,6 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "colors": "^1.4.0",
-    "concurrently": "^8.2.2",
     "cookie": "^0.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -30,6 +29,7 @@
     "parser": "^0.1.4"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "nodemon": "^3.1.0"
   }
 }

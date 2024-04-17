@@ -88,7 +88,7 @@ const TransportationForm = () => {
     const handleUpdateSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`/update/Transportation/${updateFormData.id}`, updateFormData);
+            const response = await axios.put(`/update/transportation/${updateFormData.id}`, updateFormData);
             console.log(response.data);
         } catch (error) {
             console.error('Error updating transportation:', error);

@@ -48,7 +48,7 @@ const ThingsToDoForm = () => {
     const handleAddSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/addThingsToDo', addFormData);
+            const response = await axios.post('/add/things-to-do', addFormData);
             console.log(response.data);
             setAddFormData({
                 name: '',
@@ -69,7 +69,7 @@ const ThingsToDoForm = () => {
     const handleUpdateSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`/updateThingsToDo/${updateFormData.id}`, updateFormData);
+            const response = await axios.put(`/update/things-to-do/${updateFormData.id}`, updateFormData);
             console.log(response.data);
         } catch (error) {
             console.error('Error updating thing to do:', error);
@@ -78,7 +78,7 @@ const ThingsToDoForm = () => {
 
     const handleDelete = async () => {
         try {
-            const response = await axios.delete(`/deleteThingsToDo/${deleteId}`);
+            const response = await axios.delete(`/delete/things-to-do/${deleteId}`);
             console.log(response.data);
         } catch (error) {
             console.error('Error deleting thing to do:', error);
