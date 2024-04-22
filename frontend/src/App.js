@@ -6,6 +6,7 @@ import Login from '../src/pages/Login';
 import Home from '../src/pages/Home';
 import Admin from './pages/Admin';
 import { jwtDecode } from 'jwt-decode';
+import './index.css'
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null); // Set initial state to null
