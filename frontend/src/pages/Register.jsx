@@ -40,11 +40,20 @@ const Register = () => {
   };
 
   return (
-  <div className='flex justify-center items-center bg-white w-full min-h-screen mb-14 px-10'>
+  <div className='flex justify-center items-center bg-white w-full min-h-screen  px-10'>
   
-  <div className='flex mb-10 text-3xl font-thin w-1/2 items-center justify-center'>
+  <div className='flex flex-col mb-10 text-3xl font-thin w-1/2 items-center justify-center'>
+    <div className='flex w-full justify-center items-center mb-6'>
       <FontAwesomeIcon icon={faPlaneDeparture} style={{ color: "#ff622e" }} className='mr-2' />
-      <p>Exopia</p>
+      <h2 className='text-4xl font-medium'>Exopia</h2>
+    </div>
+    
+    <div className='flex flex-col w-full text-center justify-center items-center'>
+      <h4 className='w-full text-orange-600 font-normal'>Discover Your Adventure with a Web all in one</h4>
+      <p className='w-full text-xl'> book your flights,rides,dinning,events and more!</p>
+      <p className='w-full text-xl'> Ethiopia the land of origins.</p>
+    </div>
+      
   </div>
 
     <div className='flex flex-col justify-center items-center w-1/2'>
@@ -52,7 +61,7 @@ const Register = () => {
       <img src={traveller6} alt="traveller"  className="object-contain w-full h-full"/>
     </div>
 
-    <form onSubmit={handleSubmit} className="bg-black p-4 pb-6 rounded-3xl shadow-lg w-full max-w-sm border-2 border-orange-600 justify-center items-center">
+    <form onSubmit={handleSubmit} className="bg-black p-6 rounded-3xl shadow-lg w-full max-w-sm border-2 border-orange-600 justify-center items-center">
         <h1 className="text-2xl text-center text-white mb-4 font-bold">Register Now</h1>
 
         <div className='flex justify-center items-center space-x-5 w-full'>
@@ -114,14 +123,13 @@ const Register = () => {
         </div>
         <div className='flex flex-col w-full items-center justify-center'>
         <button type="submit" className="bg-orange-600 text-white font-bold py-2 px-4 mt-6 rounded-xl w-8/12">Register</button>
-        <Link to="/login" className="flex flex-col w-full items-center justify-center">
-          <button type="button" className="bg-orange-600 text-white font-bold py-2 px-4 mt-4 rounded-xl w-8/12">Login</button>
-        </Link>
+        <divv to="/login" className="flex flex-col w-full items-center justify-center">
+          <p className="text-white font-medium mt-2">Already have account? <Link to='/login' className='text-orange-600 underline font-normal'>Login </Link></p>
+        </divv>
         </div>
 
     </form>
     </div>
-
     </div>
 
   );
