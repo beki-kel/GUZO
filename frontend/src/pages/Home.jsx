@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Nav from "../components/Nav"
+import Navigation from "../components/Navigation"
 import SearchAndFilter from '../components/SearchAndFilter';
 import CardSlider from '../components/CardSlider';
 import Promotion from '../components/Promotion';
@@ -20,6 +20,7 @@ const handleLogout = () => {
 };
   return (
     <div>
+
       <SearchAndFilter/>
       <CardSlider/>
       <Promotion/>
