@@ -10,7 +10,7 @@ const PricingCards = (props) => {
     <div className="w-full py-[8rem] px-4  ">
       <div className="max-w-[1000px] mx-auto grid md:grid-cols-3 gap-8">
         {cardData.map((card, index) => (
-          <div key={index} className={`w-full shadow-xl flex flex-col p-4 my-4 rounded-3xl hover:scale-105 duration-300  border-2 border-orange-600`}>
+          <div key={index} className={`w-full shadow-sm flex flex-col p-4 my-4 rounded-3xl hover:scale-105 duration-300   shadow-orange-600`}>
             <img className="w-10/12 h-44 rounded-md mx-auto mt-[-8rem] bg-white" src={card.image} alt="/"
             />
             <h2 className="text-xl  font-bold text-center pt-4 ">
