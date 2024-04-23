@@ -1,7 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import card1 from '../assets/kuriftu-water-park.jpg'
 import { Link } from "react-router-dom";
 
 const PricingCards = (props) => {
