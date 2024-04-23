@@ -5,6 +5,7 @@ import Register from '../src/pages/Register';
 import Login from '../src/pages/Login';
 import Home from '../src/pages/Home';
 import Admin from './pages/Admin';
+import LandingPage from './pages/landingPage';
 import { jwtDecode } from 'jwt-decode';
 import './index.css'
 
@@ -33,29 +34,25 @@ const App = () => {
       setIsAdmin(false);
       delete axios.defaults.headers.common['Authorization'];
     }
-  }, []);
+  },[]);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
   }
 
   // Render a loading indicator until authentication check is complete
-  if (isLoggedIn === null) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div>
       <Router>
         <Routes>
+          <Route path='/landing' element={<LandingPage/>}/>
           <Route path="/login" element={<Login isLoggedIn={isLoggedIn} handleLogin={handleLogin} />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/home" element={<Home/>}></Route>
           {/* Only render Admin route if user is logged in and is admin */}
           {isLoggedIn && isAdmin && <Route path="/admin" element={<Admin />} />}
           {/* Private Route for Home */}
-          <Route
-            path="/"
-            element={isLoggedIn ? <Home /> : <Navigate to="/login" />}
+          <Route path="/" element={isLoggedIn ? <Home /> : <Navigate to="/landing" />}
           />
         </Routes>
       </Router>

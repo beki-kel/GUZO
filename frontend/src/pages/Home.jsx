@@ -20,7 +20,6 @@ const handleLogout = () => {
 };
   return (
     <div>
-      <Nav />
       <SearchAndFilter/>
       <CardSlider/>
       <Promotion/>
