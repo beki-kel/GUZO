@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
 
 .slider-container{
-   
     margin: 50px;
 }
 
@@ -11,6 +10,7 @@
 }
 .slider-container img{
     padding: 10px;
+    padding-bottom: 0px;
     height: 300px;
     border: 1px solid white;
     z-index: 10;
