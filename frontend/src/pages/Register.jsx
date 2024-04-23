@@ -7,6 +7,8 @@ import { faPlaneDeparture } from '@fortawesome/free-solid-svg-icons';
 
 const Register = () => {
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [formData, setFormData] = useState({
     username: '',
     fname: '',
@@ -16,7 +18,8 @@ const Register = () => {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -26,7 +29,7 @@ const Register = () => {
 
       if (response.status === 201) {
         console.log(response.data);
-        navigate('/');
+        navigate('/login', { state: { username: formData.username, password: formData.password } });
       } else if (response.status === 400 || response.status === 404 ) {
         alert("User is not Registered");
       }
@@ -123,9 +126,9 @@ const Register = () => {
         </div>
         <div className='flex flex-col w-full items-center justify-center'>
         <button type="submit" className="bg-orange-600 text-white font-bold py-2 px-4 mt-6 rounded-xl w-8/12">Register</button>
-        <divv to="/login" className="flex flex-col w-full items-center justify-center">
+        <div className="flex flex-col w-full items-center justify-center">
           <p className="text-white font-medium mt-2">Already have account? <Link to='/login' className='text-orange-600 underline font-normal'>Login </Link></p>
-        </divv>
+        </div>
         </div>
 
     </form>
