@@ -1,6 +1,6 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import PricingCards from '../components/pricingCard';
 import cardImage1 from '../assets/entoto 2.jpg';
 import cardImage2 from '../assets/kuriftu-water-park.jpg';
@@ -15,6 +15,12 @@ import Garage from '../assets/Garage Expo.jpg';
 import jazz from '../assets/jazz night.jpg';
 import champions from '../assets/champions league.jpg';
 import zoya from '../assets/Zoya.jpg';
+import MobilePhone from '../components/MobilePhone';
+import screenshoot from '../assets/Image (1).png'
+import playstore from '../assets/PlayStore.webp'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faApple } from '@fortawesome/free-brands-svg-icons';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 function LandingPage({ isLoggedIn }) {
   const navigate = useNavigate();
@@ -128,7 +134,7 @@ function LandingPage({ isLoggedIn }) {
         <PricingCards cardData={cardData} />
       </div>
 
-      <div className='flex flex-col justify-center items-center w-full min-h-screen bg-gray-50 bg-cover p-10'>
+      <div className='flex flex-col justify-center items-center w-full bg-gray-50 bg-cover px-10 py-4'>
         <h2 className='text-center text-4xl font-light'>
           Trending Events This Week
         </h2>
@@ -136,7 +142,43 @@ function LandingPage({ isLoggedIn }) {
           <EventDisplay items={sampleItems} />
         </div>
       </div>
+
+      <div className='flex flex-col justify-center items-center w-full  bg-gray-50 bg-cover py-2 px-14'>
+        <div className='flex justify-center items-center w-full'>
+          <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='mr-3 h-8' />
+          <h2 className='text-center text-4xl font-light'>
+            Download the App
+          </h2>
+          <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='ml-3 h-8' />
+        </div>
+
+        <div className='w-full  flex'>
+          <div className='w-1/2  flex flex-col items-center mt-28 px-48'>
+            
+            <div className='ml-auto py-2 px-8 mb-9 rounded-md bg-black flex justify-center items-center shadow-md shadow-black' onClick={() => navigate('/downloadPage') }>
+              <img className='w-14 h-18 object-cover' src={playstore} alt='screenshot' />
+              <div className='flex flex-col text-center  text-white ml-10 mr-6' >
+              <p className='text-sm'> GET IT ON</p>
+              <p className='text-xl'>Google Play</p>
+            </div>
+            </div>
+
+            <div className=' ml-auto py-2 px-8 mb-2 rounded-md bg-black flex justify-center items-center shadow-md shadow-black' onClick={() => navigate('/downloadPage') }>
+            <FontAwesomeIcon icon={faApple} style={{color: "#ffffff",}} className='w-14 h-16 object-cover'/>
+            <div className='flex flex-col text-center  text-white ml-10 mr-6' >
+              <p className='text-sm'> GET IT ON</p>
+              <p className='text-xl'>Apple Store</p>
+            </div>
+            </div>
+          </div>
+
+          <div className='w-1/2  flex flex-col justify-center items-center mt-6'>
+            <MobilePhone image={screenshoot} />
+          </div>
+        </div>
+      </div>
     </div>
+    
   );
 }
 
