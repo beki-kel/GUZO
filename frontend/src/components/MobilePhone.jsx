@@ -6,7 +6,7 @@ import { faSignal,faBatteryQuarter } from '@fortawesome/free-solid-svg-icons';
 
 const MobilePhone = ({ image }) => {
   return (
-    <div className="w-1/3 h-96 bg-gray-50  flex flex-col items-center px-4 border-black">
+    <div className="w-1/3 h-96 bg-white  flex flex-col items-center px-4 border-black">
       <div className="w-full py-2 bg-black rounded-t-xl flex justify-center items-center relative">
         <div className='w-2/12 h-2 absolute left-1  flex items-center space-x-2 pl-2'> 
             <FontAwesomeIcon icon={faSignal} className="text-white h-3"/>

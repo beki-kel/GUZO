@@ -21,6 +21,7 @@ import playstore from '../assets/PlayStore.webp'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faApple } from '@fortawesome/free-brands-svg-icons';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import myTraveller from '../assets/myTraveller.png';
 
 function LandingPage({ isLoggedIn }) {
   const navigate = useNavigate();
@@ -120,21 +121,21 @@ function LandingPage({ isLoggedIn }) {
         </div>
       </div>
 
-      <div className="w-full max-h-[90vh] justify-center items-center font-light relative px-24">
+      <div className="w-full max-h-[90vh] justify-center items-center font-light relative px-24 bg-gray-50">
         <h2 className='text-center text-2xl pt-5 pb-5'>
           Enjoy travelling to the peak with us.
         </h2>
         <CircularCarousel products={sampleProducts} />
       </div>
 
-      <div className="w-full justify-center items-center font-light">
+      <div className="w-full justify-center items-center font-light bg-gray-50">
         <h2 className='text-center text-2xl pt-5'>
           Discover the beauty of exotic destinations with best values in our Top Packages.
         </h2>
         <PricingCards cardData={cardData} />
       </div>
 
-      <div className='flex flex-col justify-center items-center w-full bg-gray-50 bg-cover px-10 py-4'>
+      <div className='flex flex-col justify-center items-center w-full  bg-cover px-10 py-4'>
         <h2 className='text-center text-4xl font-light'>
           Trending Events This Week
         </h2>
@@ -143,7 +144,7 @@ function LandingPage({ isLoggedIn }) {
         </div>
       </div>
 
-      <div className='flex flex-col justify-center items-center w-full  bg-gray-50 bg-cover py-2 px-14'>
+      <div className='flex flex-col justify-center items-center w-full  bg-cover py-2 px-14'>
         <div className='flex justify-center items-center w-full'>
           <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='mr-3 h-8' />
           <h2 className='text-center text-4xl font-light'>
@@ -177,7 +178,27 @@ function LandingPage({ isLoggedIn }) {
           </div>
         </div>
       </div>
+
+      <div className='flex  w-full  bg-white bg-cover mt-14'>
+
+        <div className='bg-background2 w-4/12 h-80 mt-16 flex items-end justify-end'>
+          <img src={myTraveller} alt="traveller"  className="object-contain h-full mb-10"/>
+        </div>
+        <div className='bg-[#ffd1c1fa] w-8/12 h-80 mt-16 flex flex-col items-center justify-center'>
+          <h2 className='text-center text-4xl font-meduim text-orange-600'>
+            EXOPIA
+          </h2>
+          <p className=' text-center text-lg px-10 mt-2'> 
+            Effortlessly plan your next adventure with Exopia, your ultimate travel companion. Our user-friendly platform lets you easily find and book flights, accommodations, rides, dining experiences, and events, all in one place. Whether you're looking for a quick getaway or a luxurious vacation, Exopia offers a seamless travel planning experience. Discover the best deals and explore exotic destinations.Start your adventure with Exopia today!
+          </p>
+        </div>
+      </div>
+
+      <div className='w-full h-52 bg-black'>
+      </div>
     </div>
+
+
     
   );
 }

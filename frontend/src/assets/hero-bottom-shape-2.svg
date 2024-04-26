@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1059px" height="270px" viewBox="0 0 1059 270" version="1.1">
+    <!-- Generator: Sketch 53.1 (72631) - https://sketchapp.com -->
+    <title>about-page-header</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <pattern id="pattern-1" width="6" height="6" x="-6" y="133.810127" patternUnits="userSpaceOnUse">
+            <use xlink:href="#image-2" transform="scale(0.15,0.15)"/>
+        </pattern>
+        <image id="image-2" width="40" height="40" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAABGdBTUEAALGOfPtRkwAAAeNJREFUWAntl79KA0EQxmeSYqPgCwQLwcbaSp9BUOxtfAEhTyC+h2BjHxR8hlhZ2wgW4gsIelck63yTBPJHM7PJnQjZaZLL7X7zu+9u974Q5coOZAeyA+vtAK9y+fFxY7uk8oQiHxHFXYrUVj2mdyJ+IY4PgcIdH3y9LdtnKcD4tNkuy/KKYjyPRM1FzaVBn5hvQgiXvP8p4GmVDFj0mscCditgWymtpNGHgJ61Dvv3KfMaKYOLXuNCbmU3FQ49hnNid6jh7+p2UJ0DXKSki5pFYaaBPJ+nXiddgPrMFcXzMs7NAuIYtzu0WnueZ9LlBhZEVXAAhJYuMhwYZTqoW8mgfBXRhavV6DN3Whr3QyPsWFuQ6SD2uarhQAtN3UPn0Kd/MAGHm/D0pMqOdINfrGYD4g1RW9naNuD49VUHpEPbBqwDLEHTBtQXf4JiylCHtg2IVFJb2do2oESm+vhsbRNQ8xwiU8WlG7VkRUvWBNSdXvKcJZR8XjSttwg0TUAM0rCJPFdRaViQAOuRcwFq6pCwOYxKHtnfx6gGtJzp2gWIdqP81lkFcjS3482C6GumGQyarH8d+QGKq9ewyXyNlTgJ/9N3jGEZizkpzo21kh0cT8TnX/ztnOyXv2cHsgPZgXV04Bu6H6CZ0MtRcwAAAABJRU5ErkJggg=="/>
+        <path d="M711,274 L756,34" id="path-3"/>
+    </defs>
+    <g id="about-page-header" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M49.9948133,256 C74.5970482,254.722531 99.4510943,262.007604 120.669731,268 C136.430087,272.450913 148.54454,258.548304 172.280931,261 C280.223331,272.149206 331.406764,200.081209 421.591431,196.310492 C511.776098,192.539775 544.427027,243.752527 602.788963,243 C692.114584,241.848222 688.50569,139.810127 833,139.810127 C897.0965,139.810127 897.0965,180.301664 942.143251,222.292142 C969.729519,248.006773 1008.68177,265.172926 1059,273.7906 L0,274 C4.74601392,263.484215 21.4109517,257.484215 49.9948133,256 Z" id="Rectangle" fill="url(#pattern-1)"/>
+        
+        
+        
+        <path d="M71.3431665,269.58786 C160.333128,262.763164 205.021207,196.086762 252.617862,205.442582 C300.761748,214.905967 301.972875,271.504797 415.407448,250.448181 C452.0495,243.646395 508.587748,199.948688 596.087848,214.675928 C683.587947,229.403168 724.432184,286.431252 847.103432,260.155062 C864.416845,256.446527 903.573871,255.397716 929.689212,260.155062 C958.920049,265.479946 990.100308,268.761592 1023.22999,270 C317.408049,275.187969 0.112441084,275.050589 71.3431665,269.58786 Z" id="Rectangle" fill="#FFFFFF" transform="translate(542.389404, 239.167582) scale(-1, 1) translate(-542.389404, -239.167582) "/>
+        
+        
+    </g>
+</svg>
