@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faApple } from '@fortawesome/free-brands-svg-icons';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import myTraveller from '../assets/myTraveller.png';
+import Footer from '../components/Footer';
 
 function LandingPage({ isLoggedIn }) {
   const navigate = useNavigate();
@@ -194,7 +195,8 @@ function LandingPage({ isLoggedIn }) {
         </div>
       </div>
 
-      <div className='w-full h-52 bg-black'>
+      <div className='w-full bg-black'>
+        <Footer/>
       </div>
     </div>
 
