@@ -123,7 +123,7 @@ function LandingPage({ isLoggedIn }) {
 
   return (
     <div className='flex flex-col w-full min-h-screen '>
-      <Navigation list={['Home', 'Flights', 'Rooms', 'Rides', 'Dining', 'Events']} title='Exopia' islogged={isLoggedIn} />
+            <Navigation list={['Home', 'Flights', 'Rooms', 'Rides', 'Dining', 'Packages','Events']} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
       <div className='flex flex-col justify-center items-center w-full min-h-screen bg-background1 bg-cover'>
         <div className='w-full flex flex-col text-center items-center justify-center h-1/3'>
           <h1 className='text-4xl text-orange-600 font-bold w-full'>Discover Your Adventure</h1>

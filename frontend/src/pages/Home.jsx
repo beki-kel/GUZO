@@ -4,8 +4,10 @@ import SearchAndFilter from '../components/SearchAndFilter';
 import CircularCarousel from '../components/CircularCarousel';
 import Promotion from '../components/Promotion';
 import Subscribe from '../components/Subscribe';
-import cardImage3 from '../assets/wenchi 2.webp'
-function Home() {
+import cardImage3 from '../assets/wenchi 2.webp';
+import Navigation from '../components/Navigation';
+
+function Home(isLoggedIn) {
   const navigate = useNavigate()
   // Function to remove JWT token from browser storage
 const removeTokenFromStorage = () => {
@@ -56,9 +58,13 @@ const sampleProducts = [
 
 
   return (
-    <div>
-
-      <SearchAndFilter/>
+    <div className='flex flex-col w-full min-h-screen'>
+      <Navigation list={['Home', 'Flights', 'Rooms', 'Rides', 'Dining', 'Packages','Events']} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
+      <div className='h-20'></div>
+      <div className='w-full flex'>
+       <SearchAndFilter/>
+      </div>
+      
       <CircularCarousel products={sampleProducts} />
       <Promotion/>
       <h2>Dashboard</h2>

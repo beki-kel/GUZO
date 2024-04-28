@@ -53,7 +53,7 @@ const App = () => {
           <Route path='/landing' element={<LandingPage isLoggedIn={isLoggedIn} handlePageState={handlePageState} />} />
           <Route path="/login" element={<Login isLoggedIn={isLoggedIn} pageState={pageState} handleLogin={handleLogin} handlePageState={handlePageState} />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<Home isLoggedIn={isLoggedIn} /> } />
           {/* Only render Admin route if user is logged in and is admin */}
           {isLoggedIn && isAdmin && <Route path="/admin" element={<Admin />} />}
           {/* Private Route for Home */}
