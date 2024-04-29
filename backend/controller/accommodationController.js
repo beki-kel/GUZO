@@ -1,35 +1,51 @@
 const Hotel = require('../models/AccommodationModel');
 const hotelApiService = require('./externalAccommodationController');
 
+// Function to search and filter hotels
+// Function to search and filter hotels
 const searchFilter = async (req, res) => {
   try {
     const query = req.body.name;
+    const city = req.body.city; // Add city filter
+    const location = req.body.location; // Add location filter
     const accommodationType = req.body.accommodationType;
-    const minPrice = parseInt(req.body.minPrice, 10); // Parse minPrice to integer with radix 10
-    const maxPrice = parseInt(req.body.maxPrice, 10); // Parse maxPrice to integer with radix 10
-    
-    // it filters the Hotel data. if query has been received from the body it will check and 
-    // make comparision without case sensetivity option: "i" and regex is for normal comparision of strings
+    const minPrice = parseInt(req.body.minPrice, 10);
+    const maxPrice = parseInt(req.body.maxPrice, 10);
+    const numOfPersons = parseInt(req.body.numOfPersons, 10);
+    const amenities = req.body.amenities; // Array of desired amenities
+    const roomType = req.body.roomType; // Desired room type
+    const totalRating = parseFloat(req.body.totalRating); // Add total rating filter
+
     const localResults = await Hotel.find({
       ...(query && { name: { $regex: query, $options: 'i' } }),
+      ...(city && { city }), // Filter by city
+      ...(location && { location }), // Filter by location
       ...(accommodationType && { accommodationType }),
+      ...(numOfPersons && { 'rooms.capacity': { $gte: numOfPersons } }),
+      ...(amenities && { 'rooms.amenities': { $in: amenities } }), // Filter by amenities
+      ...(roomType && { 'rooms.type': roomType }), // Filter by room type
+      ...(totalRating && { totalRating: { $gte: totalRating } }) // Filter by total rating
     });
 
+    const filteredResults = localResults.filter(hotel => {
+      const roomsWithCapacity = hotel.rooms.filter(room => room.capacity >= numOfPersons);
+      if (roomsWithCapacity.length === 0) {
+        return false;
+      }
     
-    // Retrieve real-time pricing and availability information from external API
-    const resultsWithDetails = await hotelApiService.getHotelPrices(localResults);
-
-    const filteredResults = resultsWithDetails.filter(hotel => {
-      if (minPrice !== undefined && minPrice !== null && hotel.pricing.amount < minPrice) {
-        return false;
-      }
-      if (minPrice !== undefined && minPrice !== null && hotel.pricing.amount > maxPrice) {
-        return false;
-      }
-      return true;
+      const meetsPriceCriteria = roomsWithCapacity.every(room => {
+        if ((minPrice !== undefined && minPrice !== null) && room.price < minPrice) {
+          return false;
+        }
+        if ((maxPrice !== undefined && maxPrice !== null) && room.price > maxPrice) {
+          return false;
+        }
+        return true;
+      });
+    
+      return meetsPriceCriteria;
     });
 
-    // Send the combined results to the client
     res.json(filteredResults);
   } catch (error) {
     console.error('Error searching hotels:', error);
@@ -37,62 +53,68 @@ const searchFilter = async (req, res) => {
   }
 };
 
-const addAccommodation = async (req, res,next) => {
-  try{
+
+// Function to add a new accommodation
+const addAccommodation = async (req, res, next) => {
+  try {
     const newHotel = new Hotel({
       externalId: req.body.externalId,
       name: req.body.name,
-      city:req.body.city,
+      city: req.body.city,
       location: req.body.location,
-      accommodationType: req.body.type,
-      description:req.body.description,
+      accommodationType: req.body.accommodationType,
+      description: req.body.description,
       image: req.body.image,
-      rating:req.body.rating
-    })
+      rating: req.body.rating,
+      rooms: req.body.rooms // Array of room objects
+    });
 
-    await newHotel.save()
-    res.status(201).json({ message: 'hotel added successfully', hotel:newHotel })
- }catch(error){
-  next(error)
- }
+    await newHotel.save();
+    res.status(201).json({ message: 'Hotel added successfully', hotel: newHotel });
+  } catch (error) {
+    next(error);
+  }
 };
 
-const updateHotelRating=async(req,res,next) =>{
-  try{
+// Function to update hotel rating
+const updateHotelRating = async (req, res, next) => {
+  try {
     const hotel = await Hotel.findById(req.params.id);
-    const oldRatingSum = hotel.userRating * hotel.totalratings;
+    const oldRatingSum = hotel.userRating * hotel.totalratings; // Corrected property name
     const newUserRating = req.body.userRating;
 
-    hotel.totalratings += 1;
+    hotel.totalratings += 1; // Corrected property name
     hotel.userRating = (oldRatingSum + newUserRating) / hotel.totalratings;
     await hotel.save();
-    res.status(200).json({message:'Hotel rating updated successfully',hotel})
-  }catch(error){
-    next(error)
+    res.status(200).json({ message: 'Hotel rating updated successfully', hotel });
+  } catch (error) {
+    next(error);
   }
-}
+};
 
-const updateAccommodation=async (req,res,next)=>{
-  try{
+// Function to update an accommodation
+const updateAccommodation = async (req, res, next) => {
+  try {
     const hotel = await Hotel.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body},
-      { new: true });
-    res.status(200).json({message:'Hotel Updated Successfully', hotel})
-  }catch(error){
-    next(error)
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json({ message: 'Hotel updated successfully', hotel });
+  } catch (error) {
+    next(error);
   }
-}
+};
 
-const deleteAccommodation = (req, res,next) =>{
-  try{
-    Hotel.findByIdAndDelete(req.params.id);
-    res.status(200).json({message:'hotel deleted successfully'})
-  }catch(error){
-    next(error)
+// Function to delete an accommodation
+const deleteAccommodation = async (req, res, next) => {
+  try {
+    await Hotel.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: 'Hotel deleted successfully' });
+  } catch (error) {
+    next(error);
   }
-}
-
+};
 
 module.exports = {
   searchFilter,
@@ -101,5 +123,3 @@ module.exports = {
   updateAccommodation,
   deleteAccommodation,
 };
-
-

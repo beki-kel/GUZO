@@ -1,5 +1,16 @@
-// models/Hotel.js
 const mongoose = require('mongoose');
+
+const roomSchema = new mongoose.Schema({
+  type: { type: String, required: true }, // e.g., 'double bed', 'single bed'
+  capacity: { type: Number, required: true }, // number of people the room can accommodate
+  price: { type: Number, required: true }, // price per night
+  amenities: { type: [String] }, // list of amenities
+  description: { type: String },
+  image: {
+    data: Buffer,
+    contentType: String
+  },
+});
 
 const hotelSchema = new mongoose.Schema({
   externalId: { type: String, unique: true },
@@ -18,7 +29,7 @@ const hotelSchema = new mongoose.Schema({
     max: 5,
     required: true
   },
-  rooms: { type: [String] },
+  rooms: { type: [roomSchema] }, // Use the roomSchema here
   featured: {
     type: Boolean,
     default: false,
@@ -29,9 +40,10 @@ const hotelSchema = new mongoose.Schema({
     max: 10,
     default: 0
   },
-  totalratings: {type: Number,default: 0 }
+  totalratings: { type: Number, default: 0 }
 });
 
 const Hotel = mongoose.model('Hotel', hotelSchema);
 
 module.exports = Hotel;
+
