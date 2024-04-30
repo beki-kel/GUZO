@@ -16,6 +16,8 @@ import jazz from '../assets/jazz night.jpg';
 import champions from '../assets/champions league.jpg';
 import zoya from '../assets/Zoya.jpg';
 import MobilePhone from '../components/MobilePhone';
+import techEvent from '../assets/Tech Event.jpg';
+import kebero from '../assets/Kebero.jpg';
 import screenshoot from '../assets/Image (1).png'
 import playstore from '../assets/PlayStore.webp'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -111,12 +113,12 @@ function LandingPage({ isLoggedIn }) {
       title: 'Zoya',
     },
     {
-      image: kirunfud,
-      title: 'Kirunfud Events',
+      image: techEvent,
+      title: 'Tech event',
     },
     {
-      image: Garage,
-      title: 'Garage Expo',
+      image: kebero,
+      title: 'Kebero Event',
     },
 
   ];
@@ -132,16 +134,16 @@ function LandingPage({ isLoggedIn }) {
         </div>
       </div>
 
-      <div className="w-full max-h-[90vh] justify-center items-center font-light relative px-24 bg-gray-50">
+      <div className="w-full max-h-[90vh] justify-center items-center font-light relative px-24 bg-gray-100 pb-72">
         <h2 className='text-center text-2xl pt-14 pb-5'>
           Enjoy travelling to the peak with us.
         </h2>
         <CircularCarousel products={sampleProducts} />
       </div>
 
-      <div className='w-full bg-gray-50 py-20'>
+      <div className='w-full bg-gray-100 py-20'>
 
-        <div className='flex justify-center items-center w-full pt-6'>
+        <div className='flex justify-center items-center w-full pt-6 '>
             <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='mr-3 h-8' />
             <h2 className='text-center text-4xl font-thin'>
               Download the App
@@ -182,7 +184,7 @@ function LandingPage({ isLoggedIn }) {
           </div>
       </div>
 
-      <div className='flex flex-col justify-center items-center w-full  bg-cover px-10 py-4'>
+      <div className='flex flex-col justify-center items-center w-full  bg-cover px-10 py-4 bg-gray-50'>
         <h2 className='text-center text-4xl font-light p-10 pt-3'>
           Trending Events This Week
         </h2>

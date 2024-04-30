@@ -5,14 +5,28 @@ const distanceController = require('./mapBoxDistance');
 
 const searchRide = async (req, res) => {
     try {
-        const { currentLocation, destination } = req.body;
+        const currentLocation =req.body.rideDepLocation;
+        const destination = req.body.rideArrLocation;
+
+        const filterParams={Passengers : req.body.Ridetravllers
+                            ,minPrice: req.body.minPrice
+                            ,maxPrice:req.body.maxPrice
+                            ,minRating:req.body.minRating}
+        console.log({currentLocation,destination})
         
         const cars = await Car.find({
             $and: [
-                { pickUp: currentLocation },
-                { dropOff: destination }
+                { pickUp: currentLocation }
             ]
         });
+        console.log(cars)
+        
+        cars.forEach(async (car) => {
+            car.pickUp = currentLocation;
+            car.dropOff = destination;
+            await car.save();
+        });
+
 
         // Ensure cars is an array
         if (!Array.isArray(cars)) {
@@ -30,7 +44,7 @@ const searchRide = async (req, res) => {
         const pricingInfo = await getRidePrices(cars, distance);
 
         // Filter the pricingInfo based on the request criteria
-        const filteredResults = searchFilter(req.body, pricingInfo);
+        const filteredResults = searchFilter(filterParams, pricingInfo);
 
         res.json(filteredResults);
     } catch (error) {
@@ -46,7 +60,7 @@ const searchFilter = (filterParams, cars) => {
     if (Passengers) {
         filteredResults = filteredResults.filter(car => car.capacity >= Passengers);
     }
-    if(minRating){
+    if(minRating !== undefined){
         filteredResults = filteredResults.filter(car => car.driverrating >= minRating);
     }
 

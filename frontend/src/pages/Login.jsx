@@ -26,7 +26,7 @@ const Login = ({ handleLogin }) => {
       if (response.status === 201) {
         const { token } = response.data; // Access the token from response data
         localStorage.setItem('token', token);
-        console.log("this is the response data: ", response.data.token)
+        console.log("this is the response data: ", response.data)
         handleLogin();
         navigate('/');
       } else {

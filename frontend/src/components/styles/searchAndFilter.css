@@ -75,3 +75,10 @@
     margin-right: 5px;
   }
   
+  .mapbox-search-box {
+    border: 1px solid #000;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    outline: none;
+}

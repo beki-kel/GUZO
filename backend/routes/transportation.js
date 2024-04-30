@@ -8,8 +8,8 @@ const {updateTransportation}=require('../controller/TransportaionController')
 const {deleteTransportation}=require('../controller/TransportaionController')
 const {verifyUser,verifyAdmin} = require('../utils/verifyToken')
 
-router.get('/search/transportation', searchRide)
-router.post('/transportation/disatnce', verifyAdmin,distanceController);
+router.post('/search/transportation', searchRide)
+router.post('/transportation/disatnce',distanceController);
 router.post('/add/transportation', verifyAdmin, addTransportation);
 router.put('/update/transportation/rating/:id',verifyUser, updateDriverRating);
 router.put('/update/transportation/:id', verifyAdmin,updateTransportation);

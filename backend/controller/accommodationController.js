@@ -5,13 +5,14 @@ const hotelApiService = require('./externalAccommodationController');
 // Function to search and filter hotels
 const searchFilter = async (req, res) => {
   try {
+    
     const query = req.body.name;
-    const city = req.body.city; // Add city filter
-    const location = req.body.location; // Add location filter
+    const city = req.body.stayLocation; // Add city filter
+    const location = req.body.Location; // Add location filter
     const accommodationType = req.body.accommodationType;
     const minPrice = parseInt(req.body.minPrice, 10);
     const maxPrice = parseInt(req.body.maxPrice, 10);
-    const numOfPersons = parseInt(req.body.numOfPersons, 10);
+    const numOfPersons = parseInt(req.body.stayTravllers, 10);
     const amenities = req.body.amenities; // Array of desired amenities
     const roomType = req.body.roomType; // Desired room type
     const totalRating = parseFloat(req.body.totalRating); // Add total rating filter
@@ -24,14 +25,11 @@ const searchFilter = async (req, res) => {
       ...(numOfPersons && { 'rooms.capacity': { $gte: numOfPersons } }),
       ...(amenities && { 'rooms.amenities': { $in: amenities } }), // Filter by amenities
       ...(roomType && { 'rooms.type': roomType }), // Filter by room type
-      ...(totalRating && { totalRating: { $gte: totalRating } }) // Filter by total rating
+      ...(totalRating && { 'rating': { $gte: totalRating } }) // Filter by total rating
     });
 
     const filteredResults = localResults.filter(hotel => {
       const roomsWithCapacity = hotel.rooms.filter(room => room.capacity >= numOfPersons);
-      if (roomsWithCapacity.length === 0) {
-        return false;
-      }
     
       const meetsPriceCriteria = roomsWithCapacity.every(room => {
         if ((minPrice !== undefined && minPrice !== null) && room.price < minPrice) {
