@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot,faCalendar,faUser } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { SearchBox }  from '@mapbox/search-js-react';
+import { AutoComplete } from "primereact/autocomplete";
 
 function SearchAndFilter({isLoggedIn}) {
     const [section, setSection] = useState('stays');
@@ -15,16 +15,32 @@ function SearchAndFilter({isLoggedIn}) {
     const [dates, setdates] = useState('');
     const [Ridetravllers, setRideTravllers] = useState('');
     const [staytravllers,setstaytravllers] = useState('');
+    const [filteredCities, setFilteredCities] = useState(null);
+    
+    const cities = [
+        'Addis Ababa', 'Arba Minch', 'Assosa', 'Axum', 'Bahir Dar', 'Bale Robe', 'Dembidollo', 'Dire Dawa', 
+        'Gambella', 'Gode', 'Gonder', 'Hawassa', 'Humera', 'Jijiga', 'Jimma', 'Jinka', 'Kabri Dar', 
+        'Kombolcha', 'Lalibela', 'Mekelle', 'Semera', 'Shire','Adama'
+    ];
+
+
+    const search = (event) => {
+        // Timeout to emulate a network connection
+        setTimeout(() => {
+            let _filteredCities;
+            if (!event.query.trim().length) {
+                _filteredCities = [...cities];
+            } else {
+                _filteredCities = cities.filter((city) => {
+                    return city.toLowerCase().startsWith(event.query.toLowerCase());
+                });
+            }
+            setFilteredCities(_filteredCities);
+        }, 250);
+    };
+
 
     const setcolor = (curr) => section === curr ? 'text-orange-600 border-b-2 border-orange-600' : 'text-black';
-
-    const handleDepLocationChange = (value) => {
-        setRideDepLocation(value);
-    };
-
-    const handleArrLocationChange = (value) => {
-        setRideArrLocation(value);
-    };
 
     const handleTwoWay = (e) => setTwoWay(e.target.checked)
     const handleSubmitStays = async () => {
@@ -46,19 +62,22 @@ function SearchAndFilter({isLoggedIn}) {
     }
 
     const handleSubmitRide = async () => {
-        try {
-            const response = await axios.post('http://localhost:5000/search/transportation', 
-                {rideArrLocation,rideDepLocation,Ridetravllers});
-            if (response.status === 200) {
-                console.log('Response status:', response.status);
-                console.log(response.data);
-                console.log({rideArrLocation,rideDepLocation})
-            } else {
-                console.log('Response status:', response.status);
-                console.log(response.data);
+        if(!rideDepLocation || !rideArrLocation){alert('Please select a city.')}
+        else{
+            try {
+                const response = await axios.post('http://localhost:5000/search/transportation', 
+                    {rideArrLocation,rideDepLocation,Ridetravllers});
+                if (response.status === 200) {
+                    console.log('Response status:', response.status);
+                    console.log(response.data);
+                    console.log({rideArrLocation,rideDepLocation})
+                } else {
+                    console.log('Response status:', response.status);
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
     }
 
@@ -72,7 +91,18 @@ function SearchAndFilter({isLoggedIn}) {
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Location</p>
-                                <input type="text" placeholder='Where?' value={stayLocation} onChange={(e) => setStaylocation(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center'/> 
+                                <AutoComplete 
+                                    inputClassName="border-none focus:border-none focus:outline-none px-2 text-center"
+                                    value={stayLocation} 
+                                    suggestions={filteredCities} 
+                                    completeMethod={search} 
+                                    onChange={(e) => setStaylocation(e.value)} 
+                                    panelClassName="bg-white border border-gray-300 shadow-md"
+                                    itemTemplate={(item) => (
+                                        <div className="p-2 hover:bg-gray-200 focus:bg-gray-200">{item}</div>
+                                    )}
+                                    placeholder='Leaving From?'
+                                />
                             </div>
                         </div>
 
@@ -162,34 +192,43 @@ function SearchAndFilter({isLoggedIn}) {
                             <div className=''>
                                 <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
-                            <div className='flex flex-col text-center pb-2'>
-                                <p className='text-xl font-medium pb-2'>Departure Location</p>
-                                <SearchBox
-                                    accessToken="sk.eyJ1IjoiYmVraS1rZWwiLCJhIjoiY2x0eXMxb3NrMDFsNDJtbHYydG5hN2s5eCJ9.zJOtag54kRLLiY_7o9-z2w"
-                                    value={rideDepLocation}
-                                    onChange={(d) => handleDepLocationChange(d)}
-                                    options={{
-                                        country: 'ET'
-                                    }}
-                                    placeholder="Leaving from?"
-                                    className="mapbox-search-box"
+                            <div className='flex flex-col text-center'>
+                                <p className='text-xl font-medium'>Departure Location</p>
+                                <AutoComplete 
+                                    inputClassName="border-none focus:border-none focus:outline-none px-2 text-center"
+                                    value={rideDepLocation} 
+                                    suggestions={filteredCities} 
+                                    completeMethod={search} 
+                                    onChange={(e) => setRideDepLocation(e.value)} 
+                                    panelClassName="bg-white border border-gray-300 shadow-md"
+                                    itemTemplate={(item) => (
+                                        <div className="p-2 hover:bg-gray-200 focus:bg-gray-200">{item}</div>
+                                    )}
+                                    placeholder='Leaving From?'
+                                    inputProps={{ required: true }}
                                 />
                             </div>
+
                         </div>
 
                         <div className='flex border-[1px] border-black rounded-2xl py-1 px-3'>
                             <div className=''>
                                 <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
-                            <div className='flex flex-col text-center pb-2'>
-                                <p className='text-xl font-medium pb-2'>Arrival Location</p>
-                                <SearchBox
-                                    accessToken="sk.eyJ1IjoiYmVraS1rZWwiLCJhIjoiY2x0eXMxb3NrMDFsNDJtbHYydG5hN2s5eCJ9.zJOtag54kRLLiY_7o9-z2w"
-                                    value={rideArrLocation}
-                                    onChange={(value) => handleArrLocationChange(value)}
-                                    placeholder="Going to?"
-                                    className="border-none focus:border-none focus:outline-none px-2 text-center"
-                                     country="ET"
+                            <div className='flex flex-col text-center'>
+                                <p className='text-xl font-medium'>Arrival Location</p>
+                                <AutoComplete 
+                                    className="w-full border-0 focus:border-transparent focus:ring-0" 
+                                    inputClassName="border-none focus:border-none focus:outline-none px-2 text-center"
+                                    value={rideArrLocation} 
+                                    suggestions={filteredCities} 
+                                    completeMethod={search} 
+                                    onChange={(e) => setRideArrLocation(e.value)} 
+                                    panelClassName="bg-white border border-gray-300 shadow-md"
+                                    itemTemplate={(item) => (
+                                        <div className="p-2 hover:bg-gray-200 focus:bg-gray-200">{item}</div>
+                                    )}
+                                    placeholder='Where to?'
                                 />
                             </div>
                         </div>
@@ -200,7 +239,7 @@ function SearchAndFilter({isLoggedIn}) {
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Travllers </p>
-                                <input type="number" placeholder='Number of Travellers' value={Ridetravllers} onChange={(e) => setRideTravllers(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center'/> 
+                                <input type="number" placeholder='Number of Travellers' value={Ridetravllers} onChange={(e) => setRideTravllers(e.target.value)} className='border-none focus:border-none focus:outline-none px-2 text-center'/> 
                             </div>
                         </div>
                         <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitRide}> Search </button>
