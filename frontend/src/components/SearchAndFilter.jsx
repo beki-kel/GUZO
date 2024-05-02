@@ -23,9 +23,7 @@ function SearchAndFilter({isLoggedIn}) {
         'Kombolcha', 'Lalibela', 'Mekelle', 'Semera', 'Shire','Adama'
     ];
 
-
     const search = (event) => {
-        // Timeout to emulate a network connection
         setTimeout(() => {
             let _filteredCities;
             if (!event.query.trim().length) {
@@ -38,7 +36,6 @@ function SearchAndFilter({isLoggedIn}) {
             setFilteredCities(_filteredCities);
         }, 250);
     };
-
 
     const setcolor = (curr) => section === curr ? 'text-orange-600 border-b-2 border-orange-600' : 'text-black';
 
@@ -208,7 +205,6 @@ function SearchAndFilter({isLoggedIn}) {
                                     inputProps={{ required: true }}
                                 />
                             </div>
-
                         </div>
 
                         <div className='flex border-[1px] border-black rounded-2xl py-1 px-3'>
