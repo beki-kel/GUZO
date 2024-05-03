@@ -27,7 +27,7 @@ function Navigation(props) {
   });
 
   return (
-    <div className='flex flex-row w-full h-16 bg-white items-center justify-center fixed z-50' >
+    <div className='flex flex-row w-full h-16 bg-black text-white items-center justify-center fixed z-50' >
         <div className='flex w-full items-center p-3'>
             {islogged && title ? <Link to='/home' className='flex w-2/12 items-center p-3'>
                 <FontAwesomeIcon icon={faPlaneDeparture} style={{ color: "#ff622e" }} className='mr-2' />
@@ -36,7 +36,7 @@ function Navigation(props) {
                 <FontAwesomeIcon icon={faPlaneDeparture} style={{ color: "#ff622e" }} className='mr-2' />
                 <h2 className='text-xl font-medium'>{title}</h2>
             </Link>}
-            { App ? <button className='flex w-auto border-2 border-black items-center mx-5 ml-auto px-3 py-2  rounded-lg justify-center '>
+            { App ? <button className='flex w-auto border-2 border-white items-center mx-5 ml-auto px-3 py-2  rounded-lg justify-center '>
                 <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='mr-2' />
                 <p> Get App</p>
             </button> : <div> </div>}

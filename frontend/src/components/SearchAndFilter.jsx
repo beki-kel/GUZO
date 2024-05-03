@@ -11,6 +11,7 @@ function SearchAndFilter({isLoggedIn}) {
     const [flightDepLocation, setFlightDepLocation] = useState('');
     const [flightArrLocation, setFlightArrLocation] = useState('');
     const [flightDepdates, setFlightDepdates] = useState('');
+    const [flightArrDates, setFlightArrDates] = useState('')
     const [rideDepLocation, setRideDepLocation] = useState('');
     const [rideArrLocation, setRideArrLocation] = useState('');
     const [dates, setdates] = useState('');
@@ -40,7 +41,7 @@ function SearchAndFilter({isLoggedIn}) {
 
     const setcolor = (curr) => section === curr ? 'text-orange-600 border-b-2 border-orange-600' : 'text-black';
 
-    const handleTwoWay = (e) => setTwoWay(e.target.checked)
+    const handleTwoWay = (e) => {setTwoWay(e.target.checked); setFlightArrDates('') }
     const handleSubmitStays = async () => {
         try {
             const response = await axios.post('http://localhost:5000/search/filter/Accomadation', 
@@ -60,12 +61,15 @@ function SearchAndFilter({isLoggedIn}) {
     }
     
     const handleSubmitFlight =async  () => {
+        const departureDate= new Date(flightDepdates);
+        const arrivalDate= new Date(flightArrDates);
 
-        if(!flightDepLocation ||!flightArrLocation){alert('Please select a city.')}
+        if(arrivalDate <= departureDate){  alert('Return date must be after the departure date.'); }
+        if(!flightDepLocation ||!flightArrLocation || !flightDepdates){alert('Please fill all the fields ');}
         else{
             try {
                 const response = await axios.post('http://localhost:5000/search/flight',
-                    {flightArrLocation,flightDepLocation,flightDepdates});
+                    {flightArrLocation,flightDepLocation,flightDepdates,flightArrDates});
                 if (response.status === 200) {
                     console.log('Response status:', response.status);
                     console.log(response.data);
@@ -212,7 +216,7 @@ function SearchAndFilter({isLoggedIn}) {
                                 </div>
                                 <div className='flex flex-col text-center'>
                                     <p className='text-xl font-medium'>Departure Date</p>
-                                    <input type="text" placeholder='Flight day' value={dates} onChange={(e) => setdates(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
+                                    <input type="date" placeholder='Flight day' value={flightDepdates} onChange={(e) => setFlightDepdates(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
                                 </div>
                             </div>
                             <div className='flex border-[1px] border-black rounded-2xl p-1 px-3'>
@@ -221,7 +225,7 @@ function SearchAndFilter({isLoggedIn}) {
                                 </div>
                                 <div className='flex flex-col text-center'>
                                     <p className='text-xl font-medium'>Return Date</p>
-                                    <input type="text" placeholder='Return day' value={dates} onChange={(e) => setdates(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
+                                    <input type="date" placeholder='Flight day' value={flightArrDates} onChange={(e) => setFlightArrDates(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
                                 </div>
                             </div>
                         </>
@@ -311,23 +315,32 @@ function SearchAndFilter({isLoggedIn}) {
 }
 
 return (
-    <div className='w-full mx-52 my-10 border-2 flex flex-col items-center justify-center rounded-xl bg-white'>
-        <div className=' border-b-2 w-full mb-3 flex justify-center items-center'>
-            <ul className='w-full flex justify-center space-x-10 text-lg'>
-                <button className= {`${setcolor('stays')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('stays') }> Stays</button>
-                <button className= {`${setcolor('flights')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('flights')}> Flights</button>
-                <button className= {`${setcolor('rides')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('rides')}> Rides</button>
-                <button className= {`${setcolor('packages')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('packages')}> Packages</button>
-                <button className= {`${setcolor('events')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('events')}> Events</button>
-            </ul>
+    <div className='w-full flex flex-col mx-52'>
+        <div className='w-full my-10 border-2 flex flex-col items-center justify-center rounded-xl bg-white'>
+            <div className=' border-b-2 w-full mb-3 flex justify-center items-center'>
+                <ul className='w-full flex justify-center space-x-10 text-lg'>
+                    <button className= {`${setcolor('stays')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('stays') }> Stays</button>
+                    <button className= {`${setcolor('flights')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('flights')}> Flights</button>
+                    <button className= {`${setcolor('rides')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('rides')}> Rides</button>
+                    <button className= {`${setcolor('packages')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('packages')}> Packages</button>
+                    <button className= {`${setcolor('events')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('events')}> Events</button>
+                </ul>
+            </div>
+            {renderSection()}
+            {section ==='flights'?
+                <div className='flex w-full justify-start pb-6 pl-10 space-x-4 text-lg items-center'>
+                    <input type='checkbox' className="h-5 w-5 border-gray-300" checked={twoWay} onChange={handleTwoWay} />
+                    <p>Two way</p>
+                </div>: <></>}
         </div>
-        {renderSection()}
-        {section ==='flights'?
-            <div className='flex w-full justify-start pb-6 pl-10 space-x-4 text-lg items-center'>
-                <input type='checkbox' className="h-5 w-5 border-gray-300" checked={twoWay} onChange={handleTwoWay} />
-                <p>Two way</p>
-            </div>: <></>}
+        <div className='w-full my-10 flex h-44 '>
+            <div className='w-3/12 h-44 bg-gray-100'></div>
+            <div className='w-9/12 h-44 bg-white'></div>
+        </div>
     </div>
+
+
+    
   )
 }
 

@@ -159,7 +159,7 @@ function LandingPage({ isLoggedIn }) {
             <div className='w-full  flex '>
               <div className='w-1/2  flex flex-col items-center mt-28 pl-48'>
                 
-                <div className='ml-auto py-2 px-8 mb-9 rounded-md bg-black flex justify-center items-center shadow-md shadow-black' onClick={() => navigate('/downloadPage') }>
+                <div className='ml-auto py-2 px-8 mb-9 rounded-md bg-gray-900 flex justify-center items-center shadow-md shadow-black' onClick={() => navigate('/downloadPage') }>
                   <img className='w-14 h-18 object-cover' src={playstore} alt='screenshot' />
                   <div className='flex flex-col text-center  text-white ml-10 mr-6' >
                   <p className='text-sm'> GET IT ON</p>
@@ -167,7 +167,7 @@ function LandingPage({ isLoggedIn }) {
                 </div>
                 </div>
 
-                <div className=' ml-auto py-2 px-8 mb-2 rounded-md bg-black flex justify-center items-center shadow-md shadow-black' onClick={() => navigate('/downloadPage') }>
+                <div className=' ml-auto py-2 px-8 mb-2 rounded-md bg-gray-900 flex justify-center items-center shadow-md shadow-black' onClick={() => navigate('/downloadPage') }>
                   <FontAwesomeIcon icon={faApple} style={{color: "#ffffff",}} className='w-14 h-16 object-cover'/>
                   <div className='flex flex-col text-center  text-white ml-10 mr-6' >
                     <p className='text-sm'> GET IT ON</p>
@@ -216,7 +216,7 @@ function LandingPage({ isLoggedIn }) {
         </div>
       </div>
 
-      <div className='w-full bg-black'>
+      <div className='w-full bg-gray-900'>
         <Footer/>
       </div>
     </div>

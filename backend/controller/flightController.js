@@ -1,33 +1,45 @@
 const Flight = require('../models/flightModel');
 
-// Search flights based on departure, arrival, and date
+// Search flights based on departure, arrival, and dates
 const searchFlights = async (req, res) => {
-    const departure=req.body.flightDepLocation;
-    const arrival=req.body.flightArrLocation
-    const date= req.body.flightDepdates;
+    const { flightDepLocation, flightArrLocation, flightDepdates, flightArrDates } = req.body;
 
     try {
         let query = {
-            'departure.airport': departure,
-            'arrival.airport': arrival,
+            'departure.airport': flightDepLocation,
+            'arrival.airport': flightArrLocation,
         };
 
-        if (date) {
-            query['flightDate'] = date;
+        let query2 = {
+            'departure.airport': flightArrLocation,
+            'arrival.airport': flightDepLocation,
+        };
+
+        if (flightDepdates) {
+            query['flightDate'] = flightDepdates;
+        }
+
+        if (flightArrDates) {
+            query2['flightDate'] = flightArrDates;
         }
 
         const flights = await Flight.find(query);
+        const returnFlights = await Flight.find(query2);
 
-        if (flights.length === 0) {
+        if (flights.length === 0 && returnFlights.length === 0) {
             return res.status(404).json({ message: 'No flights found' });
         }
 
-        res.json(flights);
+        // Return both flights and return flights in a single response
+        res.json({ outboundFlights: flights, returnFlights: returnFlights });
     } catch (err) {
-        console.log(err)
+        console.log(err);
         res.status(500).json({ message: err.message });
     }
 };
+
+module.exports = { searchFlights };
+
 
 // Add a new flight
 const addFlight = async (req, res) => {
