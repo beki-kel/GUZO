@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot,faCalendar,faUser } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { AutoComplete } from "primereact/autocomplete";
+import StayFilterSection from './stayFilterSection'
 
 function SearchAndFilter({isLoggedIn}) {
     const [section, setSection] = useState('stays');
     const [twoWay, setTwoWay] = useState(false)
+    const [filterState , setFilterState] = useState('')
     const [stayLocation, setStaylocation] = useState('');
     const [flightDepLocation, setFlightDepLocation] = useState('');
     const [flightArrLocation, setFlightArrLocation] = useState('');
@@ -18,6 +20,10 @@ function SearchAndFilter({isLoggedIn}) {
     const [Ridetravllers, setRideTravllers] = useState('');
     const [staytravllers,setstaytravllers] = useState('');
     const [filteredCities, setFilteredCities] = useState(null);
+    const [stayResponse, setStayResponse]= useState('');
+    const [stayLoading, setStayLoading] = useState(false);
+    const [stayError, setStayError] = useState(null);
+
     
     const cities = [
         'Addis Ababa', 'Arba Minch', 'Assosa', 'Axum', 'Bahir Dar', 'Bale Robe', 'Dembidollo', 'Dire Dawa', 
@@ -41,24 +47,47 @@ function SearchAndFilter({isLoggedIn}) {
 
     const setcolor = (curr) => section === curr ? 'text-orange-600 border-b-2 border-orange-600' : 'text-black';
 
-    const handleTwoWay = (e) => {setTwoWay(e.target.checked); setFlightArrDates('') }
+    const handleTwoWay = (e) => {
+        setTwoWay(e.target.checked);
+        setFlightArrDates('');
+    };
+    
     const handleSubmitStays = async () => {
+        setFilterState('stays');
+        setStayLoading(true);
+        setStayResponse(null);
+        setStayError(null);
+    
         try {
-            const response = await axios.post('http://localhost:5000/search/filter/Accomadation', 
-                {stayLocation,staytravllers});
-            if (response.status === 200) {
-                console.log('Response status:', response.status);
-                console.log(response.data);
-            } else {
-                console.log(typeof travllers);
-                console.log(typeof staysLocation);
-                console.log('Response status:', response.status);
-                console.log(response.data);
-            }
+            setTimeout(async () => {
+                try {
+                    const response = await axios.post('http://localhost:5000/search/filter/Accomadation', {stayLocation,staytravllers});
+                    if (response.status === 200 && response.data[0]) {
+                        setStayResponse(response);
+                        setStayLoading(false);
+                        console.log(response);
+                    } else if (!response.data) {
+                        setStayError('No result Found');
+                        setStayLoading(false);
+                    } else {
+                        setStayError('Error Getting Results Please Try Again');
+                        setStayLoading(false);
+                    }
+                } catch (error) {
+                    setStayLoading(false);
+                    if (error.response) {
+                        setStayError(error.response.data.message || 'An error occurred during Search Please Try Again');
+                    } else {
+                        setStayError('An error occurred during search');
+                    }
+                }
+            }, 5000);
         } catch (error) {
-            console.log(error);
+            setStayLoading(false);
+            setStayError('An unexpected error occurred');
+            console.error(error);
         }
-    }
+    };
     
     const handleSubmitFlight =async  () => {
         const departureDate= new Date(flightDepdates);
@@ -314,9 +343,18 @@ function SearchAndFilter({isLoggedIn}) {
     }
 }
 
+const filterSection = () =>{
+    switch (filterState){
+        case '' : return <></>
+        case 'stays': return <StayFilterSection stayResponse={stayResponse} stayLoading={stayLoading} stayError={stayError}/>
+        default: <></>
+    }
+        
+}
+
 return (
     <div className='w-full flex flex-col mx-52'>
-        <div className='w-full my-10 border-2 flex flex-col items-center justify-center rounded-xl bg-white'>
+        <div className='w-full my-10 border-2 flex flex-col items-center justify-center rounded-xl bg-white shadow-xl'>
             <div className=' border-b-2 w-full mb-3 flex justify-center items-center'>
                 <ul className='w-full flex justify-center space-x-10 text-lg'>
                     <button className= {`${setcolor('stays')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('stays') }> Stays</button>
@@ -333,10 +371,7 @@ return (
                     <p>Two way</p>
                 </div>: <></>}
         </div>
-        <div className='w-full my-10 flex h-44 '>
-            <div className='w-3/12 h-44 bg-gray-100'></div>
-            <div className='w-9/12 h-44 bg-white'></div>
-        </div>
+        <div className='bg-white w-full rounded-3xl shadow-lg mb-10'> {filterSection()}</div>
     </div>
 
 
