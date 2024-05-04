@@ -27,7 +27,7 @@ import myTraveller from '../assets/myTraveller.png';
 import Traveller10 from '../assets/traveller10.png';
 import Footer from '../components/Footer';
 
-function LandingPage({ isLoggedIn }) {
+function LandingPage({isLoggedIn}) {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/register');

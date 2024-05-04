@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'primereact/button';
 import { Carousel } from 'primereact/carousel';
 
-export default function CircularDemo(props) {
+export default function CircularCarousel(props) {
     const responsiveOptions = [
         {
             breakpoint: '1400px',

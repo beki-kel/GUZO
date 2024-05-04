@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot,faCalendar,faUser } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { AutoComplete } from "primereact/autocomplete";
-import StayFilterSection from './stayFilterSection'
+import StayFilterSection from './StayFilterSection'
 
-function SearchAndFilter({isLoggedIn}) {
+function SearchAndFilter( ) {
     const [section, setSection] = useState('stays');
     const [twoWay, setTwoWay] = useState(false)
     const [filterState , setFilterState] = useState('')

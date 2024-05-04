@@ -2,12 +2,11 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchAndFilter from '../components/SearchAndFilter';
 import CircularCarousel from '../components/CircularCarousel';
-import Promotion from '../components/Promotion';
 import Subscribe from '../components/Subscribe';
 import cardImage3 from '../assets/wenchi 2.webp';
 import Navigation from '../components/Navigation';
 
-function Home() {
+function Home({isLoggedIn}) {
   const navigate = useNavigate()
   // Function to remove JWT token from browser storage
 const removeTokenFromStorage = () => {
@@ -66,7 +65,6 @@ const sampleProducts = [
       </div>
       
       <CircularCarousel products={sampleProducts} />
-      <Promotion/>
       <h2>Dashboard</h2>
       <Link to="/login">
         <button>Login</button>
