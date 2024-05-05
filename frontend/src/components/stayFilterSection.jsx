@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faHotel, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 function StayFilterSection({ stayResponse, stayLoading, stayError }) {
-
     const [nocities, setnoCities] = useState('some');
     const [amen, setAmen] = useState('some');
     const [selectedFilters, setSelectedFilters] = useState({
