@@ -79,7 +79,7 @@ const updateHotelRating = async (req, res, next) => {
     const hotel = await Hotel.findById(req.params.id);
     const oldRatingSum = hotel.userRating * hotel.totalratings; // Corrected property name
     const newUserRating = req.body.userRating;
-
+    
     hotel.totalratings += 1; // Corrected property name
     hotel.userRating = (oldRatingSum + newUserRating) / hotel.totalratings;
     await hotel.save();
