@@ -200,9 +200,7 @@ function LandingPage({isLoggedIn}) {
         <PricingCards cardData={cardData} />
       </div>
 
-
       <div className='flex  w-full  bg-white bg-cover mt-14'>
-
         <div className='bg-background2 w-4/12 h-80 mt-16 flex items-end justify-end'>
           <img src={myTraveller} alt="traveller"  className="object-contain h-full mb-10"/>
         </div>
@@ -220,8 +218,6 @@ function LandingPage({isLoggedIn}) {
         <Footer/>
       </div>
     </div>
-
-
     
   );
 }

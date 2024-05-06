@@ -40,13 +40,11 @@ function Navigation(props) {
                 <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='mr-2' />
                 <p> Get App</p>
             </button> : <div> </div>}
-
             <ul className='flex w-7/12 space-x-5 justify-end text-lg'>
                 {menuItems}
             </ul>
         </div>
     </div>
-);
-}
+);}
 
 export default Navigation;

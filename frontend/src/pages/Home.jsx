@@ -54,14 +54,12 @@ const sampleProducts = [
   // Add more products as needed
 ];
 
-
-
   return (
     <div className='flex flex-col w-full min-h-screen bg-white'>
       <Navigation list={['Home', 'Flights', 'Rooms', 'Rides', 'Dining', 'Packages','Events']} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
       <div className='h-20'></div>
       <div className='w-full flex'>
-       <SearchAndFilter/>
+        <SearchAndFilter/>
       </div>
       
       <CircularCarousel products={sampleProducts} />
