@@ -18,7 +18,6 @@ export default function EventDisplay(props) {
                     <FontAwesomeIcon icon={faStar} className=" mr-2 text-orange-600" />
                     </div>
             </Link>
-
         ))}
     </div>
   );
