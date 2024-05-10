@@ -25,10 +25,9 @@ const PricingCards = (props) => {
                     <FontAwesomeIcon icon={faCheck} className="text-[#ff6d2e] mr-2 items-center justify-center" />
                   {feature}
                 </p>
-
-
               ))}
             </div>
+            
             <Link to='/login' className="flex justify-center items-center w-full">
                 <button
                 className={`bg-orange-500 text-white hover:bg-orange-600 hover:opacity-2 duration-150 w-[130px] rounded-md font-medium my-6 mx-auto px-6 py-2`}>
