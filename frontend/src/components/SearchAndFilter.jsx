@@ -24,7 +24,6 @@ function SearchAndFilter( ) {
     const [stayLoading, setStayLoading] = useState(false);
     const [stayError, setStayError] = useState(null);
 
-    
     const cities = [
         'Addis Ababa', 'Arba Minch', 'Assosa', 'Axum', 'Bahir Dar', 'Bale Robe', 'Dembidollo', 'Dire Dawa', 
         'Gambella', 'Gode', 'Gonder', 'Hawassa', 'Humera', 'Jijiga', 'Jimma', 'Jinka', 'Kabri Dar', 
@@ -92,7 +91,6 @@ function SearchAndFilter( ) {
     const handleSubmitFlight =async  () => {
         const departureDate= new Date(flightDepdates);
         const arrivalDate= new Date(flightArrDates);
-
         if(arrivalDate <= departureDate){  alert('Return date must be after the departure date.'); }
         if(!flightDepLocation ||!flightArrLocation || !flightDepdates){alert('Please fill all the fields ');}
         else{
@@ -167,8 +165,6 @@ function SearchAndFilter( ) {
                                 <input type="date" placeholder='Start date -End date' value={dates} onChange={(e) => setdates(e.target.value) } className='border-nonef focus:border-none focus:outline-none px-2 text-center'/> 
                             </div>
                         </div>
-
-                        
 
                         <div className='flex border-[1px] border-black rounded-2xl p-1 px-3'>
                             <div className=''>

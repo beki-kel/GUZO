@@ -23,7 +23,6 @@ export default function SearchBox() {
         // Timeout to emulate a network connection
         setTimeout(() => {
             let _filteredCities;
-
             if (!event.query.trim().length) {
                 _filteredCities = [...cities];
             }
@@ -32,7 +31,6 @@ export default function SearchBox() {
                     return city.name.toLowerCase().startsWith(event.query.toLowerCase());
                 });
             }
-
             setFilteredCities(_filteredCities);
         }, 250);
     }
