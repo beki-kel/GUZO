@@ -10,10 +10,6 @@ const AddBooking = async (req, res) => {
     try {
         const { userId, type, details } = req.body;
 
-        if (!userId) {
-            return res.status(400).json({ message: 'Invalid user' });
-        }
-
         let bookingDetails;
         let typeDetails;
         
