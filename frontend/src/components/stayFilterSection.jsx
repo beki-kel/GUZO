@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
+import axios from 'axios';
 import sheraton from '../assets/Sheraton_Hotel,_Addis_Ababa_(2058298419).jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faClose, faFireAlt, faStar, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faWifi,faTemperatureArrowUp,faTelevision,faMartiniGlass, faBellConcierge, faCouch, faEarDeaf, faSmokingBan, faDoorOpen, faEye, faPhone} from '@fortawesome/free-solid-svg-icons';
-import {Card,CardHeader,CardBody,CardFooter,Typography,Button,Tooltip,IconButton,} from "@material-tailwind/react";
+import {Alert,Card,CardHeader,CardBody,CardFooter,Typography,Button,Tooltip,IconButton,} from "@material-tailwind/react";
 import {Dialog,DialogHeader,DialogBody,DialogFooter,Avatar, List,ListItem,ListItemPrefix,} from "@material-tailwind/react";
 import Sherton2 from '../assets/sheraton.jpg';
 import SheratonDb from '../assets/sheratonDouble.jpg';
@@ -38,12 +39,18 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
         accommodation: '',
         roomType: '',
         rating:0
-    });
-    const [open, setOpen] = React.useState(false);
-    const [isFavorite, setIsFavorite] = React.useState(false);
-   
-    const handleOpen = () => setOpen((cur) => !cur);
-    const handleIsFavorite = () => setIsFavorite((cur) => !cur)
+});
+    const [hotelBK,setHotel]=useState('');
+    const [roomBk,setRoom]=useState('');
+    const [roomID,setRoomId]=useState('')
+    const [open, setOpen] = useState(false);
+    const [altopen, setAltOpen] = useState(false);
+    const [bookErr,SetBookErr]=useState(false);
+    const [isAlerted, setIsAlerted] =useState(false);
+
+    const handleAltOpen = () => {setAltOpen(!altopen),setIsAlerted(false),SetBookErr(false)};
+    const handleOpen = () => {setOpen((cur) => !cur),setIsAlerted(false),SetBookErr(false)};
+    const handleIsAlerted = () => setIsAlerted(true)
 
     const handleClick = () => setFilterState('')
 
@@ -107,6 +114,42 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
             return prevFilters;
         });
     };
+
+    const handleBooking = async( hotelId, roomTyp, roomI) =>{
+        const userID = localStorage.getItem('_id');
+        setHotel(hotelId);
+        setRoom(roomTyp);
+        setRoomId(roomI);
+        const reqBody={
+            userId: userID,
+            type:"hotel",
+            details:{hotelId : hotelBK, roomType:roomBk,roomId:roomID}
+        }
+
+        console.log(JSON.stringify(reqBody))
+        try{
+            const response = await fetch("http://localhost:5000/add/book", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reqBody),
+            });
+            
+            if(response.status === 201){
+                const data = await response;
+                console.log("Room Booked Successfully",data);
+                handleIsAlerted( );
+            }else{
+                console.log('Failed to book the room',err);
+                SetBookErr(true);
+            }
+            
+        }catch(err){
+            console.error('Error booking the room:', err);
+            SetBookErr(true);
+        }
+    }
 
     const handleRemoveFilter = (type, value) => {
         setSelectedFilters((prevFilters) => {
@@ -361,12 +404,30 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                     </Card>
 
                                     <Dialog size="xl" open={open} handler={handleOpen}>
-                                        <DialogHeader className="justify-between">
+
+                                        <DialogHeader className="justify-between flex-col">
                                         <div className="w-full flex items-end justify-end">
                                             <Button size="sm" onClick={handleOpen} className='bg-orange-700'>
                                                 <FontAwesomeIcon icon={faClose}/>
                                             </Button>
                                         </div>
+
+                                        {isAlerted &&
+                                            <div className='w-full flex px-20'>
+                                                <Alert  open={isAlerted} onClose={() => setIsAlerted(false)} className=' rounded-none border-l-4 border-[#2ec946] bg-[#018715]/10 font-medium text-[#18b52f] '>
+                                                    booked Sucessfuly. Go Check on Booking page.
+                                                </Alert>
+                                            </div>
+                                        }
+
+                                        {bookErr&&
+                                            <div className='w-full flex px-20'>
+                                                <Alert  open={bookErr} onClose={() => SetBookErr(false)} className=' rounded-none border-l-4 border-[#b90000]/10 bg-[#870101]/10 font-medium text-[#b51818] '>
+                                                    booking Failed. Please Try again!
+                                                </Alert>
+                                            </div>
+                                        }
+
                                         </DialogHeader>
                                         <DialogBody>
                                         <div className='w-full flex flex-col p-3'>
@@ -397,7 +458,32 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                                 </div>
                                                 <div className='w-8/12 flex flex-col justify-center'>
                                                     {stay.rooms.map((room, index) =>
-                                                        <List className='w-full '>
+                                                        <>
+                                                        <Dialog
+                                                            open={altopen}
+                                                            handler={handleAltOpen}
+                                                            animate={{mount: { scale: 1, y: 0 },unmount: { scale: 0.9, y: -100 },}}
+                                                        >
+                                                            <DialogHeader>Confirmation</DialogHeader>
+                                                            <DialogBody>
+                                                                Confirm if you want to Book this room?
+                                                            </DialogBody>
+                                                            <DialogFooter>
+                                                            <Button
+                                                                variant="text"
+                                                                color="red"
+                                                                onClick={handleAltOpen}
+                                                                className="mr-1"
+                                                            >
+                                                                <span>Cancel</span>
+                                                            </Button>
+                                                            <Button variant="gradient" color="green" onClick={()=> handleBooking(stay._id, room.type, room._id)}>
+                                                                <span>Confirm</span>
+                                                            </Button>
+                                                            </DialogFooter>
+                                                        </Dialog>
+
+                                                        <List className='w-full ' onClick={handleAltOpen}>
                                                         <ListItem key={index} className='w-full px-4 border-2 shadow-md'>
                                                             <ListItemPrefix className='flex gap-4 text-xl w-1/6 text-black'>
                                                                 <FontAwesomeIcon icon={faBed} className='text-orange-800'></FontAwesomeIcon>
@@ -423,11 +509,13 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                                             <Button size="sm" className='bg-orange-700'> Book </Button>
                                                             </ListItem>
                                                         </List>
+                                                        </>
                                                     )}
                                                 </div>
                                             </div>
 
                                             </div>
+                                            
                                         </DialogBody>
                                     </Dialog>
                                 </div>
