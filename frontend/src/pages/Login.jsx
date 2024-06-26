@@ -60,7 +60,7 @@ const Login = ({ handleLogin }) => {
       <div className='flex flex-col justify-center items-center mt-auto w-1/2'>
         <form onSubmit={handleSubmit} className="bg-black px-8 py-12 rounded-3xl shadow-lg w-full max-w-sm border-2 border-orange-600 justify-center items-center">
       <h1 className="text-2xl text-center text-white mb-4 font-bold">Login</h1>
-        {errorMessage && <div className='errorDisplay'>{errorMessage}</div>}
+        {errorMessage && <div className='text-red-700 text-center mb-3'>{errorMessage}</div>}
           <div className='flex justify-center items-center space-x-5 w-full'>
             <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} className='rounded-lg p-2 mb-3 text-center bg-gray-900 focus:outline-none focus:border-none focus:outline-orange-600 text-white w-full' />
           </div>

@@ -7,8 +7,7 @@ import { faPlaneDeparture } from '@fortawesome/free-solid-svg-icons';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     username: '',
     fname: '',
@@ -26,21 +25,39 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/auth/register', formData);
-
+  
       if (response.status === 201) {
         console.log(response.data);
         navigate('/login', { state: { username: formData.username, password: formData.password } });
-      } else if (response.status === 400 || response.status === 404 ) {
+      } else if (response.status === 400 || response.status === 404) {
         alert("User is not Registered");
       }
     } catch (error) {
       if (error.response) {
-        console.error('Registration failed:', error.response.data.message);
+        const status = error.response.status;
+        const message = error.response.data.message;
+  
+        if (status === 409 || message.includes('E11000 duplicate key error')) {
+          if (message.includes('username')) {
+            setErrorMessage('Username already exists. Please choose a different one.');
+          } else if (message.includes('email')) {
+            setErrorMessage('Email already exists. Please use a different one.');
+          } else {
+            setErrorMessage('Duplicate key error. Please choose different values.');
+          }
+        } else if (status === 422) {
+          setErrorMessage('Validation error. Please check your input.');
+        } else {
+          setErrorMessage(`An error occurred during registration. Please retry.`);
+        }
       } else {
-        console.error('Registration failed:', error.message);
+        setErrorMessage('An error occurred during registration');
       }
     }
   };
+  
+  
+  
 
   return (
   <div className='flex justify-center items-center bg-white w-full min-h-screen  px-10'>
@@ -66,7 +83,7 @@ const Register = () => {
 
     <form onSubmit={handleSubmit} className="bg-black p-6 rounded-3xl shadow-lg w-full max-w-sm border-2 border-orange-600 justify-center items-center">
         <h1 className="text-2xl text-center text-white mb-4 font-bold">Register Now</h1>
-
+        {errorMessage && <div className='text-red-700 text-center mb-3'>{errorMessage}</div>}
         <div className='flex justify-center items-center space-x-5 w-full'>
         <input
           type="text"
