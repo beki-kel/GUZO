@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faApple } from '@fortawesome/free-brands-svg-icons';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import myTraveller from '../assets/myTraveller.png';
+import Traveller10 from '../assets/traveller10.png';
 import Footer from '../components/Footer';
 
 function LandingPage({ isLoggedIn }) {
@@ -103,12 +104,21 @@ function LandingPage({ isLoggedIn }) {
     },
     {
       image: champions,
-      title: 'Champions league Final',
+      title: 'Champions league',
     },
     {
       image: zoya,
       title: 'Zoya',
     },
+    {
+      image: kirunfud,
+      title: 'Kirunfud Events',
+    },
+    {
+      image: Garage,
+      title: 'Garage Expo',
+    },
+
   ];
 
   return (
@@ -123,21 +133,57 @@ function LandingPage({ isLoggedIn }) {
       </div>
 
       <div className="w-full max-h-[90vh] justify-center items-center font-light relative px-24 bg-gray-50">
-        <h2 className='text-center text-2xl pt-5 pb-5'>
+        <h2 className='text-center text-2xl pt-14 pb-5'>
           Enjoy travelling to the peak with us.
         </h2>
         <CircularCarousel products={sampleProducts} />
       </div>
 
-      <div className="w-full justify-center items-center font-light bg-gray-50">
-        <h2 className='text-center text-2xl pt-5'>
-          Discover the beauty of exotic destinations with best values in our Top Packages.
-        </h2>
-        <PricingCards cardData={cardData} />
+      <div className='w-full bg-gray-50 py-20'>
+
+        <div className='flex justify-center items-center w-full pt-6'>
+            <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='mr-3 h-8' />
+            <h2 className='text-center text-4xl font-thin'>
+              Download the App
+            </h2>
+            <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='ml-3 h-8' />
+        </div>
+          <div className='flex justify-center items-center'>
+          <div className=' w-4/12 h-96  flex items-end justify-end mt-24'>
+           <img src={Traveller10} alt="traveller"  className="object-contain h-full "/>
+          </div>
+
+            <div className='flex flex-col justify-center items-center w-2/3  bg-cover '>
+            <div className='w-full  flex '>
+              <div className='w-1/2  flex flex-col items-center mt-28 pl-48'>
+                
+                <div className='ml-auto py-2 px-8 mb-9 rounded-md bg-black flex justify-center items-center shadow-md shadow-black' onClick={() => navigate('/downloadPage') }>
+                  <img className='w-14 h-18 object-cover' src={playstore} alt='screenshot' />
+                  <div className='flex flex-col text-center  text-white ml-10 mr-6' >
+                  <p className='text-sm'> GET IT ON</p>
+                  <p className='text-xl'>Google Play</p>
+                </div>
+                </div>
+
+                <div className=' ml-auto py-2 px-8 mb-2 rounded-md bg-black flex justify-center items-center shadow-md shadow-black' onClick={() => navigate('/downloadPage') }>
+                  <FontAwesomeIcon icon={faApple} style={{color: "#ffffff",}} className='w-14 h-16 object-cover'/>
+                  <div className='flex flex-col text-center  text-white ml-10 mr-6' >
+                    <p className='text-sm'> GET IT ON</p>
+                    <p className='text-xl'>Apple Store</p>
+                  </div>
+                  </div>
+                </div>
+
+              <div className='w-1/2  flex flex-col justify-start items-start mt-10 ml-10'>
+                <MobilePhone image={screenshoot} />
+              </div>
+          </div>
+      </div>
+          </div>
       </div>
 
       <div className='flex flex-col justify-center items-center w-full  bg-cover px-10 py-4'>
-        <h2 className='text-center text-4xl font-light'>
+        <h2 className='text-center text-4xl font-light p-10 pt-3'>
           Trending Events This Week
         </h2>
         <div className='w-full'>
@@ -145,40 +191,13 @@ function LandingPage({ isLoggedIn }) {
         </div>
       </div>
 
-      <div className='flex flex-col justify-center items-center w-full  bg-cover py-2 px-14'>
-        <div className='flex justify-center items-center w-full'>
-          <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='mr-3 h-8' />
-          <h2 className='text-center text-4xl font-light'>
-            Download the App
-          </h2>
-          <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='ml-3 h-8' />
-        </div>
-
-        <div className='w-full  flex'>
-          <div className='w-1/2  flex flex-col items-center mt-28 px-48'>
-            
-            <div className='ml-auto py-2 px-8 mb-9 rounded-md bg-black flex justify-center items-center shadow-md shadow-black' onClick={() => navigate('/downloadPage') }>
-              <img className='w-14 h-18 object-cover' src={playstore} alt='screenshot' />
-              <div className='flex flex-col text-center  text-white ml-10 mr-6' >
-              <p className='text-sm'> GET IT ON</p>
-              <p className='text-xl'>Google Play</p>
-            </div>
-            </div>
-
-            <div className=' ml-auto py-2 px-8 mb-2 rounded-md bg-black flex justify-center items-center shadow-md shadow-black' onClick={() => navigate('/downloadPage') }>
-            <FontAwesomeIcon icon={faApple} style={{color: "#ffffff",}} className='w-14 h-16 object-cover'/>
-            <div className='flex flex-col text-center  text-white ml-10 mr-6' >
-              <p className='text-sm'> GET IT ON</p>
-              <p className='text-xl'>Apple Store</p>
-            </div>
-            </div>
-          </div>
-
-          <div className='w-1/2  flex flex-col justify-center items-center mt-6'>
-            <MobilePhone image={screenshoot} />
-          </div>
-        </div>
+      <div className="w-full justify-center items-center font-light bg-white">
+        <h2 className='text-center text-2xl pt-5'>
+          Discover the beauty of exotic destinations with best values in our Top Packages.
+        </h2>
+        <PricingCards cardData={cardData} />
       </div>
+
 
       <div className='flex  w-full  bg-white bg-cover mt-14'>
 
@@ -189,8 +208,8 @@ function LandingPage({ isLoggedIn }) {
           <h2 className='text-center text-4xl font-meduim text-orange-600'>
             EXOPIA
           </h2>
-          <p className=' text-center text-lg px-10 mt-2'> 
-            Effortlessly plan your next adventure with Exopia, your ultimate travel companion. Our user-friendly platform lets you easily find and book flights, accommodations, rides, dining experiences, and events, all in one place. Whether you're looking for a quick getaway or a luxurious vacation, Exopia offers a seamless travel planning experience. Discover the best deals and explore exotic destinations.Start your adventure with Exopia today!
+          <p className=' text-center text-xl px-14 mt-2'> 
+            Effortlessly plan your next adventure with Exopia, your ultimate travel companion. Our user-friendly platform lets you easily find and book flights, accommodations, rides, dining experiences, and events, all in one place.Start your adventure with Exopia today!
           </p>
         </div>
       </div>

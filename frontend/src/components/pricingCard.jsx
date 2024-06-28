@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 
 const PricingCards = (props) => {
@@ -31,7 +31,7 @@ const PricingCards = (props) => {
             </div>
             <Link to='/login' className="flex justify-center items-center w-full">
                 <button
-                className={`bg-gray-950 text-white hover:bg-orange-600 hover:opacity-2 duration-150 w-[130px] rounded-md font-medium my-6 mx-auto px-6 py-2`}>
+                className={`bg-orange-500 text-white hover:bg-orange-600 hover:opacity-2 duration-150 w-[130px] rounded-md font-medium my-6 mx-auto px-6 py-2`}>
                 Book now
                 </button>
             </Link>
