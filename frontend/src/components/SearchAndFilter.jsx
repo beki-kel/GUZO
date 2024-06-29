@@ -192,7 +192,6 @@ function SearchAndFilter({isLoggedIn}) {
                 <input type='checkbox' className="h-5 w-5 border-gray-300" checked={twoWay} onChange={handleTwoWay} />
                 <p>Two way</p>
             </div>: <></>}
-
     </div>
   )
 }
