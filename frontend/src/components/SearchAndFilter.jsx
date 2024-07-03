@@ -10,6 +10,7 @@ function SearchAndFilter({isLoggedIn}) {
     const [stayLocation, setStaylocation] = useState('');
     const [flightDepLocation, setFlightDepLocation] = useState('');
     const [flightArrLocation, setFlightArrLocation] = useState('');
+    const [flightDepdates, setFlightDepdates] = useState('');
     const [rideDepLocation, setRideDepLocation] = useState('');
     const [rideArrLocation, setRideArrLocation] = useState('');
     const [dates, setdates] = useState('');
@@ -55,6 +56,27 @@ function SearchAndFilter({isLoggedIn}) {
             }
         } catch (error) {
             console.log(error);
+        }
+    }
+    
+    const handleSubmitFlight =async  () => {
+
+        if(!flightDepLocation ||!flightArrLocation){alert('Please select a city.')}
+        else{
+            try {
+                const response = await axios.post('http://localhost:5000/search/flight',
+                    {flightArrLocation,flightDepLocation,flightDepdates});
+                if (response.status === 200) {
+                    console.log('Response status:', response.status);
+                    console.log(response.data);
+                    console.log({flightArrLocation, flightDepLocation, flightDepdates})
+                } else {
+                    console.log('Response status:', response.status);
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -136,7 +158,19 @@ function SearchAndFilter({isLoggedIn}) {
                         </div>
                         <div className='flex flex-col text-center'>
                             <p className='text-xl font-medium'>Departure Location</p>
-                            <input type="text" placeholder='Leaving from ?' value={flightDepLocation} onChange={(e) => setFlightDepLocation(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
+                            <AutoComplete
+                                    inputClassName="border-none focus:border-none focus:outline-none px-2 text-center"
+                                    value={flightDepLocation} 
+                                    suggestions={filteredCities} 
+                                    completeMethod={search} 
+                                    onChange={(e) => setFlightDepLocation(e.value)} 
+                                    panelClassName="bg-white border border-gray-300 shadow-md"
+                                    itemTemplate={(item) => (
+                                        <div className="p-2 hover:bg-gray-200 focus:bg-gray-200">{item}</div>
+                                    )}
+                                    placeholder='Leaving From?'
+                                    inputProps={{ required: true }}
+                                />
                         </div>
                     </div>
                     <div className='flex border-[1px] border-black rounded-2xl py-1 px-3'>
@@ -145,7 +179,19 @@ function SearchAndFilter({isLoggedIn}) {
                         </div>
                         <div className='flex flex-col text-center'>
                             <p className='text-xl font-medium'>Arrival Location</p>
-                            <input type="text" placeholder='Going to ?' value={flightArrLocation} onChange={(e) => setFlightArrLocation(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
+                            <AutoComplete
+                                    inputClassName="border-none focus:border-none focus:outline-none px-2 text-center"
+                                    value={flightArrLocation} 
+                                    suggestions={filteredCities} 
+                                    completeMethod={search} 
+                                    onChange={(e) => setFlightArrLocation(e.value)} 
+                                    panelClassName="bg-white border border-gray-300 shadow-md"
+                                    itemTemplate={(item) => (
+                                        <div className="p-2 hover:bg-gray-200 focus:bg-gray-200">{item}</div>
+                                    )}
+                                    placeholder='Going to?'
+                                    inputProps={{ required: true }}
+                                />
                         </div>
                     </div>
                     {!twoWay ? (
@@ -155,7 +201,7 @@ function SearchAndFilter({isLoggedIn}) {
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'>Dates</p>
-                                <input type="text" placeholder='Flight day' value={dates} onChange={(e) => setdates(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
+                                <input type="date" placeholder='Flight day' value={flightDepdates} onChange={(e) => setFlightDepdates(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
                             </div>
                         </div>
                     ) : (
@@ -180,7 +226,7 @@ function SearchAndFilter({isLoggedIn}) {
                             </div>
                         </>
                     )}
-                    <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium'>Search</button>
+                    <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitFlight}>Search</button>
                 </div>
             );
         case 'rides':
@@ -191,7 +237,7 @@ function SearchAndFilter({isLoggedIn}) {
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'>Departure Location</p>
-                                <AutoComplete 
+                                <AutoComplete
                                     inputClassName="border-none focus:border-none focus:outline-none px-2 text-center"
                                     value={rideDepLocation} 
                                     suggestions={filteredCities} 
@@ -247,13 +293,6 @@ function SearchAndFilter({isLoggedIn}) {
                         <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
                         <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium'> Search </button>
                     </div>;
-        case 'dinning':
-            return <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium'> Search </button>
-                    </div>;
         case 'events':
             return <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>
                         <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
@@ -279,7 +318,6 @@ return (
                 <button className= {`${setcolor('flights')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('flights')}> Flights</button>
                 <button className= {`${setcolor('rides')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('rides')}> Rides</button>
                 <button className= {`${setcolor('packages')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('packages')}> Packages</button>
-                <button className= {`${setcolor('dinning')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('dinning')}> Dinning</button>
                 <button className= {`${setcolor('events')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('events')}> Events</button>
             </ul>
         </div>

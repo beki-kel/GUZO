@@ -11,7 +11,7 @@ const flightSchema = new mongoose.Schema({
     unique: true,
   },
   flightDate:{
-    type: Date,
+    type: String,
     required: true,
   },
   flightTime:{

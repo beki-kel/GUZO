@@ -2,7 +2,9 @@ const Flight = require('../models/flightModel');
 
 // Search flights based on departure, arrival, and date
 const searchFlights = async (req, res) => {
-    const { departure, arrival, date } = req.body;
+    const departure=req.body.flightDepLocation;
+    const arrival=req.body.flightArrLocation
+    const date= req.body.flightDepdates;
 
     try {
         let query = {
@@ -22,6 +24,7 @@ const searchFlights = async (req, res) => {
 
         res.json(flights);
     } catch (err) {
+        console.log(err)
         res.status(500).json({ message: err.message });
     }
 };
