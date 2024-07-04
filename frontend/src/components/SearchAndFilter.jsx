@@ -63,7 +63,7 @@ function SearchAndFilter({isLoggedIn}) {
                 try {
                     const response = await axios.post('http://localhost:5000/search/filter/Accomadation', {stayLocation,staytravllers});
                     if (response.status === 200 && response.data[0]) {
-                        setStayResponse(response);
+                        setStayResponse(response.data);
                         setStayLoading(false);
                         console.log(response);
                     } else if (!response.data) {
@@ -153,7 +153,7 @@ function SearchAndFilter({isLoggedIn}) {
                                     itemTemplate={(item) => (
                                         <div className="p-2 hover:bg-gray-200 focus:bg-gray-200">{item}</div>
                                     )}
-                                    placeholder='Leaving From?'
+                                    placeholder='Where?'
                                 />
                             </div>
                         </div>
@@ -353,7 +353,7 @@ const filterSection = () =>{
 }
 
 return (
-    <div className='w-full flex flex-col mx-52'>
+    <div className='w-full flex flex-col mx-52 bg-white'>
         <div className='w-full my-10 border-2 flex flex-col items-center justify-center rounded-xl bg-white shadow-xl'>
             <div className=' border-b-2 w-full mb-3 flex justify-center items-center'>
                 <ul className='w-full flex justify-center space-x-10 text-lg'>
@@ -371,7 +371,7 @@ return (
                     <p>Two way</p>
                 </div>: <></>}
         </div>
-        <div className='bg-white w-full rounded-3xl shadow-lg mb-10'> {filterSection()}</div>
+        <div className='bg-white w-full mb-10 '> {filterSection()}</div>
     </div>
 
 
