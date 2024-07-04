@@ -28,7 +28,7 @@ const Login = ({ handleLogin }) => {
         localStorage.setItem('token', token);
         console.log("this is the response data: ", response.data)
         handleLogin();
-        navigate('/');
+        navigate('/home');
       } else {
         console.log("Can't login")
       }

@@ -7,7 +7,7 @@ import Subscribe from '../components/Subscribe';
 import cardImage3 from '../assets/wenchi 2.webp';
 import Navigation from '../components/Navigation';
 
-function Home(isLoggedIn) {
+function Home() {
   const navigate = useNavigate()
   // Function to remove JWT token from browser storage
 const removeTokenFromStorage = () => {

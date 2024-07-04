@@ -3,7 +3,7 @@ import orangeLoading from '../assets/orange-gif.gif';
 import sheraton from '../assets/Sheraton_Hotel,_Addis_Ababa_(2058298419).jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import { response } from 'express';
+
 
 function StayFilterSection( {stayResponse,stayLoading,stayError}) {
 
