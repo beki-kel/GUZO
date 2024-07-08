@@ -179,12 +179,12 @@ function StayFilterSection({ stayResponse, stayLoading, stayError }) {
                         <div className='w-full mb-3 rounded-md flex flex-wrap'>
                             {Object.entries(selectedFilters).map(([type, value]) => (
                                 (type === 'amenities' ? value.map((amenity) => (
-                                    <div className='bg-slate-100 rounded-2xl px-3 py-2 flex items-center m-2' key={amenity}>
+                                    <div className='bg-orange-500 text-white rounded-2xl px-3 py-2 flex items-center m-2' key={amenity}>
                                         <p>{amenity}</p>
                                         <FontAwesomeIcon icon={faXmark} className='ml-3' onClick={() => handleRemoveFilter(type, amenity)} />
                                     </div>
                                 )) : (value ?
-                                    <div className='bg-slate-100 rounded-2xl px-3 py-2 flex items-center m-2' key={value}>
+                                    <div className='bg-orange-500 text-white rounded-2xl px-3 py-2 flex items-center m-2' key={value}>
                                         {value ? <p>{value}</p> : <></>  }
                                         <FontAwesomeIcon icon={faXmark} className='ml-3' onClick={() => handleRemoveFilter(type, value)} />
                                     </div>:<></>
@@ -193,11 +193,11 @@ function StayFilterSection({ stayResponse, stayLoading, stayError }) {
                         </div>
 
                         {stayResponse.map((stay, index) => (
-                            <div className='w-full mr-32  bg-white flex rounded-2xl border-2 mb-3' key={index}>
+                            <div className='w-full mr-32  bg-white flex rounded-2xl shadow-md border-2 mb-3' key={index}>
                                 <div className='w-5/12 rounded-xl'>
                                     <img src={sheraton} alt="Loading" className="h-60 w-full rounded-l-2xl" />
                                 </div>
-                                <div className=' h-60'>
+                                <div className="w-7/12">
                                     <div className='w-full flex items-center justify-center'>
                                         <p className="text-orange-600 text-xl w-full px-3 py-2 pb-0 font-medium">{stay.name}</p>
                                         
@@ -207,20 +207,22 @@ function StayFilterSection({ stayResponse, stayLoading, stayError }) {
                                             ))}
                                         </div>
                                     </div>
-                                    <p className='ml-3 text-sm'>{stay.city},{stay.location}</p>
-                                    <div className='w-full flex space-x-5 ml-3 py-2'>
+                                    <p className='pl-3 text-sm'>{stay.city},{stay.location}</p>
+                                    <div className='w-full flex space-x-5 pl-3 py-2'>
                                         {stay.rooms.map((room, index) => (<div className=' text-sm text-orange-500' key={index}> <FontAwesomeIcon icon={faBed}></FontAwesomeIcon> <span className='text-gray-400'>{room.type}</span> </div>))}
                                     </div>
-                                    <p className="ml-3 text-md text-center"> {stay.description} </p>
+                                    <p className="w-full px-6 text-md "> {stay.description} fkalsdfjnsajdkfhalk kdfhlakdf jafdhjka kahfda kashdf jsdfhaf asdjfhaksf a sfnklasdf </p>
+
+                                    <div className=' flex items-center p-3  mt-2'>
+                                        <div className='w-1/2'>
+                                            <p className=' w-1/3 text-center px-4 py-1 bg-orange-600 rounded-md text-white'>
+                                                {stay.userRating}
+                                            </p>
+                                        </div>
 
 
-                                    <div className='w-full flex items-center p-3  '>
-                                        <p className='px-4 py-1 bg-orange-500 rounded-md text-white'>
-                                            {stay.userRating}
-                                        </p>
-
-                                        <div className='flex justify-center w-full items-center my-2 ml-10 text-orange-500'>
-                                        <span className='font-medium text-xl'>{Math.min(...stay.rooms.map(room => room.price))}</span>  - <span className='font-medium text-xl mr-1'> {Math.max(...stay.rooms.map(room => room.price))} </span> birr
+                                        <div className='flex justify-center w-1/2 items-center my-2 '>
+                                            <span className='font-semibold text-xl ml-auto'>{Math.min(...stay.rooms.map(room => room.price))}</span>  - <span className='font-medium text-xl mr-1'> {Math.max(...stay.rooms.map(room => room.price))} </span> birr
                                         </div>
                                     </div>
                                 </div>
