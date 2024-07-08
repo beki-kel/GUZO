@@ -4,6 +4,7 @@ import { faLocationDot,faCalendar,faUser } from '@fortawesome/free-solid-svg-ico
 import axios from 'axios';
 import { AutoComplete } from "primereact/autocomplete";
 import StayFilterSection from './StayFilterSection'
+import FlightFillter from './FlightFillter';
 
 function SearchAndFilter( ) {
     const [section, setSection] = useState('stays');
@@ -23,6 +24,9 @@ function SearchAndFilter( ) {
     const [stayResponse, setStayResponse]= useState('');
     const [stayLoading, setStayLoading] = useState(false);
     const [stayError, setStayError] = useState(null);
+    const [flightResponse, setFlightResponse]= useState('');
+    const [flightLoading, setFlightLoading] = useState(false);
+    const [flightError, setFlightError] = useState(null);
 
     const cities = [
         'Addis Ababa', 'Arba Minch', 'Assosa', 'Axum', 'Bahir Dar', 'Bale Robe', 'Dembidollo', 'Dire Dawa', 
@@ -52,12 +56,12 @@ function SearchAndFilter( ) {
     };
     
     const handleSubmitStays = async () => {
-        setFilterState('stays');
-        setStayLoading(true);
-        setStayResponse(null);
-        setStayError(null);
-        if(!stayLocation){alert('Please fill all the fields ');}
+        if(!stayLocation|| !stayTravllers){alert('Please fill all the fields ');}
         else{
+            setFilterState('stays');
+            setStayLoading(true);
+            setStayResponse(null);
+            setStayError(null);
             try {
                 setTimeout(async () => {
                     try {
@@ -81,44 +85,67 @@ function SearchAndFilter( ) {
                             setStayError('An error occurred during search');
                         }
                     }
-                }, );
+                },5000 );
             } catch (error) {
                 setStayLoading(false);
                 setStayError('An unexpected error occurred');
                 console.error(error);
             }
         }
-
     };
     
-    const handleSubmitFlight =async  () => {
-        const departureDate= new Date(flightDepdates);
-        const arrivalDate= new Date(flightArrDates);
-        if(arrivalDate <= departureDate){  alert('Return date must be after the departure date.'); }
-        if(!flightDepLocation ||!flightArrLocation || !flightDepdates){alert('Please fill all the fields ');}
-        else{
-            try {
-                const response = await axios.post('http://localhost:5000/search/flight',
-                    {flightArrLocation,flightDepLocation,flightDepdates,flightArrDates});
-                if (response.status === 200) {
-                    console.log('Response status:', response.status);
-                    console.log(response.data);
-                    console.log({flightArrLocation, flightDepLocation, flightDepdates})
-                } else {
-                    console.log('Response status:', response.status);
-                    console.log(response.data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
+
+    const handleSubmitFlight = async () => {
+        const departureDate = new Date(flightDepdates);
+        const arrivalDate = new Date(flightArrDates);
+    
+        // Validate dates
+        if (arrivalDate <= departureDate) {
+            alert('Return date must be after the departure date.');
+            return;
         }
-    }
+    
+        // Validate fields
+        if (!flightDepLocation || !flightArrLocation || !flightDepdates) {
+            alert('Please fill all the fields.');
+            return;
+        }
+    
+        try {
+            const response = await axios.post('http://localhost:5000/search/flight', {
+                flightArrLocation,
+                flightDepLocation,
+                flightDepdates,
+                flightArrDates
+            });
+    
+            // Log request data
+            console.log('Flight search request:', {
+                flightArrLocation,
+                flightDepLocation,
+                flightDepdates,
+                flightArrDates
+            });
+    
+            if (response.status === 200) {
+                console.log('Flight search successful.');
+                console.log('Response data:', response.data);
+            } else {
+                console.log('Flight search failed.');
+                console.log('Response status:', response.status);
+                console.log('Response data:', response.data);
+            }
+        } catch (error) {
+            console.error('Error occurred during flight search:', error.message);
+        }
+    };
+    
 
     const handleSubmitRide = async () => {
         if(!rideDepLocation || !rideArrLocation){alert('Please select a city.')}
         else{
             try {
-                const response = await axios.post('http://localhost:5000/search/transportation', 
+                const response = await axios.post("http://localhost:5000/search/transportation", 
                     {rideArrLocation,rideDepLocation,Ridetravllers});
                 if (response.status === 200) {
                     console.log('Response status:', response.status);
@@ -192,9 +219,9 @@ function SearchAndFilter( ) {
                             <p className='text-xl font-medium'>Departure Location</p>
                             <AutoComplete
                                     inputClassName="border-none focus:border-none focus:outline-none px-2 text-center"
-                                    value={flightDepLocation} 
-                                    suggestions={filteredCities} 
-                                    completeMethod={search} 
+                                    value={flightDepLocation}
+                                    suggestions={filteredCities}
+                                    completeMethod={search}
                                     onChange={(e) => setFlightDepLocation(e.value)} 
                                     panelClassName="bg-white border border-gray-300 shadow-md"
                                     itemTemplate={(item) => (
@@ -346,6 +373,7 @@ const filterSection = () =>{
     switch (filterState){
         case '' : return <></>
         case 'stays': return <StayFilterSection stayResponse={stayResponse} stayLoading={stayLoading} stayError={stayError} setStayResponse={setStayResponse}/>
+        case 'flight': return <FlightFillter/>
         default: <></>
     }
         
@@ -356,8 +384,8 @@ return (
         <div className='w-full my-10 border-2 flex flex-col items-center justify-center rounded-xl bg-white shadow-xl'>
             <div className=' border-b-2 w-full mb-3 flex justify-center items-center'>
                 <ul className='w-full flex justify-center space-x-10 text-lg'>
-                    <button className= {`${setcolor('stays')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('stays') }> Stays</button>
-                    <button className= {`${setcolor('flights')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('flights')}> Flights</button>
+                    <button className= {`${setcolor('stays')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => {setSection ('stays'); setFilterState('stays')}}> Stays</button>
+                    <button className= {`${setcolor('flights')} p-3 hover:border-b-black hover:border-b-2`} onClick={() =>{ setSection ('flights'); setFilterState('flight')}}> Flights</button>
                     <button className= {`${setcolor('rides')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('rides')}> Rides</button>
                     <button className= {`${setcolor('packages')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('packages')}> Packages</button>
                     <button className= {`${setcolor('events')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('events')}> Events</button>

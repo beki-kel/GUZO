@@ -1,8 +1,6 @@
 const Hotel = require('../models/AccommodationModel');
 const hotelApiService = require('./externalAccommodationController');
 
-// Function to search and filter hotels
-// Function to search and filter hotels
 const searchFilter = async (req, res) => {
   try {
     const query = req.body.name;
