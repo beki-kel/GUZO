@@ -18,7 +18,7 @@ function SearchAndFilter( ) {
     const [rideArrLocation, setRideArrLocation] = useState('');
     const [dates, setdates] = useState('');
     const [Ridetravllers, setRideTravllers] = useState('');
-    const [staytravllers,setstaytravllers] = useState('');
+    const [stayTravllers,setstayTravllers] = useState('');
     const [filteredCities, setFilteredCities] = useState(null);
     const [stayResponse, setStayResponse]= useState('');
     const [stayLoading, setStayLoading] = useState(false);
@@ -56,36 +56,39 @@ function SearchAndFilter( ) {
         setStayLoading(true);
         setStayResponse(null);
         setStayError(null);
-    
-        try {
-            setTimeout(async () => {
-                try {
-                    const response = await axios.post('http://localhost:5000/search/filter/Accomadation', {stayLocation,staytravllers});
-                    if (response.status === 200 && response.data[0]) {
-                        setStayResponse(response.data);
+        if(!stayLocation){alert('Please fill all the fields ');}
+        else{
+            try {
+                setTimeout(async () => {
+                    try {
+                        const response = await axios.post('http://localhost:5000/search/filter/Accomadation', {stayLocation,stayTravllers});
+                        if (response.status === 200 && response.data[0]) {
+                            setStayResponse(response.data);
+                            setStayLoading(false);
+                            console.log(response);
+                        } else if (!response.data || !response.data[0]) {
+                            setStayError('No result Found');
+                            setStayLoading(false);
+                        } else {
+                            setStayError('Error Getting Results Please Try Again');
+                            setStayLoading(false);
+                        }
+                    } catch (error) {
                         setStayLoading(false);
-                        console.log(response);
-                    } else if (!response.data) {
-                        setStayError('No result Found');
-                        setStayLoading(false);
-                    } else {
-                        setStayError('Error Getting Results Please Try Again');
-                        setStayLoading(false);
+                        if (error.response) {
+                            setStayError(error.response.data.message || 'An error occurred during Search Please Try Again');
+                        } else {
+                            setStayError('An error occurred during search');
+                        }
                     }
-                } catch (error) {
-                    setStayLoading(false);
-                    if (error.response) {
-                        setStayError(error.response.data.message || 'An error occurred during Search Please Try Again');
-                    } else {
-                        setStayError('An error occurred during search');
-                    }
-                }
-            }, 5000);
-        } catch (error) {
-            setStayLoading(false);
-            setStayError('An unexpected error occurred');
-            console.error(error);
+                }, );
+            } catch (error) {
+                setStayLoading(false);
+                setStayError('An unexpected error occurred');
+                console.error(error);
+            }
         }
+
     };
     
     const handleSubmitFlight =async  () => {
@@ -172,7 +175,7 @@ function SearchAndFilter( ) {
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Travllers </p>
-                                <input type="number" placeholder='Travellers, Rooms' value={staytravllers} onChange={(e) => setstaytravllers(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center'/> 
+                                <input type="number" placeholder='Travellers, Rooms' value={stayTravllers} onChange={(e) => setstayTravllers(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center'/> 
                             </div>
                         </div>
                         
@@ -342,7 +345,7 @@ function SearchAndFilter( ) {
 const filterSection = () =>{
     switch (filterState){
         case '' : return <></>
-        case 'stays': return <StayFilterSection stayResponse={stayResponse} stayLoading={stayLoading} stayError={stayError}/>
+        case 'stays': return <StayFilterSection stayResponse={stayResponse} stayLoading={stayLoading} stayError={stayError} setStayResponse={setStayResponse}/>
         default: <></>
     }
         

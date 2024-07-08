@@ -1,23 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
 import sheraton from '../assets/Sheraton_Hotel,_Addis_Ababa_(2058298419).jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBed, faHotel, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBed, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-function StayFilterSection({ stayResponse, stayLoading, stayError }) {
+function StayFilterSection({ stayResponse, stayLoading, stayError, setStayResponse }) {
     const [nocities, setnoCities] = useState('some');
     const [amen, setAmen] = useState('some');
     const [selectedFilters, setSelectedFilters] = useState({
-        cities: '',
+        stayLocation: '',
         amenities: [],
         accommodation: '',
         roomType: '',
-        rating: 0,
+        rating:0
     });
+
+    // Function to update stayResponse based on filters
+    useEffect(() => {
+        const fetchFilteredResults = async () => {
+            try {
+                // Filter out empty or null values from selectedFilters
+                const filteredFilters = Object.fromEntries(
+                    Object.entries(selectedFilters).filter(([key, value]) => {
+                        if (key === 'amenities') {
+                            return value.length > 0; // Include amenities if not empty array
+                        } else if (key === 'rating') {
+                            return value !== 0; // Include rating if not zero
+                        }
+                        return value !== '' && value !== null; // Include other filters if not empty or null
+                    })
+                );
+    
+                const response = await fetch('http://localhost:5000/search/filter/Accomadation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(filteredFilters),
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to fetch filtered results');
+                }
+    
+                const data = await response.json();
+    
+                if (data.length === 0) {
+                    console.log('No results found');
+                    setStayResponse([]);
+                } else {
+                    console.log('Filtered results:', data);
+                    setStayResponse(data);
+                }
+            } catch (error) {
+                console.error('Error fetching filtered results:', error);
+                // Handle error state
+            }
+        };
+    
+        fetchFilteredResults();
+    }, [selectedFilters, setStayResponse]);
 
     const handleFilterChange = (type, value) => {
         setSelectedFilters((prevFilters) => {
-            if (type === 'cities' || type === 'accommodation' || type === 'roomType' || type === 'rating') {
+            if (type === 'stayLocation' || type === 'accommodation' || type === 'roomType' || type === 'rating') {
                 return { ...prevFilters, [type]: value };
             }
             if (type === 'amenities') {
@@ -32,7 +78,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError }) {
 
     const handleRemoveFilter = (type, value) => {
         setSelectedFilters((prevFilters) => {
-            if (type === 'cities' || type === 'accommodation' || type === 'roomType' || type === 'rating') {
+            if (type === 'stayLocation' || type === 'accommodation' || type === 'roomType' || type === 'rating') {
                 return { ...prevFilters, [type]: '' };
             }
             if (type === 'amenities') {
@@ -46,7 +92,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError }) {
         <div className='w-full my-10 flex flex-col'>
             {stayLoading && (
                 <div className='w-full flex justify-center items-center mb-2 p-2'>
-                    <img src={orangeLoading} alt="Loading" className="w-50 h-32 rounded-t-lg" />
+                    <img src={orangeLoading} alt="Loading" className="w-50 h-20 rounded-t-lg" />
                 </div>
             )}
 
@@ -64,7 +110,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError }) {
                                 {['Addis Ababa', 'Hawassa', 'Jijiga', 'Semera'].map(city => (
                                     <div className='flex justify-center' key={city}>
                                         <input type="radio" name="city" value={city} id={city} className="accent-orange-600 mr-1"
-                                            onChange={() => handleFilterChange('cities', city)} checked={selectedFilters.cities === city} />
+                                            onChange={() => handleFilterChange('stayLocation', city)} checked={selectedFilters.stayLocation === city} />
                                         <label htmlFor={city}>{city}</label>
                                     </div>
                                 ))}
@@ -85,7 +131,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError }) {
                                 ].map(city => (
                                     <div className='flex justify-center' key={city}>
                                         <input type="radio" name="city" value={city} id={city} className="accent-orange-600 mr-1"
-                                            onChange={() => handleFilterChange('cities', city)} checked={selectedFilters.cities === city} />
+                                            onChange={() => handleFilterChange('stayLocation', city)} checked={selectedFilters.stayLocation === city} />
                                         <label htmlFor={city}>{city}</label>
                                     </div>
                                 ))}
@@ -209,9 +255,9 @@ function StayFilterSection({ stayResponse, stayLoading, stayError }) {
                                     </div>
                                     <p className='pl-3 text-sm'>{stay.city},{stay.location}</p>
                                     <div className='w-full flex space-x-5 pl-3 py-2'>
-                                        {stay.rooms.map((room, index) => (<div className=' text-sm text-orange-500' key={index}> <FontAwesomeIcon icon={faBed}></FontAwesomeIcon> <span className='text-gray-400'>{room.type}</span> </div>))}
+                                        {stay.rooms.map((room, index) => (<div className=' text-sm text-orange-500' key={index}> <FontAwesomeIcon icon={faBed}></FontAwesomeIcon> <span className='text-gray-400'>{room.type !== "other"? room.type : room.otherType}</span> </div>))}
                                     </div>
-                                    <p className="w-full px-6 text-md "> {stay.description} fkalsdfjnsajdkfhalk kdfhlakdf jafdhjka kahfda kashdf jsdfhaf asdjfhaksf a sfnklasdf </p>
+                                    <p className="w-full px-6 text-md "> {stay.description}</p>
 
                                     <div className=' flex items-center p-3  mt-2'>
                                         <div className='w-1/2'>
@@ -219,7 +265,6 @@ function StayFilterSection({ stayResponse, stayLoading, stayError }) {
                                                 {stay.userRating}
                                             </p>
                                         </div>
-
 
                                         <div className='flex justify-center w-1/2 items-center my-2 '>
                                             <span className='font-semibold text-xl ml-auto'>{Math.min(...stay.rooms.map(room => room.price))}</span>  - <span className='font-medium text-xl mr-1'> {Math.max(...stay.rooms.map(room => room.price))} </span> birr

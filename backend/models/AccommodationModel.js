@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const roomSchema = new mongoose.Schema({
   type: { type: String, required: true }, // e.g., 'double bed', 'single bed'
+  otherType:{type:String, required:true},
   capacity: { type: Number, required: true }, // number of people the room can accommodate
   price: { type: Number, required: true }, // price per night
   amenities: { type: [String] }, // list of amenities
