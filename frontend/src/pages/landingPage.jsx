@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef,useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import { Navigate, useNavigate } from 'react-router-dom';
 import PricingCards from '../components/pricingCard';
@@ -22,10 +22,11 @@ import screenshoot from '../assets/Image (1).png'
 import playstore from '../assets/PlayStore.webp'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faApple } from '@fortawesome/free-brands-svg-icons';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faArrowCircleDown, faDownload } from '@fortawesome/free-solid-svg-icons';
 import myTraveller from '../assets/myTraveller.png';
 import Traveller10 from '../assets/traveller10.png';
 import Footer from '../components/Footer';
+import Typed from 'typed.js';
 
 function LandingPage({isLoggedIn}) {
   const navigate = useNavigate();
@@ -122,19 +123,42 @@ function LandingPage({isLoggedIn}) {
     },
 
   ];
+  const nextSectionRef = useRef(null);
+  const typedRef = useRef(null);
+  
+  const scrollToNextSection = () => {
+    window.scrollTo({
+      top: nextSectionRef.current.offsetTop,
+      behavior: 'smooth'
+    });}
+
+    useEffect(() => {
+      const typed = new Typed(typedRef.current, {
+        strings: ["book your Flights", "book your Rides", "book your Event", "Create Your Own Package and more!"],
+        typeSpeed: 50,
+        backSpeed: 50,
+        backDelay: 1000,
+        showCursor:false,
+        loop:true,
+      });
+      return () => {
+        typed.destroy();
+      };
+    }, []);
+    
 
   return (
     <div className='flex flex-col w-full min-h-screen '>
-            <Navigation list={['Home', 'Flights', 'Rooms', 'Rides', 'Dining', 'Packages','Events']} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
       <div className='flex flex-col justify-center items-center w-full min-h-screen bg-background1 bg-cover'>
-        <div className='w-full flex flex-col text-center items-center justify-center h-1/3'>
-          <h1 className='text-4xl text-orange-600 font-bold w-full'>Discover Your Adventure</h1>
-          <p className='text-white text-xl'>book your flights, rides, dining, events and more!</p>
-          <button className="bg-orange-600 text-white font-bold py-2 px-2 mt-6 rounded-xl w-1/12" onClick={handleClick}>Get Started</button>
+        <div className='w-full flex flex-col text-center items-center justify-center h-1/3 mb-14'>
+          <h1 className='text-4xl text-orange-600 font-semibold w-full'>Discover Your Adventure</h1>
+          <span ref={typedRef} className='text-white text-xl inline-block' ></span>
+          <button className="bg-orange-600 text-white font-bold p-2 mt-6 rounded-xl w-1/12" onClick={handleClick}>Get Started</button>
         </div>
+        <FontAwesomeIcon icon={faArrowCircleDown} className='absolute bottom-0 mb-2 h-10 text-orange-500' onClick={scrollToNextSection}/>
       </div>
 
-      <div className="w-full max-h-[90vh] justify-center items-center font-light relative px-24 bg-gray-100 pb-72">
+      <div ref={nextSectionRef} className="w-full max-h-[90vh] justify-center items-center font-light relative px-24 bg-gray-100 pb-72">
         <h2 className='text-center text-2xl pt-14 pb-5'>
           Enjoy travelling to the peak with us.
         </h2>
