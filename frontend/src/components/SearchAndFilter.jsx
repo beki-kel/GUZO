@@ -5,6 +5,8 @@ import axios from 'axios';
 import { AutoComplete } from "primereact/autocomplete";
 import StayFilterSection from './StayFilterSection'
 import FlightFillter from './FlightFillter';
+import { DateRangePicker } from 'rsuite';
+import 'rsuite/dist/rsuite.min.css';
 
 function SearchAndFilter( ) {
     const [section, setSection] = useState('stays');
@@ -17,7 +19,7 @@ function SearchAndFilter( ) {
     const [flightArrDates, setFlightArrDates] = useState('')
     const [rideDepLocation, setRideDepLocation] = useState('');
     const [rideArrLocation, setRideArrLocation] = useState('');
-    const [dates, setdates] = useState('');
+    const [dates, setdates] = useState([new Date(), new Date()]);
     const [Ridetravllers, setRideTravllers] = useState('');
     const [stayTravllers,setstayTravllers] = useState('');
     const [filteredCities, setFilteredCities] = useState(null);
@@ -56,7 +58,7 @@ function SearchAndFilter( ) {
     };
     
     const handleSubmitStays = async () => {
-        if(!stayLocation|| !stayTravllers){alert('Please fill all the fields ');}
+        if(!stayLocation|| !stayTravllers || !dates){alert('Please fill all the fields '); setFilterState('');}
         else{
             setFilterState('stays');
             setStayLoading(true);
@@ -85,7 +87,7 @@ function SearchAndFilter( ) {
                             setStayError('An error occurred during search');
                         }
                     }
-                },5000 );
+                });
             } catch (error) {
                 setStayLoading(false);
                 setStayError('An unexpected error occurred');
@@ -169,7 +171,7 @@ function SearchAndFilter( ) {
                             <div className=''>
                                 <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
-                            <div className='flex flex-col text-center'>
+                            <div className='flex flex-col text-center p-2'>
                                 <p className='text-xl font-medium'> Location</p>
                                 <AutoComplete 
                                     inputClassName="border-none focus:border-none focus:outline-none px-2 text-center"
@@ -186,17 +188,17 @@ function SearchAndFilter( ) {
                             </div>
                         </div>
 
-                        <div className='flex border-[1px] border-black rounded-2xl p-1 px-3'>
+                        <div className='flex border-[1px] border-black rounded-2xl py-1 px-3'>
                             <div className=''>
                                 <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Dates </p>
-                                <input type="date" placeholder='Start date -End date' value={dates} onChange={(e) => setdates(e.target.value) } className='border-nonef focus:border-none focus:outline-none px-2 text-center'/> 
+                                <DateRangePicker format="dd.MM.yyyy" character=" – "  appearance="default" placeholder='Start date -End date' value={dates} onChange={(dates) => setdates(dates) } style={{border:"none"}}/>
                             </div>
                         </div>
 
-                        <div className='flex border-[1px] border-black rounded-2xl p-1 px-3'>
+                        <div className='flex border-[1px] border-black rounded-2xl p-3 px-3'>
                             <div className=''>
                                 <FontAwesomeIcon icon={faUser} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
@@ -384,8 +386,8 @@ return (
         <div className='w-full my-10 border-2 flex flex-col items-center justify-center rounded-xl bg-white shadow-xl'>
             <div className=' border-b-2 w-full mb-3 flex justify-center items-center'>
                 <ul className='w-full flex justify-center space-x-10 text-lg'>
-                    <button className= {`${setcolor('stays')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => {setSection ('stays'); setFilterState('stays')}}> Stays</button>
-                    <button className= {`${setcolor('flights')} p-3 hover:border-b-black hover:border-b-2`} onClick={() =>{ setSection ('flights'); setFilterState('flight')}}> Flights</button>
+                    <button className= {`${setcolor('stays')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => {setSection ('stays');}}> Stays</button>
+                    <button className= {`${setcolor('flights')} p-3 hover:border-b-black hover:border-b-2`} onClick={() =>{ setSection ('flights'); }}> Flights</button>
                     <button className= {`${setcolor('rides')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('rides')}> Rides</button>
                     <button className= {`${setcolor('packages')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('packages')}> Packages</button>
                     <button className= {`${setcolor('events')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('events')}> Events</button>

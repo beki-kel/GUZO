@@ -221,7 +221,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                     </div>
 
                     <div className='w-7/12 flex flex-col bg-white'>
-                        <p className='text-2xl text-center m-2 mb-4'> Found {stayResponse.length === 1 ? "1 Result" : `${stayResponse.length} Results`} </p>
+                        <p className='text-2xl text-center m-2 mb-4'> Found {stayResponse.length === 1 ? "1 Result in Stays" : `${stayResponse.length} Results in Stays`} </p>
                         <div className='w-full mb-3 rounded-md flex flex-wrap'>
                             {Object.entries(selectedFilters).map(([type, value]) => (
                                 (type === 'amenities' ? value.map((amenity) => (
