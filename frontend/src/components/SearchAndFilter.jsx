@@ -112,7 +112,11 @@ function SearchAndFilter( ) {
             alert('Please fill all the fields.');
             return;
         }
-    
+        setFilterState('flight');
+        setFlightLoading(true);
+        setFlightResponse(null);
+        setFlightError(null);
+
         try {
             const response = await axios.post('http://localhost:5000/search/flight', {
                 flightArrLocation,
@@ -120,29 +124,29 @@ function SearchAndFilter( ) {
                 flightDepdates,
                 flightArrDates
             });
-    
-            // Log request data
-            console.log('Flight search request:', {
-                flightArrLocation,
-                flightDepLocation,
-                flightDepdates,
-                flightArrDates
-            });
-    
-            if (response.status === 200) {
-                console.log('Flight search successful.');
-                console.log('Response data:', response.data);
-            } else {
-                console.log('Flight search failed.');
-                console.log('Response status:', response.status);
-                console.log('Response data:', response.data);
+            if (response.status === 200 ) {
+                setFlightResponse(response.data);
+                setFlightLoading(false);
+            }
+            else if (response.status === 204){
+                setFlightError('No result Found');
+                setFlightLoading(false);
+            }
+            else {
+                setFlightError('Error Getting Results Please Try Again');
+                setFlightLoading(false);
             }
         } catch (error) {
+            setFlightLoading(false);
+            if (error.response) {
+                setFlightError(error.response.data.message || 'An error occurred during Flight Search. Please try again.');
+            } else {
+                setFlightError('An error occurred during Flight Search. Please try again.');
+            }
             console.error('Error occurred during flight search:', error.message);
         }
     };
     
-
     const handleSubmitRide = async () => {
         if(!rideDepLocation || !rideArrLocation){alert('Please select a city.')}
         else{
@@ -375,7 +379,7 @@ const filterSection = () =>{
     switch (filterState){
         case '' : return <></>
         case 'stays': return <StayFilterSection stayResponse={stayResponse} stayLoading={stayLoading} stayError={stayError} setStayResponse={setStayResponse}/>
-        case 'flight': return <FlightFillter/>
+        case 'flight': return <FlightFillter flightResponse={flightResponse} flightLoading={flightLoading} flightError={flightError}/>
         default: <></>
     }
         
@@ -383,7 +387,7 @@ const filterSection = () =>{
 
 return (
     <div className='w-full flex flex-col mx-52 bg-white'>
-        <div className='w-full my-10 border-2 flex flex-col items-center justify-center rounded-xl bg-white shadow-xl'>
+        <div className='w-full my-10 border-2 flex flex-col items-center justify-center rounded-3xl bg-white shadow-lg'>
             <div className=' border-b-2 w-full mb-3 flex justify-center items-center'>
                 <ul className='w-full flex justify-center space-x-10 text-lg'>
                     <button className= {`${setcolor('stays')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => {setSection ('stays');}}> Stays</button>
