@@ -37,6 +37,10 @@ const searchFlights = async (req, res) => {
         // Execute queries
         const flights = await Flight.find(query);
         const returnFlights = await Flight.find(query2);
+
+        if (flights.length === 0 && returnFlights.length === 0) {
+            return res.status(204).json({ message: 'No results found' });
+        }
         
         // Return flights
         res.json({ outboundFlights: flights, returnFlights: returnFlights });
