@@ -27,7 +27,7 @@ function Navigation(props) {
   });
 
   return (
-    <div className='flex flex-row w-full h-16 bg-white border-b-[1px] shadow-md  items-center justify-center fixed z-50' >
+    <div className='flex flex-row w-full h-16 bg-white border-b-[1px] shadow-md rounded-b-3xl  items-center justify-center fixed z-50' >
         <div className='flex w-full items-center p-3'>
             {islogged && title ? <Link to='/home' className='flex w-2/12 items-center p-3'>
                 <FontAwesomeIcon icon={faPlaneDeparture} style={{ color: "#ff622e" }} className='mr-2' />
