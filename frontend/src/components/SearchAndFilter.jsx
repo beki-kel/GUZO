@@ -127,6 +127,7 @@ function SearchAndFilter( ) {
             if (response.status === 200 ) {
                 setFlightResponse(response.data);
                 setFlightLoading(false);
+                console.log(response);
             }
             else if (response.status === 204){
                 setFlightError('No result Found');
@@ -198,7 +199,7 @@ function SearchAndFilter( ) {
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Dates </p>
-                                <DateRangePicker format="dd.MM.yyyy" character=" – "  appearance="default" placeholder='Start date -End date' value={dates} onChange={(dates) => setdates(dates) } style={{border:"none"}}/>
+                                <DateRangePicker format="dd.MM.yyyy" character=" – "  appearance="default" placeholder='Start date -End date' value={dates} onChange={(dates) => setdates(dates) } style={{ zIndex: 30 }} />
                             </div>
                         </div>
 
@@ -405,10 +406,7 @@ return (
                 </div>: <></>}
         </div>
         <div className='bg-white w-full mb-10 '> {filterSection()}</div>
-    </div>
-
-
-    
+    </div>    
   )
 }
 
