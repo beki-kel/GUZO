@@ -174,7 +174,7 @@ function SearchAndFilter( ) {
     switch (section){
         case 'stays':
             return <div className='w-full flex space-x-10 justify-center items-center mt-5 mb-10 py-5 mx-3 px-3'>
-                        <div className='flex border-[1px] border-black rounded-2xl py-1 px-3'>
+                        <div className='flex border-2  rounded-2xl py-1 px-3'>
                             <div className=''>
                                 <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
@@ -195,7 +195,7 @@ function SearchAndFilter( ) {
                             </div>
                         </div>
 
-                        <div className='flex border-[1px] border-black rounded-2xl py-1 px-3'>
+                        <div className='flex border-2 rounded-2xl py-1 px-3'>
                             <div className=''>
                                 <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
@@ -205,7 +205,7 @@ function SearchAndFilter( ) {
                             </div>
                         </div>
 
-                        <div className='flex border-[1px] border-black rounded-2xl p-3 px-3'>
+                        <div className='flex border-2  rounded-2xl p-3 px-3'>
                             <div className=''>
                                 <FontAwesomeIcon icon={faUser} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
@@ -220,7 +220,7 @@ function SearchAndFilter( ) {
         case 'flights':
             return (
                 <div className='w-full flex space-x-10 justify-center items-center mt-5 mb-10 py-5 mx-3 px-3'>
-                    <div className='flex border-[1px] border-black rounded-2xl py-1 px-3'>
+                    <div className='flex border-2 rounded-2xl py-1 px-3'>
                         <div>
                             <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6' />
                         </div>
@@ -241,7 +241,7 @@ function SearchAndFilter( ) {
                                 />
                         </div>
                     </div>
-                    <div className='flex border-[1px] border-black rounded-2xl py-1 px-3'>
+                    <div className='flex border-2 rounded-2xl py-1 px-3'>
                         <div>
                             <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6' />
                         </div>
@@ -263,7 +263,7 @@ function SearchAndFilter( ) {
                         </div>
                     </div>
                     {!twoWay ? (
-                        <div className='flex border-[1px] border-black rounded-2xl p-1 px-3'>
+                        <div className='flex border-2 rounded-2xl p-1 px-3'>
                             <div>
                                 <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6' />
                             </div>
@@ -274,7 +274,7 @@ function SearchAndFilter( ) {
                         </div>
                     ) : (
                         <>
-                            <div className='flex border-[1px] border-black rounded-2xl p-1 px-3'>
+                            <div className='flex border-2 rounded-2xl p-1 px-3'>
                                 <div>
                                     <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6' />
                                 </div>
@@ -283,7 +283,7 @@ function SearchAndFilter( ) {
                                     <input type="date" placeholder='Flight day' value={flightDepdates} onChange={(e) => setFlightDepdates(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
                                 </div>
                             </div>
-                            <div className='flex border-[1px] border-black rounded-2xl p-1 px-3'>
+                            <div className='flex border-2 rounded-2xl p-1 px-3'>
                                 <div>
                                     <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6' />
                                 </div>
@@ -299,7 +299,7 @@ function SearchAndFilter( ) {
             );
         case 'rides':
             return  <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>
-                        <div className='flex border-[1px] border-black rounded-2xl py-1 px-3'>
+                        <div className='flex border-2 rounded-2xl py-1 px-3'>
                             <div className=''>
                                 <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
@@ -321,7 +321,7 @@ function SearchAndFilter( ) {
                             </div>
                         </div>
 
-                        <div className='flex border-[1px] border-black rounded-2xl py-1 px-3'>
+                        <div className='flex border-2 rounded-2xl py-1 px-3'>
                             <div className=''>
                                 <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
@@ -343,7 +343,7 @@ function SearchAndFilter( ) {
                             </div>
                         </div>
 
-                        <div className='flex border-[1px] border-black rounded-2xl p-1 px-3'>
+                        <div className='flex border-2 rounded-2xl p-1 px-3'>
                             <div className=''>
                                 <FontAwesomeIcon icon={faUser} className='text-orange-600 mr-2 mt-3 h-6'/> 
                             </div>
