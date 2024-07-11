@@ -13,7 +13,7 @@ function Navigation(props) {
       if(!islogged){
         return(
           <Link key={`menu-item-${index}`} to="/login">
-            <li className='hover:text-orange-400'>{item}</li>
+            <button className='hover:text-orange-400'>{item}</button>
           </Link>
       );
       }else{
