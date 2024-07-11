@@ -374,13 +374,6 @@ function SearchAndFilter( ) {
                         </div>
                         <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitRide}> Search </button>
                     </div>;
-        case 'packages':
-            return <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium'> Search </button>
-                    </div>;
         case 'events':
             return <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>
                         <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
@@ -417,7 +410,6 @@ return (
                     <button className= {`${setcolor('stays')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => {setSection ('stays');}}> Stays</button>
                     <button className= {`${setcolor('flights')} p-3 hover:border-b-black hover:border-b-2`} onClick={() =>{ setSection ('flights'); }}> Flights</button>
                     <button className= {`${setcolor('rides')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('rides')}> Rides</button>
-                    <button className= {`${setcolor('packages')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('packages')}> Packages</button>
                     <button className= {`${setcolor('events')} p-3 hover:border-b-black hover:border-b-2`} onClick={() => setSection ('events')}> Events</button>
                 </ul>
             </div>
