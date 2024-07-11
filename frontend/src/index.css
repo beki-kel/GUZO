@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a {
+    color: inherit; /* Ensures links inherit text color */
+    text-decoration: none; /* Removes underline */
+}
+
+a:hover {
+    color: inherit; /* Ensures hovered links inherit text color */
+    text-decoration: none; /* Adds underline on hover */
+}
