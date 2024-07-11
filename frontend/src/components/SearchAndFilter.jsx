@@ -72,7 +72,8 @@ function SearchAndFilter( ) {
                             setStayResponse(response.data);
                             setStayLoading(false);
                             console.log(response);
-                        } else if (!response.data || !response.data[0]) {
+                        }
+                        else if (!response.data || !response.data[0] || !response.data.outboundFlights[0]) {
                             setStayError('No result Found');
                             setStayLoading(false);
                         } else {
@@ -124,12 +125,13 @@ function SearchAndFilter( ) {
                 flightDepdates,
                 flightArrDates
             });
-            if (response.status === 200 ) {
+            const { outboundFlights } = response.data;
+            if (response.status === 200 && outboundFlights.length > 0) {
                 setFlightResponse(response.data);
                 setFlightLoading(false);
                 console.log(response);
             }
-            else if (response.status === 204){
+            else if (response.status === 204 || outboundFlights.length === 0){
                 setFlightError('No result Found');
                 setFlightLoading(false);
             }
