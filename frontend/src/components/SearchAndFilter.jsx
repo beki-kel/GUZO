@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot,faCalendar,faUser } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { AutoComplete } from "primereact/autocomplete";
-import StayFilterSection from './StayFilterSection'
-import FlightFillter from './FlightFillter';
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
+import StayFilterSection from './StayFilterSection'
+import FlightFillter from './FlightFillter';
+import RideFilter from './RideFilter';
 
 function SearchAndFilter( ) {
     const [section, setSection] = useState('stays');
@@ -29,6 +30,9 @@ function SearchAndFilter( ) {
     const [flightResponse, setFlightResponse]= useState('');
     const [flightLoading, setFlightLoading] = useState(false);
     const [flightError, setFlightError] = useState(null);
+    const [rideResponse, setRideResponse]= useState('');
+    const [rideLoading, setRideLoading] = useState(false);
+    const [rideError, setRideError] = useState(null);
 
     const cities = [
         'Addis Ababa', 'Arba Minch', 'Assosa', 'Axum', 'Bahir Dar', 'Bale Robe', 'Dembidollo', 'Dire Dawa', 
@@ -73,7 +77,7 @@ function SearchAndFilter( ) {
                             setStayLoading(false);
                             console.log(response);
                         }
-                        else if (!response.data || !response.data[0] || !response.data.outboundFlights[0]) {
+                        else if (!response.data || !response.data[0]) {
                             setStayError('No result Found');
                             setStayLoading(false);
                         } else {
@@ -151,25 +155,41 @@ function SearchAndFilter( ) {
     };
     
     const handleSubmitRide = async () => {
-        if(!rideDepLocation || !rideArrLocation){alert('Please select a city.')}
-        else{
+        if(!rideDepLocation || !rideArrLocation){
+            alert('Please select a city.')
+            return
+        }
+        setFilterState('Ride');
+        setRideLoading(true);
+        setRideResponse(null);
+        setRideError(null);
+
             try {
                 const response = await axios.post("http://localhost:5000/search/transportation", 
                     {rideArrLocation,rideDepLocation,Ridetravllers});
-                if (response.status === 200) {
+                if (response.status === 200 && response.data[0]) {
                     console.log('Response status:', response.status);
                     console.log(response.data);
-                    console.log({rideArrLocation,rideDepLocation})
-                } else {
-                    console.log('Response status:', response.status);
-                    console.log(response.data);
+                    setRideResponse(response.data);
+                    setRideLoading(false);
+                }else if(!response.data[0]){
+                    setRideError('No result Found');
+                    setRideLoading(false);
+                }
+                else {
+                    setRideError('Error Getting Results Please Try Again');
+                    setRideLoading(false)
                 }
             } catch (error) {
+                setRideLoading(false);
+                if (error.response) {
+                    setRideError(error.response.data.message || 'An error occurred during Ride Search. Please try again.');
+                } else {
+                    setRideError('An error occurred during Ride Search. Please try again.');
+                }
                 console.log(error);
-            }
-        }
     }
-
+    }
     const renderSection = () => {
     switch (section){
         case 'stays':
@@ -383,6 +403,7 @@ const filterSection = () =>{
         case '' : return <></>
         case 'stays': return <StayFilterSection stayResponse={stayResponse} stayLoading={stayLoading} stayError={stayError} setStayResponse={setStayResponse}/>
         case 'flight': return <FlightFillter flightResponse={flightResponse} flightLoading={flightLoading} flightError={flightError}/>
+        case 'stay': return <RideFilter rideResponse={rideResponse} rideLoading={rideLoading} rideError={rideError}></RideFilter>
         default: <></>
     }
         
