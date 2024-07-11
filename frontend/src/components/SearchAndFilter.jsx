@@ -159,7 +159,7 @@ function SearchAndFilter( ) {
             alert('Please select a city.')
             return
         }
-        setFilterState('Ride');
+        setFilterState('ride');
         setRideLoading(true);
         setRideResponse(null);
         setRideError(null);
@@ -221,7 +221,7 @@ function SearchAndFilter( ) {
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Dates </p>
-                                <DateRangePicker format="dd.MM.yyyy" character=" – "  appearance="default" placeholder='Start date -End date' value={dates} onChange={(dates) => setdates(dates) } style={{ zIndex: 30 }} />
+                                <DateRangePicker character=" – "  placeholder='Start date -End date' value={dates} onChange={(dates) => setdates(dates) } style={{ zIndex: 9999 }} showOneCalendar/>
                             </div>
                         </div>
 
@@ -403,7 +403,7 @@ const filterSection = () =>{
         case '' : return <></>
         case 'stays': return <StayFilterSection stayResponse={stayResponse} stayLoading={stayLoading} stayError={stayError} setStayResponse={setStayResponse}/>
         case 'flight': return <FlightFillter flightResponse={flightResponse} flightLoading={flightLoading} flightError={flightError}/>
-        case 'stay': return <RideFilter rideResponse={rideResponse} rideLoading={rideLoading} rideError={rideError}></RideFilter>
+        case 'ride': return <RideFilter rideResponse={rideResponse} rideLoading={rideLoading} rideError={rideError}></RideFilter>
         default: <></>
     }
         
