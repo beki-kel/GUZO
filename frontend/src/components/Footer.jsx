@@ -54,7 +54,7 @@ function Footer() {
           <h2 className='text-4xl font-thin text-orange-600'>Exopia</h2>
         </div>
         <div className='flex flex-col w-full text-center justify-center items-center'>
-          <p className='w-full text-xl text-white'>book your flights, rides, dining, events and more!</p>
+          <p className='w-full text-xl text-white'>book your flights, rides, events and more!</p>
         </div>
         <div className='flex flex-col w-full text-center justify-center items-center mt-10'>
           <p className='text-white text-2xl'>Contact Us</p>
