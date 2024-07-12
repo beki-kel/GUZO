@@ -11,3 +11,8 @@ a:hover {
     color: inherit; /* Ensures hovered links inherit text color */
     text-decoration: none; /* Adds underline on hover */
 }
+
+a:focus {
+    color: inherit; /* Ensures hovered links inherit text color */
+    text-decoration: none; /* Adds underline on hover */
+}
