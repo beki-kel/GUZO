@@ -10,8 +10,6 @@ const searchEvent = async (req, res ) =>{
             ...(query && { title: { $regex: query, $options: 'i' } }),
             ...(category && { category }),
             ...(date && { date }),
-            ...(location && { location }),
-            ...(description && { description }),
         });
         res.json(event);
     }catch (err){
