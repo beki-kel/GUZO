@@ -421,8 +421,8 @@ return (
                 </div>: <></>}
         </div>
         <div className='bg-white w-full mb-10 '> {filterSection()}</div>
-    </div>    
-  )
+    </div>
+)
 }
 
 export default SearchAndFilter
