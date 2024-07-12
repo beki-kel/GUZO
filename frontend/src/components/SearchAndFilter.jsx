@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot,faCalendar,faUser } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot,faCalendar,faUser, faList } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { AutoComplete } from "primereact/autocomplete";
 import { DateRangePicker } from 'rsuite';
@@ -8,6 +8,8 @@ import 'rsuite/dist/rsuite.min.css';
 import StayFilterSection from './StayFilterSection'
 import FlightFillter from './FlightFillter';
 import RideFilter from './RideFilter';
+import Select from 'react-select';
+
 
 function SearchAndFilter( ) {
     const [section, setSection] = useState('stays');
@@ -33,12 +35,30 @@ function SearchAndFilter( ) {
     const [rideResponse, setRideResponse]= useState('');
     const [rideLoading, setRideLoading] = useState(false);
     const [rideError, setRideError] = useState(null);
+    const [eventDate, seteventDate] = useState('');
+    const[eventCata,setEventCata]= useState('');
 
     const cities = [
         'Addis Ababa', 'Arba Minch', 'Assosa', 'Axum', 'Bahir Dar', 'Bale Robe', 'Dembidollo', 'Dire Dawa', 
         'Gambella', 'Gode', 'Gonder', 'Hawassa', 'Humera', 'Jijiga', 'Jimma', 'Jinka', 'Kabri Dar', 
         'Kombolcha', 'Lalibela', 'Mekelle', 'Semera', 'Shire','Adama'
     ];
+
+    const eventOptions = [
+        { value: 'Community Events', label: 'Community Events' },
+        { value: 'Sports', label: 'Sports' },
+        { value: 'Entertainment Events', label: 'Entertainment Events' },
+        { value: 'Technology', label: 'Technology' },
+        { value: 'Fashion Events', label: 'Fashion Events' },
+        { value: 'Healthcare Events', label: 'Healthcare Events' },
+        { value: 'Education Events', label: 'Education Events' },
+        { value: 'Art', label: 'Art' },
+      ];
+
+    const customStyles = {
+        control: (provided) => ({...provided,border: 'none',boxShadow: 'none',textAlign: 'center',}),
+        option: (provided, state) => ({...provided,padding: '10px 20px',backgroundColor: state.isFocused ? 'orange' : 'white',color: 'black',':hover': {backgroundColor: 'orange-500',color: 'white',},}),
+        dropdownIndicator: (provided) => ({...provided,padding: '2px',}),};
 
     const search = (event) => {
         setTimeout(() => {
@@ -100,8 +120,6 @@ function SearchAndFilter( ) {
             }
         }
     };
-    
-
     const handleSubmitFlight = async () => {
         const departureDate = new Date(flightDepdates);
         const arrivalDate = new Date(flightArrDates);
@@ -153,7 +171,6 @@ function SearchAndFilter( ) {
             console.error('Error occurred during flight search:', error.message);
         }
     };
-    
     const handleSubmitRide = async () => {
         if(!rideDepLocation || !rideArrLocation){
             alert('Please select a city.')
@@ -189,7 +206,8 @@ function SearchAndFilter( ) {
                 }
                 console.log(error);
     }
-    }
+    };
+
     const renderSection = () => {
     switch (section){
         case 'stays':
@@ -231,7 +249,7 @@ function SearchAndFilter( ) {
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Travllers </p>
-                                <input type="number" placeholder='Travellers, Rooms' value={stayTravllers} onChange={(e) => setstayTravllers(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center'/> 
+                                <input type="number" placeholder='Travellers, Rooms' value={stayTravllers} onChange={(e) => setstayTravllers(e.target.value)} className='border-none focus:border-none focus:outline-none px-2 text-center'/> 
                             </div>
                         </div>
                         
@@ -289,7 +307,7 @@ function SearchAndFilter( ) {
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'>Dates</p>
-                                <input type="date" placeholder='Flight day' value={flightDepdates} onChange={(e) => setFlightDepdates(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
+                                <input type="date" placeholder='Flight day' value={flightDepdates} onChange={(e) => setFlightDepdates(e.target.value)} className='border-none focus:border-none focus:outline-none px-2 text-center' />
                             </div>
                         </div>
                     ) : (
@@ -300,7 +318,7 @@ function SearchAndFilter( ) {
                                 </div>
                                 <div className='flex flex-col text-center'>
                                     <p className='text-xl font-medium'>Departure Date</p>
-                                    <input type="date" placeholder='Flight day' value={flightDepdates} onChange={(e) => setFlightDepdates(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
+                                    <input type="date" placeholder='Flight day' value={flightDepdates} onChange={(e) => setFlightDepdates(e.target.value)} className='border-none focus:border-none focus:outline-none px-2 text-center' />
                                 </div>
                             </div>
                             <div className='flex border-2 rounded-2xl p-1 px-3'>
@@ -309,7 +327,7 @@ function SearchAndFilter( ) {
                                 </div>
                                 <div className='flex flex-col text-center'>
                                     <p className='text-xl font-medium'>Return Date</p>
-                                    <input type="date" placeholder='Flight day' value={flightArrDates} onChange={(e) => setFlightArrDates(e.target.value)} className='border-nonef focus:border-none focus:outline-none px-2 text-center' />
+                                    <input type="date" placeholder='Flight day' value={flightArrDates} onChange={(e) => setFlightArrDates(e.target.value)} className='border-none focus:border-none focus:outline-none px-2 text-center' />
                                 </div>
                             </div>
                         </>
@@ -376,17 +394,41 @@ function SearchAndFilter( ) {
                     </div>;
         case 'events':
             return <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
+                        <div className='flex  border-2 rounded-2xl py-5 px-6 text-center'>
+                            <div>
+                                <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6' />
+                            </div>
+                            <div className='flex flex-col '>
+                                <p className='text-xl font-medium'>Date</p>
+                                <input type="date" placeholder='Flight day' value={eventDate} onChange={(e) => seteventDate(e.target.value)} className='border-none focus:border-none focus:outline-none px-2 text-center' />
+                            </div>
+                        </div>
+
+                        <div className='flex  border-2 rounded-2xl py-2 px-6 text-center'>
+                            <div>
+                                <FontAwesomeIcon icon={faList} className='text-orange-600 mr-2 mt-3 h-6' />
+                            </div>
+                            <div className='flex  flex-col  '>
+                                <label htmlFor="dropdown" className='text-xl font-medium'>Category</label>
+                                <Select
+                                    value={eventCata}
+                                    onChange={setEventCata}
+                                    options={eventOptions}
+                                    styles={customStyles}
+                                    placeholder="Select an option"
+                                    isClearable
+                                />
+                            </div>
+                        </div>
+
                         <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium'> Search </button>
                     </div>;
         default:
             return <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <input type="password" placeholder="Password" className='border-black border-2 focus:border-none focus:outline-orange-600 rounded-xl text-center py-2 px-6'/>
-                        <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium'> Search </button>
+                            <div className='flex flex-col text-center'>
+                                <p className='text-xl font-medium'>Date</p>
+                                <input type="date" placeholder='Flight day' value={eventDate} onChange={(e) => seteventDate(e.target.value)} className='border-none focus:border-none focus:outline-none px-2 text-center' />
+                            </div>
                     </div>;
     }
 }
