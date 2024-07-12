@@ -4,7 +4,7 @@ const searchEvent = async (req, res ) =>{
     try{
         const query = req.body.title;
         const category = req.body.category;
-        const date = req.body.date;
+        const date = req.body.eventDate;
 
         const event = await Event.find({
             ...(query && { title: { $regex: query, $options: 'i' } }),
