@@ -9,6 +9,7 @@ import StayFilterSection from './StayFilterSection'
 import FlightFillter from './FlightFillter';
 import RideFilter from './RideFilter';
 import Select from 'react-select';
+import EventFilter from './EventFilter';
 
 
 function SearchAndFilter( ) {
@@ -37,6 +38,9 @@ function SearchAndFilter( ) {
     const [rideError, setRideError] = useState(null);
     const [eventDate, seteventDate] = useState('');
     const[eventCata,setEventCata]= useState('');
+    const[eventResponse,setEventResponse]=useState('');
+    const[eventLoading,setEventLoading]=useState(false);
+    const[eventError,setEventError]=useState(null);
 
     const cities = [
         'Addis Ababa', 'Arba Minch', 'Assosa', 'Axum', 'Bahir Dar', 'Bale Robe', 'Dembidollo', 'Dire Dawa', 
@@ -207,6 +211,42 @@ function SearchAndFilter( ) {
                 console.log(error);
     }
     };
+    const handleSubmitEvent = async () =>{
+        const category = eventCata.value;
+        if(!eventCata || !eventDate){
+            alert('Please fill all fields')
+            return
+        }
+        setFilterState('event');
+        setEventLoading(true);
+        setEventResponse(null);
+        setEventError(null);
+        try{
+            const response = await axios.post("http://localhost:5000/search/Event",
+                {eventDate,category});
+            if(response.status === 200 && response.data[0]){
+                console.log('Response status:', response.status);
+                console.log(response.data);
+                setEventResponse(response.data);
+                setEventLoading(false);
+            }else if(!response.data[0]){
+                console.log('No result Found')
+                setEventError('No result Found');
+                setEventLoading(false);
+            }
+            else{
+                console.log('Error Getting Results Please Try Again')
+                setEventError('Error Getting Results Please Try Again');
+                setEventLoading(false);
+            }
+        }catch(error){
+            if (error.response) {
+                setEventError(error.response.data.message || 'An error occurred during Event Search. Please try again.');
+            }else{
+                setEventError('An error occurred during Event Search. Please try again.')
+            }console.log(error);
+        }
+    }
 
     const renderSection = () => {
     switch (section){
@@ -421,7 +461,7 @@ function SearchAndFilter( ) {
                             </div>
                         </div>
 
-                        <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium'> Search </button>
+                        <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitEvent}> Search </button>
                     </div>;
         default:
             return <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>
@@ -439,6 +479,7 @@ const filterSection = () =>{
         case 'stays': return <StayFilterSection stayResponse={stayResponse} stayLoading={stayLoading} stayError={stayError} setStayResponse={setStayResponse}/>
         case 'flight': return <FlightFillter flightResponse={flightResponse} flightLoading={flightLoading} flightError={flightError}/>
         case 'ride': return <RideFilter rideResponse={rideResponse} rideLoading={rideLoading} rideError={rideError}></RideFilter>
+        case 'event': return <EventFilter eventResponse={eventResponse} eventLoading={eventLoading} eventError={eventError}></EventFilter>
         default: <></>
     }
         
