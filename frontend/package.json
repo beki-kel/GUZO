@@ -4,6 +4,7 @@
   "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
+    "@darenft/react-3d-hover-card": "^1.0.9",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
