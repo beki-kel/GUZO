@@ -22,25 +22,25 @@ function EventFilter({ eventResponse, eventLoading, eventError }) {
 
                 {eventResponse && (
                     <div className='w-full my-10 flex flex-col'>
-                        <p className="text-3xl font-serif w-full text-center text-gray-800">Found results for Events</p>
+                        <p className="text-3xl font-serif w-full text-center text-black">Found results for Events</p>
                         <div className='w-full mb-36 flex flex-wrap items-center justify-center'>
                             {eventResponse.map((event, index) => (
-                                <div key={index} className='w-1/4 mx-3 mt-36 flex flex-col justify-center items-center bg-gradient-to-br from-red-400 to-orange-300 rounded-2xl shadow-2xl hover:scale-105 text-black'>
+                                <div key={index} className='w-1/4 mx-3 mt-36 flex flex-col justify-center items-center bg-gradient-to-br from-red-400 to-orange-300 rounded-2xl shadow-2xl hover:scale-105 text-white'>
                                     <HoverCard scaleFactor={1}>
-                                        <div className='w-full mt-2 text-black px-6 py-3'>
+                                        <div className='w-full mt-2 text-white px-6 py-3'>
                                             <img src={Kebero} className='w-full h-56 rounded-t-md mb-8 z-30 shadow-xl rounded-lg mt-[-6rem]' alt="Event" />
                                         </div>
                                     </HoverCard>
                                     <p className='mr-auto ml-2 text-lg text-center p-2'>{event.description}</p>
                                     <div className='w-full flex items-center justify-center px-3 py-2'>
-                                        <FontAwesomeIcon icon={faLocationDot} className='h-4 ml-2 text-white' />
+                                        <FontAwesomeIcon icon={faLocationDot} className='h-4 ml-2 text-black' />
                                         <p className='mr-auto ml-2 text-lg'>{event.location}</p>
-                                        <FontAwesomeIcon icon={faCalendar} className='h-4 ml-2 text-white' />
+                                        <FontAwesomeIcon icon={faCalendar} className='h-4 ml-2 text-black' />
                                         <p className='mr-auto ml-2 text-lg'>{event.date}</p>
                                     </div>
-                                    <div className='w-full p-3 bg-gray-50 text-black rounded-b-2xl flex items-center justify-center mt-2'>
+                                    <div className='w-full p-3 bg-gray-50 text-orange-500 rounded-b-2xl flex items-center justify-center mt-2 font-bold'>
                                         <p className='mr-auto ml-2 text-lg'>{event.title}</p>
-                                        <FontAwesomeIcon icon={faStar} className="text-black" />
+                                        <FontAwesomeIcon icon={faStar} className="text-orange-600" />
                                     </div>
                                 </div>
                             ))}
