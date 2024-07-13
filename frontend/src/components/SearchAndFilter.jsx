@@ -279,7 +279,7 @@ function SearchAndFilter( ) {
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Dates </p>
-                                <DateRangePicker character=" – "  placeholder='Start date -End date' value={dates} onChange={(dates) => setdates(dates) } style={{ zIndex: 9999 }} showOneCalendar/>
+                                <DateRangePicker character=" – "  placeholder='Start date -End date' value={dates} onChange={(dates) => setdates(dates) }  showOneCalendar/>
                             </div>
                         </div>
 
