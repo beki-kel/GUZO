@@ -38,19 +38,19 @@ function LandingPage({isLoggedIn}) {
     {
       image: cardImage1,
       title: "1 day in Entoto Park",
-      price: "2000 birr",
+      price: "2000 ",
       features: ["Transportation", "Lunch and Dinner", "Sleeping Room"],
     },
     {
       image: cardImage2,
       title: "Kuriftu Water Park",
-      price: "1500 birr",
+      price: "1500 ",
       features: ["Transportation", "Lunch", "Swimming pools"],
     },
     {
       image: cardImage3,
       title: "2 day in Wenchi Lodge",
-      price: "5500 birr",
+      price: "5500 ",
       features: ["Transportation", "Lunch", "Room & swimming pools"],
     },
   ];
@@ -165,14 +165,14 @@ function LandingPage({isLoggedIn}) {
         <CircularCarousel products={sampleProducts} />
       </div>
 
-      <div className='w-full bg-gray-100 py-20'>
+      <div className='w-full bg-gradient-to-br from-red-400 to-orange-300 py-20'>
 
         <div className='flex justify-center items-center w-full pt-6 '>
-            <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='mr-3 h-8' />
-            <h2 className='text-center text-4xl font-thin'>
+            <FontAwesomeIcon icon={faDownload} className='mr-3 h-8 text-white' />
+            <h2 className='text-center text-4xl font-thin text-black'>
               Download the App
             </h2>
-            <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='ml-3 h-8' />
+            <FontAwesomeIcon icon={faDownload}  className='ml-3 h-8 text-white' />
         </div>
           <div className='flex justify-center items-center'>
           <div className=' w-4/12 h-96  flex items-end justify-end mt-24'>
