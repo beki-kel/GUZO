@@ -47,12 +47,12 @@ const addPackage = async (req, res) => {
 
 const fetchPackage = async (req, res) => {
     try {
-        const { destination, startDate, endDate, minPrice, maxPrice } = req.query;
-
-        if(!destination || !startDate || !endDate || !minPrice || !maxPrice){
-            res.status(400).json({ message: 'Please provide all the required fields' });
-            return;
-        }
+        const destination = req.body.destination;
+        const startDate = req.body.startDate;
+        const endDate=req.body.endDate;
+        const minPrice=req.body.minPrice;
+        const maxPrice=req.body.maxPrice;
+        const trending = req.body.trending;
 
         const query = {};
         
@@ -65,6 +65,9 @@ const fetchPackage = async (req, res) => {
         }
         if (minPrice && maxPrice) {
             query.price = { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) };
+        }
+        if (trending){
+            query.trending= trending
         }
 
         const packages = await Package.find(query);
