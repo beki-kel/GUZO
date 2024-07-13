@@ -37,7 +37,7 @@ function HomePricingCard() {
 
     return (
         <div className='w-full flex flex-col justify-center items-center my-5'>
-            <p className="text-4xl font-serif font-medium text-orange-600 w-full text-center mb-6">Our Trending Packages</p>
+            <p className="text-4xl font-serif font-medium text-black w-full text-center mb-6">Our Trending Packages</p>
             {loading && (
                 <div className='w-full flex p-10'>
                     <Placeholder.Graph active />
@@ -45,7 +45,7 @@ function HomePricingCard() {
             )}
             {!loading && cardData.length > 0 && <PricingCards cardData={cardDataReal(cardData, cardImage)} />}
 
-            <button className='px-10 py-6 border-none rounded-2xl text-white text-lg font-medium  bg-orange-500 mt-[-6rem] mb-10 hover:opacity-85'> Create Your Own Package </button>
+            <button className='px-10 py-6 rounded-2xl text-orange-500 text-lg font-medium border-2 bg-white shadow-lg mt-[-6rem] mb-10 hover:opacity-85 hover:shadow-2xl'> Create Your Own Package </button>
         </div>
     );
 }
