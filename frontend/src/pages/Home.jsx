@@ -5,6 +5,7 @@ import CircularCarousel from '../components/CircularCarousel';
 import Subscribe from '../components/Subscribe';
 import cardImage3 from '../assets/wenchi 2.webp';
 import Navigation from '../components/Navigation';
+import HomePricingCard from '../components/HomePricingCard';
 
 function Home({isLoggedIn}) {
   const navigate = useNavigate()
@@ -61,7 +62,7 @@ const sampleProducts = [
       <div className='w-full flex '>
         <SearchAndFilter/>
       </div>
-      
+      <HomePricingCard/>
       <CircularCarousel products={sampleProducts} />
       <h2>Dashboard</h2>
       <Link to="/login">
