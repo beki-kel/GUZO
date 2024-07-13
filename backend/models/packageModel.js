@@ -22,11 +22,11 @@ const packageSchema = new mongoose.Schema({
         required: true
     },
     startDate: {
-        type: Date,
+        type: String,
         required: true
     },
     endDate: {
-        type: Date,
+        type: String,
         required: true
     },
     includes: [{
@@ -88,6 +88,10 @@ const packageSchema = new mongoose.Schema({
         startDate: Date,
         endDate: Date,
         bannerImage: String
+    },
+    trending:{
+        type:Boolean,
+        required: true
     }
 });
 
