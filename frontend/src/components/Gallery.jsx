@@ -12,7 +12,7 @@ import bale from '../assets/Bale Mountains.jpg';
 
 function Gallery() {
 
-    const [hoveredImage, setHoveredImage] = useState(null);
+    const [hoveredImage, setHoveredImage] = useState('Wenchi');
 
     const handleMouseEnter = (place) => {
         setHoveredImage(place);
