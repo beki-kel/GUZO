@@ -7,6 +7,8 @@ import cardImage3 from '../assets/wenchi 2.webp';
 import Navigation from '../components/Navigation';
 import HomePricingCard from '../components/HomePricingCard';
 import Gallery from '../components/Gallery';
+import { CarouselCustomNavigation } from '../components/blogCarousal';
+import Footer from '../components/Footer';
 
 function Home({isLoggedIn}) {
   const navigate = useNavigate()
@@ -58,7 +60,7 @@ const sampleProducts = [
 
   return (
     <div className='flex flex-col w-full min-h-screen bg-white'>
-      <Navigation list={['Home', 'Flights', 'Rooms', 'Rides', 'Dining', 'Packages','Events']} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
+      <Navigation list={['Home', 'Blogs', 'Bookings', 'Packages', 'Notification','Become a Partner',]} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
       <div className='h-20'></div>
       <div className='w-full flex '>
         <SearchAndFilter/>
@@ -66,13 +68,18 @@ const sampleProducts = [
       <Gallery/>
       <HomePricingCard/>
       
-      <CircularCarousel products={sampleProducts} />
+      <div className='w-full h-[36rem] '>
+        <CarouselCustomNavigation/>
+      </div>
       <h2>Dashboard</h2>
       <Link to="/login">
         <button>Login</button>
       </Link>
       <button onClick={handleLogout}>Logout</button>
       <Subscribe/>
+      <div className='w-full bg-gray-900'>
+        <Footer/>
+      </div>
 
     </div>
   );
