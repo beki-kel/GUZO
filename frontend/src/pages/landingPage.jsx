@@ -267,7 +267,6 @@ function LandingPage({isLoggedIn}) {
       </div>
     </div>
     
-  );
-}
+  );}
 
 export default LandingPage;
