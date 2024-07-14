@@ -45,7 +45,7 @@ function HomePricingCard() {
             )}
             {!loading && cardData.length > 0 && <PricingCards cardData={cardDataReal(cardData, cardImage)} />}
 
-            <button className='px-10 py-6 rounded-2xl text-orange-500 text-lg font-medium border-2 bg-white shadow-lg mt-[-6rem] mb-10 hover:opacity-85 hover:shadow-2xl'> Create Your Own Package </button>
+            <button className='px-10 py-6 rounded-2xl text-orange-600 text-lg font-medium border-2 bg-white shadow-lg mt-[-6rem] mb-10 hover:opacity-85 hover:shadow-2xl'> Create Your Own Package </button>
         </div>
     );
 }
