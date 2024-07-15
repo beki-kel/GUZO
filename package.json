@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "client": "npm start --prefix frontend",
-    "server": "nodemon backend/index.js",
+    "server": "npm install && nodemon backend/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Baslael and Bereket",
