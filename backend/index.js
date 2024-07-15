@@ -29,8 +29,15 @@ connectDB()
 
 const app = express();
 
-app.use(cors(
-))
+// CORS configuration
+const corsOptions = {
+    origin: 'http://localhost:3000', // Allow requests from localhost:3000
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Enable this if you need to include cookies in requests
+  };
+  
+  app.use(cors(corsOptions));
 
 app.get("/",(req,res)=>{
     res.json("Server is running");
