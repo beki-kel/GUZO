@@ -60,22 +60,19 @@ const sampleProducts = [
 
   return (
     <div className='flex flex-col w-full min-h-screen bg-white'>
-      <Navigation list={['Home', 'Blogs', 'Bookings', 'Packages', 'Notification','Become a Partner',]} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
+      <Navigation list={['Home', 'Blog', 'Bookings', 'Packages', 'Notification','Become a Partner',]} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
       <div className='h-20'></div>
       <div className='w-full flex '>
         <SearchAndFilter/>
       </div>
       <Gallery/>
       <HomePricingCard/>
-      
       <div className='w-full h-[36rem] '>
         <CarouselCustomNavigation/>
       </div>
-
       <div className='w-full bg-gray-900'>
         <Footer/>
       </div>
-
     </div>
   );
 }

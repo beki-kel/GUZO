@@ -8,6 +8,7 @@ import Admin from './pages/Admin';
 import LandingPage from './pages/landingPage';
 import {jwtDecode} from 'jwt-decode';
 import './index.css';
+import Blog from './pages/Blog';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null); // Set initial state to null
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="/login" element={<Login isLoggedIn={isLoggedIn} pageState={pageState} handleLogin={handleLogin} handlePageState={handlePageState} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home isLoggedIn={isLoggedIn}/>} />
+          <Route path="/Blog" element={<Blog isLoggedIn={isLoggedIn} />}/>
           {/* Only render Admin route if user is logged in and is admin */}
           {isLoggedIn && isAdmin && <Route path="/admin" element={<Admin />} />}
           {/* Private Route for Home */}
