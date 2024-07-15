@@ -15,15 +15,14 @@ const thingsToDo = require('./routes/thingsToDo')
 const packages = require('./routes/packages')
 
 //bk's Imports
-const authRoute = require('./routes/auth.JS')
-const accommodationRoute=require('./routes/Accommodations')
-const transportRoute = require('./routes/transportation')
-const dinningRoute=require('./routes/dining')
-const userRoute=require('./routes/users')
 const bodyParser = require('body-parser');
-const eventRoute=require('./routes/event')
-
-
+const authRoute = require('./routes/auth.JS');
+const accommodationRoute=require('./routes/Accommodations');
+const transportRoute = require('./routes/transportation');
+const dinningRoute=require('./routes/dining');
+const userRoute=require('./routes/users');
+const eventRoute=require('./routes/event');
+const blogRoute=require('./routes/blog');
 
 connectDB()
 
@@ -35,9 +34,9 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true, // Enable this if you need to include cookies in requests
-  };
-  
-  app.use(cors(corsOptions));
+};
+
+app.use(cors(corsOptions));
 
 app.get("/",(req,res)=>{
     res.json("Server is running");
@@ -57,6 +56,7 @@ app.use('/', userRoute)
 app.use('/', packages)
 app.use('/', thingsToDo)
 app.use('/', eventRoute)
+app.use('/', blogRoute)
 
 //error handler middleware
 app.use( (err,req,res,next) => {
