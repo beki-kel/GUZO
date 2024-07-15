@@ -34,13 +34,12 @@ function FlightFilter({ flightResponse, flightLoading, flightError }) {
                             const returnFlight = flightResponse.returnFlights ? flightResponse.returnFlights[index] : null;
                             const qrValueReturn = returnFlight ? `Outbound City: ${returnFlight.departure.airport}\nReturn City: ${returnFlight.arrival.airport}\nFlight Number: ${returnFlight.flightNumber}\nFlight Date: ${returnFlight.flightDate}` : '';
                             const qrValue = qrValueOutbound + (returnFlight ? `\n\nReturn Flight:\n${qrValueReturn}` : '');
-
                             const totalPrice = returnFlight ? flight.price + returnFlight.price : flight.price;
 
                             return (
                                 <div key={flight._id} className='w-full flex flex-col space-y-6'>
                                     <div className='w-full flex justify-center p-5 py-8 shadow-lg border-2 rounded-xl transform hover:scale-105 hover:translate-x-2 hover:-translate-y-2 transition duration-300 ease-in-out'>
-                                        <div className='w-1/2 py-6 h-64 bg-gradient-to-r from-orange-500 to-orange-300 rounded-md mr-2 flex items-center justify-center'>
+                                        <div className='w-1/2 py-6 h-64 bg-gradient-to-r from-orange-700 to-orange-500 rounded-md mr-2 flex items-center justify-center'>
                                             <div className='text-center'>
                                                 <img src={EthiopianAirlines} className='w-14 h-14 rounded-full bg-cover mx-auto mb-2' />
                                                 <p className='text-xl font-semibold text-white'>{flight.airline}</p>
@@ -70,7 +69,7 @@ function FlightFilter({ flightResponse, flightLoading, flightError }) {
 
                                     {returnFlight && (
                                         <div className='w-full flex justify-center p-5 py-8 shadow-lg border-2 rounded-xl transform hover:scale-105 hover:translate-x-2 hover:-translate-y-2 transition duration-300 ease-in-out'>
-                                            <div className='w-1/2 py-6 h-64 bg-orange-500 to-orange-200 rounded-md mr-2 flex items-center justify-center'>
+                                            <div className='w-1/2 py-6 h-64 bg-orange-700 to-orange-400 rounded-md mr-2 flex items-center justify-center'>
                                                 <div className='text-center'>
                                                     <img src={EthiopianAirlines} className='w-14 h-14 rounded-full bg-cover mx-auto mb-2' />
                                                     <p className='text-xl font-semibold text-white'>{returnFlight.airline}</p>
@@ -80,10 +79,10 @@ function FlightFilter({ flightResponse, flightLoading, flightError }) {
                                             </div>
 
                                             <div className='flex items-center justify-center w-12 h-12 rounded-full bg-white p-3 left-auto top-auto absolute z-20 mt-28 mr-72 shadow-lg transform hover:scale-110 transition duration-300 ease-in-out'>
-                                                <FontAwesomeIcon icon={faRightLeft} className='text-orange-500 w-full h-10 z-10' />
+                                                <FontAwesomeIcon icon={faRightLeft} className='text-orange-700 w-full h-10 z-10' />
                                             </div>
 
-                                            <div className='w-1/2 py-6 h-64 bg-orange-400 to-orange-100 rounded-md ml-2 flex items-center justify-center'>
+                                            <div className='w-1/2 py-6 h-64 bg-orange-600 to-orange-300 rounded-md ml-2 flex items-center justify-center'>
                                                 <div className='text-center'>
                                                     <img src={EthiopianAirlines} className='w-14 h-14 rounded-full bg-cover mx-auto mb-2' />
                                                     <p className='text-xl font-semibold text-white'>{returnFlight.airline}</p>
@@ -97,13 +96,13 @@ function FlightFilter({ flightResponse, flightLoading, flightError }) {
                                                     <div className='w-1/2 flex flex-col border-r-4 border-b-4 border-dashed border-white items-center pt-4'>
                                                         <p className='text-lg flex flex-col '>
                                                             <span><FontAwesomeIcon icon={faPlane} /> {flight.departure.airport} </span>
-                                                            <span className='h-10 border-l-2 border-dashed border-orange-700 ml-8 text-xs p-2 flex items-center text-gray-400'> <FontAwesomeIcon icon={faCalendar} className='text-gray-500 mr-1' /> {flight.flightDate}</span>
+                                                            <span className='h-10 border-l-2 border-dashed border-orange-900 ml-8 text-xs p-2 flex items-center text-gray-400'> <FontAwesomeIcon icon={faCalendar} className='text-gray-500 mr-1' /> {flight.flightDate}</span>
                                                             <span ><FontAwesomeIcon icon={faPlane} /> {flight.arrival.airport}</span></p>
                                                     </div>
                                                     <div className='w-1/2 px-1 flex flex-col border-b-4 border-dashed border-white  items-center pt-4'>
                                                         <p className='text-lg flex flex-col '>
                                                             <span><FontAwesomeIcon icon={faPlane} /> {returnFlight.departure.airport} </span>
-                                                            <span className='h-10 border-l-2 border-dashed border-orange-700 ml-8 text-xs p-2 flex items-center text-gray-400'> <FontAwesomeIcon icon={faCalendar} className='text-gray-500 mr-1' /> {returnFlight.flightDate}</span>
+                                                            <span className='h-10 border-l-2 border-dashed border-orange-900 ml-8 text-xs p-2 flex items-center text-gray-400'> <FontAwesomeIcon icon={faCalendar} className='text-gray-500 mr-1' /> {returnFlight.flightDate}</span>
                                                             <span ><FontAwesomeIcon icon={faPlane} /> {returnFlight.arrival.airport}</span></p>
                                                     </div>
                                                 </div>

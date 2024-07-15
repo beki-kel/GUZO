@@ -23,11 +23,11 @@ const RideFilter = ({ rideResponse, rideLoading, rideError }) => {
 
             {rideResponse && rideResponse.map((ride) => (
                 <div key={ride._id} className='w-[45%] p-3 m-4 rounded-3xl shadow-md shadow-gray-300 hover:scale-110 transform transition duration-700'>
-                    <div className='bg-gradient-to-br from-red-400 to-orange-300 py-2 px-3 m-3 rounded-xl shadow-lg shadow-orange-600 z-20 flex flex-col'>
+                    <div className='bg-gradient-to-br from-red-500 to-orange-500 py-2 px-3 m-3 rounded-xl shadow-lg shadow-orange-800 z-20 flex flex-col'>
                         <div className='w-full h-7/12 flex items-center justify-center'>
                             <img className='w-1/2 h-7/12 z-30' src={blackCar} alt="Car" />
                             <div className='w-1/2 h-7/12 flex items-center justify-center z-30'>
-                                <div className='w-20 h-20 rounded-full flex items-center justify-center bg-gray-200 border-4 border-white shadow-orange-700 shadow-xl'>
+                                <div className='w-20 h-20 rounded-full flex items-center justify-center bg-gray-200 border-4 border-white shadow-orange-900 shadow-xl'>
                                     <FontAwesomeIcon icon={faUser} className='w-12 h-12 text-black' />
                                 </div>
                             </div>

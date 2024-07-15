@@ -71,12 +71,7 @@ const sampleProducts = [
       <div className='w-full h-[36rem] '>
         <CarouselCustomNavigation/>
       </div>
-      <h2>Dashboard</h2>
-      <Link to="/login">
-        <button>Login</button>
-      </Link>
-      <button onClick={handleLogout}>Logout</button>
-      <Subscribe/>
+
       <div className='w-full bg-gray-900'>
         <Footer/>
       </div>

@@ -78,7 +78,7 @@ function SearchAndFilter( ) {
         }, 250);
     };
 
-    const setcolor = (curr) => section === curr ? 'text-orange-600 border-b-2 border-orange-600' : 'text-black';
+    const setcolor = (curr) => section === curr ? 'text-orange-800 border-b-2 border-orange-800' : 'text-black';
 
     const handleTwoWay = (e) => {
         setTwoWay(e.target.checked);
@@ -95,7 +95,7 @@ function SearchAndFilter( ) {
             try {
                 setTimeout(async () => {
                     try {
-                        const response = await axios.post('http://localhost:5000/search/filter/Accomadation', {stayLocation,stayTravllers});
+                        const response = await axios.post('https://guzo-x4ue.onrender.com/search/filter/Accomadation', {stayLocation,stayTravllers});
                         if (response.status === 200 && response.data[0]) {
                             setStayResponse(response.data);
                             setStayLoading(false);
@@ -145,7 +145,7 @@ function SearchAndFilter( ) {
         setFlightError(null);
 
         try {
-            const response = await axios.post('http://localhost:5000/search/flight', {
+            const response = await axios.post('https://guzo-x4ue.onrender.com/search/flight', {
                 flightArrLocation,
                 flightDepLocation,
                 flightDepdates,
@@ -186,7 +186,7 @@ function SearchAndFilter( ) {
         setRideError(null);
 
             try {
-                const response = await axios.post("http://localhost:5000/search/transportation", 
+                const response = await axios.post("https://guzo-x4ue.onrender.com/search/transportation", 
                     {rideArrLocation,rideDepLocation,Ridetravllers});
                 if (response.status === 200 && response.data[0]) {
                     console.log('Response status:', response.status);
@@ -222,7 +222,7 @@ function SearchAndFilter( ) {
         setEventResponse(null);
         setEventError(null);
         try{
-            const response = await axios.post("http://localhost:5000/search/Event",
+            const response = await axios.post("https://guzo-x4ue.onrender.com/search/Event",
                 {eventDate,category});
             if(response.status === 200 && response.data[0]){
                 console.log('Response status:', response.status);
@@ -254,7 +254,7 @@ function SearchAndFilter( ) {
             return <div className='w-full flex space-x-10 justify-center items-center mt-5 mb-10 py-5 mx-3 px-3'>
                         <div className='flex border-2  rounded-2xl py-1 px-3'>
                             <div className=''>
-                                <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6'/> 
+                                <FontAwesomeIcon icon={faLocationDot} className='text-orange-800 mr-2 mt-3 h-6'/> 
                             </div>
                             <div className='flex flex-col text-center p-2'>
                                 <p className='text-xl font-medium'> Location</p>
@@ -275,7 +275,7 @@ function SearchAndFilter( ) {
 
                         <div className='flex border-2 rounded-2xl py-1 px-3'>
                             <div className=''>
-                                <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6'/> 
+                                <FontAwesomeIcon icon={faCalendar} className='text-orange-800 mr-2 mt-3 h-6'/> 
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Dates </p>
@@ -285,7 +285,7 @@ function SearchAndFilter( ) {
 
                         <div className='flex border-2  rounded-2xl p-3 px-3'>
                             <div className=''>
-                                <FontAwesomeIcon icon={faUser} className='text-orange-600 mr-2 mt-3 h-6'/> 
+                                <FontAwesomeIcon icon={faUser} className='text-orange-800 mr-2 mt-3 h-6'/> 
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Travllers </p>
@@ -293,14 +293,14 @@ function SearchAndFilter( ) {
                             </div>
                         </div>
                         
-                        <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitStays}> Search </button>
+                        <button className='bg-orange-700 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitStays}> Search </button>
                     </div>;
         case 'flights':
             return (
                 <div className='w-full flex space-x-10 justify-center items-center mt-5 mb-10 py-5 mx-3 px-3'>
                     <div className='flex border-2 rounded-2xl py-1 px-3'>
                         <div>
-                            <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6' />
+                            <FontAwesomeIcon icon={faLocationDot} className='text-orange-800 mr-2 mt-3 h-6' />
                         </div>
                         <div className='flex flex-col text-center'>
                             <p className='text-xl font-medium'>Departure Location</p>
@@ -321,7 +321,7 @@ function SearchAndFilter( ) {
                     </div>
                     <div className='flex border-2 rounded-2xl py-1 px-3'>
                         <div>
-                            <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6' />
+                            <FontAwesomeIcon icon={faLocationDot} className='text-orange-800 mr-2 mt-3 h-6' />
                         </div>
                         <div className='flex flex-col text-center'>
                             <p className='text-xl font-medium'>Arrival Location</p>
@@ -343,7 +343,7 @@ function SearchAndFilter( ) {
                     {!twoWay ? (
                         <div className='flex border-2 rounded-2xl p-1 px-3'>
                             <div>
-                                <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6' />
+                                <FontAwesomeIcon icon={faCalendar} className='text-orange-800 mr-2 mt-3 h-6' />
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'>Dates</p>
@@ -354,7 +354,7 @@ function SearchAndFilter( ) {
                         <>
                             <div className='flex border-2 rounded-2xl p-1 px-3'>
                                 <div>
-                                    <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6' />
+                                    <FontAwesomeIcon icon={faCalendar} className='text-orange-800 mr-2 mt-3 h-6' />
                                 </div>
                                 <div className='flex flex-col text-center'>
                                     <p className='text-xl font-medium'>Departure Date</p>
@@ -363,7 +363,7 @@ function SearchAndFilter( ) {
                             </div>
                             <div className='flex border-2 rounded-2xl p-1 px-3'>
                                 <div>
-                                    <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6' />
+                                    <FontAwesomeIcon icon={faCalendar} className='text-orange-800 mr-2 mt-3 h-6' />
                                 </div>
                                 <div className='flex flex-col text-center'>
                                     <p className='text-xl font-medium'>Return Date</p>
@@ -372,14 +372,14 @@ function SearchAndFilter( ) {
                             </div>
                         </>
                     )}
-                    <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitFlight}>Search</button>
+                    <button className='bg-orange-700 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitFlight}>Search</button>
                 </div>
             );
         case 'rides':
             return  <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>
                         <div className='flex border-2 rounded-2xl py-1 px-3'>
                             <div className=''>
-                                <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6'/> 
+                                <FontAwesomeIcon icon={faLocationDot} className='text-orange-800 mr-2 mt-3 h-6'/> 
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'>Departure Location</p>
@@ -401,7 +401,7 @@ function SearchAndFilter( ) {
 
                         <div className='flex border-2 rounded-2xl py-1 px-3'>
                             <div className=''>
-                                <FontAwesomeIcon icon={faLocationDot} className='text-orange-600 mr-2 mt-3 h-6'/> 
+                                <FontAwesomeIcon icon={faLocationDot} className='text-orange-800 mr-2 mt-3 h-6'/> 
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'>Arrival Location</p>
@@ -423,20 +423,20 @@ function SearchAndFilter( ) {
 
                         <div className='flex border-2 rounded-2xl p-1 px-3'>
                             <div className=''>
-                                <FontAwesomeIcon icon={faUser} className='text-orange-600 mr-2 mt-3 h-6'/> 
+                                <FontAwesomeIcon icon={faUser} className='text-orange-800 mr-2 mt-3 h-6'/> 
                             </div>
                             <div className='flex flex-col text-center'>
                                 <p className='text-xl font-medium'> Travllers </p>
                                 <input type="number" placeholder='Number of Travellers' value={Ridetravllers} onChange={(e) => setRideTravllers(e.target.value)} className='border-none focus:border-none focus:outline-none px-2 text-center'/> 
                             </div>
                         </div>
-                        <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitRide}> Search </button>
+                        <button className='bg-orange-700 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitRide}> Search </button>
                     </div>;
         case 'events':
             return <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>
                         <div className='flex  border-2 rounded-2xl py-5 px-6 text-center'>
                             <div>
-                                <FontAwesomeIcon icon={faCalendar} className='text-orange-600 mr-2 mt-3 h-6' />
+                                <FontAwesomeIcon icon={faCalendar} className='text-orange-800 mr-2 mt-3 h-6' />
                             </div>
                             <div className='flex flex-col '>
                                 <p className='text-xl font-medium'>Date</p>
@@ -446,7 +446,7 @@ function SearchAndFilter( ) {
 
                         <div className='flex  border-2 rounded-2xl py-2 px-6 text-center'>
                             <div>
-                                <FontAwesomeIcon icon={faList} className='text-orange-600 mr-2 mt-3 h-6' />
+                                <FontAwesomeIcon icon={faList} className='text-orange-800 mr-2 mt-3 h-6' />
                             </div>
                             <div className='flex  flex-col  '>
                                 <label htmlFor="dropdown" className='text-xl font-medium'>Category</label>
@@ -461,7 +461,7 @@ function SearchAndFilter( ) {
                             </div>
                         </div>
 
-                        <button className='bg-orange-500 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitEvent}> Search </button>
+                        <button className='bg-orange-700 py-3 px-5 rounded-3xl text-white text-md font-medium' onClick={handleSubmitEvent}> Search </button>
                     </div>;
         default:
             return <div className='w-full flex space-x-10 justify-center  items-center mt-5 mb-10 py-5 mx-3 px-3'>

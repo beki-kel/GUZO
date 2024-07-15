@@ -31,7 +31,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                     })
                 );
     
-                const response = await fetch('http://localhost:5000/search/filter/Accomadation', {
+                const response = await fetch('https://guzo-x4ue.onrender.com/search/filter/Accomadation', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
