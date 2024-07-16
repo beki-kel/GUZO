@@ -1,4 +1,4 @@
-import React, { useRef,useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Navigation from '../components/Navigation';
 import { Navigate, useNavigate } from 'react-router-dom';
 import PricingCards from '../components/pricingCard';
@@ -11,6 +11,9 @@ import skyLight from '../assets/sky light.jpg';
 import kuriftu from '../assets/img-kuriftu-resort-and-spa-adama-adama-2.jpg'
 import cabin from '../assets/Cabin.jpg';
 import wenchiCarter from '../assets/wenchi carter.jpg';
+import traveller1 from '../assets/traveller3.png';
+import traveller2 from '../assets/trvaeller 8.png';
+import traveller3 from '../assets/treveller 5.png'
 import friendship from '../assets/frendship.jpg';
 import changan from '../assets/changan.jpg';
 import tesla from '../assets/tesla.jpg';
@@ -27,6 +30,7 @@ import zoya from '../assets/Zoya.jpg';
 import MobilePhone from '../components/MobilePhone';
 import techEvent from '../assets/Tech Event.jpg';
 import kebero from '../assets/Kebero.jpg';
+import orangeLoading from '../assets/orange-gif.gif';
 import screenshoot from '../assets/Image (1).png'
 import playstore from '../assets/PlayStore.webp'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,15 +40,14 @@ import myTraveller from '../assets/myTraveller.png';
 import Traveller10 from '../assets/traveller10.png';
 import Footer from '../components/Footer';
 import Typed from 'typed.js';
+import '../components/styles/gallery.css'
 
-function LandingPage({isLoggedIn}) {
-
+function LandingPage({ isLoggedIn }) {
+  const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
-  const handleClick = (isLoggedIn) => {
-    isLoggedIn? navigate('/home') : navigate('/register');
-    
-  };
-  
+  const nextSectionRef = useRef(null);
+  const typedRef = useRef(null);
+
   const cardData = [
     {
       image: cardImage1,
@@ -164,28 +167,49 @@ function LandingPage({isLoggedIn}) {
     },
 
   ];
-  const nextSectionRef = useRef(null);
-  const typedRef = useRef(null);
-  
+
+  const handleClick = () => {
+    isLoggedIn ? navigate('/home') : navigate('/register');
+  };
+
   const scrollToNextSection = () => {
     window.scrollTo({
       top: nextSectionRef.current.offsetTop,
-      behavior: 'smooth'
-    });}
+      behavior: 'smooth',
+    });
+  };
 
-    useEffect(() => {
+  useEffect(() => {
+    if (typedRef.current) {
       const typed = new Typed(typedRef.current, {
         strings: ["book your Flights", "book your Rides", "book your Event", "Create Your Own Package and more!"],
         typeSpeed: 50,
         backSpeed: 50,
         backDelay: 1000,
-        showCursor:false,
-        loop:true,
+        showCursor: false,
+        loop: true,
       });
       return () => {
         typed.destroy();
       };
-    }, []);
+    }
+  }, [isLoaded]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isLoaded) {
+    return (
+      <div className='w-full min-h-screen flex justify-center items-center mb-2 p-2'>
+        <img src={orangeLoading} alt="Loading" className="w-50 h-20 rounded-t-lg" />
+      </div>
+    );
+  }
+
     
 
   return (
@@ -199,7 +223,7 @@ function LandingPage({isLoggedIn}) {
         <FontAwesomeIcon icon={faArrowCircleDown} className='absolute bottom-0 mb-2 h-10 text-orange-800' onClick={scrollToNextSection}/>
       </div>
 
-      <div ref={nextSectionRef} className="w-full max-h-[90vh] justify-center items-center font-light relative px-24 bg-gray-100 pb-72">
+      <div ref={nextSectionRef} className="w-full max-h-[90vh] justify-center items-center font-light relative px-24 bg-white pb-72">
         <h2 className='text-center text-2xl pt-14 pb-5 text-black font-serif'>
           Enjoy travelling to the peak with us.
         </h2>
@@ -211,6 +235,42 @@ function LandingPage({isLoggedIn}) {
           Discover the beauty of exotic destinations with best values in our Top Packages.
         </h2>
         <PricingCards cardData={cardData} />
+      </div>
+
+      
+      <div className='w-full flex flex-col items-center justify-center text-orange-700 bg-white px-40'>
+        <h2 className='text-center text-4xl font-light py-10 pt-3 text-black font-serif'>
+          With us you can easily
+        </h2>
+        <div className='w-full flex items-center justify-center'>
+          <div className='w-1/2 text-4xl flex pl-40  flex-col flex-wrap py-10  justify-end items-end'>
+            <img src={traveller1} className='h-80 w-80 '/>
+          </div>
+          <div className='w-1/2 text-[4rem] flex flex-col  flex-wrap nunito-title text-end items-center justify-center'>
+            <p > Book your </p>
+            <p>Flight</p>
+          </div>
+        </div>
+
+        <div className='w-full flex items-center justify-center'>
+        <div className='w-1/2 text-[4rem] pl-40 flex flex-col  flex-wrap nunito-title text-center items-center justify-center'>
+            <p > Book your </p>
+            <p>Hotel</p>
+          </div>
+          <div className='w-1/2 text-4xl flex   flex-col flex-wrap py-10 items-center justify-center'>
+            <img src={traveller2} className='h-80 w-80 '/>
+          </div>
+        </div>
+
+        <div className='w-full flex items-center justify-center'>
+          <div className='w-1/2 text-4xl flex pl-40  flex-col flex-wrap py-10  justify-end items-end'>
+            <img src={traveller3} className='h-80 w-80 '/>
+          </div>
+          <div className='w-1/2 text-[4rem] flex flex-col  flex-wrap  nunito-title text-center items-center justify-center'>
+            <p > Book your </p>
+            <p>Ride</p>
+          </div>
+        </div>
       </div>
 
       <div className='flex flex-col justify-center items-center w-full  bg-cover px-10 py-4'>
