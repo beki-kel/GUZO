@@ -22,7 +22,10 @@ const Login = ({ handleLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://guzo-x4ue.onrender.com/auth/login', { username, password });
+      const response = await axios.post('https://guzo-x4ue.onrender.com/auth/login', { username, password },{
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'https://exopia.vercel.app',}});
       if (response.status === 201) {
         const { token } = response.data; // Access the token from response data
         localStorage.setItem('token', token);
