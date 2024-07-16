@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
 import Register from './pages/Register';
@@ -41,24 +41,19 @@ const App = () => {
     setIsLoggedIn(true);
   };
 
-  const handlePageState = (page) => {
-    setPageState(page);
-    console.log("Page state set to:", page);
-  };
-
   return (
     <div>
-      <Router>
+      <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage isLoggedIn={isLoggedIn} />} />
-          <Route path='/landing' element={<LandingPage isLoggedIn={isLoggedIn} handlePageState={handlePageState} />} />
-          <Route path="/login" element={<Login isLoggedIn={isLoggedIn} pageState={pageState} handleLogin={handleLogin} handlePageState={handlePageState} />} />
+          <Route path="/" index element={<LandingPage isLoggedIn={isLoggedIn} />} />
+          <Route path='/landing' element={<LandingPage isLoggedIn={isLoggedIn}/>}/>
+          <Route path="/login" element={<Login isLoggedIn={isLoggedIn} pageState={pageState} handleLogin={handleLogin}/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={isLoggedIn ? <Home isLoggedIn={isLoggedIn} /> : <Navigate to="/login" />} />
           <Route path="/blog" element={<Blog isLoggedIn={isLoggedIn} />} />
           {isLoggedIn && isAdmin && <Route path="/admin" element={<Admin />} />}
         </Routes>
-      </Router>
+      </BrowserRouter>
     </div>
   );
 };
