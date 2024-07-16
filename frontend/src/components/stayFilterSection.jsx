@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
 import sheraton from '../assets/Sheraton_Hotel,_Addis_Ababa_(2058298419).jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBed, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBed, faFireAlt, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faWifi,faTemperatureArrowUp,faTelevision,faMartiniGlass, faBellConcierge, faCouch, faEarDeaf, faSmokingBan, faDoorOpen, faEye, faPhone} from '@fortawesome/free-solid-svg-icons';
+import {Card,CardHeader,CardBody,CardFooter,Typography,Button,Tooltip,IconButton,} from "@material-tailwind/react";
 
 function StayFilterSection({ stayResponse, stayLoading, stayError, setStayResponse }) {
     const [nocities, setnoCities] = useState('some');
@@ -87,6 +89,37 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
             return prevFilters;
         });
     };
+
+    const handleIcon = (tyu) => {
+        switch(tyu) {
+            case 'Free Wi-Fi':
+                return (<FontAwesomeIcon icon={faWifi} className='p-1'/>);
+            case 'Air Conditioning':
+                return (<FontAwesomeIcon icon={faTemperatureArrowUp} className="p-1"/>);
+            case 'TV':
+                return (<FontAwesomeIcon icon={faTelevision} className="p-1"/>);
+            case 'Mini Bar':
+                return (<FontAwesomeIcon icon={faMartiniGlass} className="p-1"/>);
+            case 'Room Service':
+                return (<FontAwesomeIcon icon={faBellConcierge} className="p-1"/>);
+            case 'Tea/Coffee Maker':
+                return (<FontAwesomeIcon icon={faMugHot} className="p-1"/>);
+            case 'Seating Area':
+                return (<FontAwesomeIcon icon={faCouch} className="p-1"/>);
+            case 'Soundproof Rooms':
+                return (<FontAwesomeIcon icon={faEarDeaf} className="p-1"/>);
+            case 'Non-smoking Rooms':
+                return (<FontAwesomeIcon icon={faSmokingBan} className="p-1"/>);
+            case 'Balcony':
+                return (<FontAwesomeIcon icon={faDoorOpen} className="p-1"/>);
+            case 'View':
+                return (<FontAwesomeIcon icon={faEye} className="p-1"/>);
+            case 'Telephone':
+                return (<FontAwesomeIcon icon={faPhone} className="p-1"/>);
+            default:
+                return null;
+        }
+    }
 
     return (
         <div className='w-full my-10 flex flex-col'>
@@ -239,40 +272,70 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                         </div>
 
                         {stayResponse.map((stay, index) => (
-                            <div className='w-full mr-32  bg-white flex rounded-2xl shadow-md border-2 mb-3' key={index}>
-                                <div className='w-5/12 rounded-xl'>
-                                    <img src={sheraton} alt="Loading" className="h-60 w-full rounded-l-2xl" />
+                                <Card className="w-full max-w-[26rem] shadow-lg "  key={index}>
+                                <CardHeader floated={false} color="blue-gray">
+                                <img src={sheraton} alt="Loading" className="h-60 w-full rounded-l-2xl" />
+                                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 "/>
+                                </CardHeader>
+                                <CardBody>
+                                <div className="mb-3 flex items-center justify-between">
+                                    <Typography variant="h5" color="blue-gray" className="font-medium">
+                                    {stay.name}
+                                    </Typography>
+                                    <Typography color="blue-gray" className="flex items-center gap-1.5 font-normal">
+                                    {parseInt(stay.rating)}
+                                    <FontAwesomeIcon icon={faStar} className='text-orange-700' />
+                                    </Typography>
                                 </div>
-                                <div className="w-7/12">
-                                    <div className='w-full flex items-center justify-center'>
-                                        <p className="text-orange-600 text-xl w-full px-3 py-2 pb-0 font-medium">{stay.name}</p>
-                                        
-                                        <div className="flex items-center pr-3">
-                                            {Array(parseInt(stay.rating)).fill().map((_, i) => (
-                                                <FontAwesomeIcon icon={faStar} className='text-orange-500' key={i} />
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <p className='pl-3 text-sm'>{stay.city},{stay.location}</p>
-                                    <div className='w-full flex space-x-5 pl-3 py-2'>
-                                        {stay.rooms.map((room, index) => (<div className=' text-sm text-orange-500' key={index}> <FontAwesomeIcon icon={faBed}></FontAwesomeIcon> <span className='text-gray-400'>{room.type !== "other"? room.type : room.otherType}</span> </div>))}
-                                    </div>
-                                    <p className="w-full px-6 text-md "> {stay.description}</p>
-
-                                    <div className=' flex items-center p-3  mt-2'>
-                                        <div className='w-1/2'>
-                                            <p className=' w-1/3 text-center px-4 py-1 bg-orange-600 rounded-md text-white'>
-                                                {stay.userRating}
-                                            </p>
-                                        </div>
-
-                                        <div className='flex justify-center w-1/2 items-center my-2 '>
-                                            <span className='font-semibold text-xl ml-auto'>{Math.min(...stay.rooms.map(room => room.price))}</span>  - <span className='font-medium text-xl mr-1'> {Math.max(...stay.rooms.map(room => room.price))} </span> birr
-                                        </div>
-                                    </div>
-                                </div>
+                                <Typography color="gray">
+                                {stay.city},{stay.location}
+                                </Typography>
                         
-                            </div>
+                                <Typography color="gray">
+                                    {stay.description}
+                                </Typography>
+                                    
+                                <Typography>
+                                    <div className='w-full flex space-x-5 pl-3 py-2'>
+                                        {stay.rooms.map((room, index) => (<div className=' text-sm text-orange-700' key={index}> <FontAwesomeIcon icon={faBed}></FontAwesomeIcon> <span className='text-gray-600'>{room.type !== "other"? room.type : room.otherType}</span> </div>))}
+                                    </div>
+                                </Typography>
+                                <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
+                                    <Tooltip content={`${Math.min(...stay.rooms.map(room => room.price))} - ${Math.max(...stay.rooms.map(room => room.price))} birr`}>
+                                    <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+                                        <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        className="h-5 w-5"
+                                        >
+                                        <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z" />
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z"
+                                            clipRule="evenodd"
+                                        />
+                                        <path d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z" />
+                                        </svg>
+                                    </span>
+                                    </Tooltip>
+                                    {stay.rooms.flatMap((room) => 
+                                        room.amenities.map((amenity, index) => (
+                                            <Tooltip content={amenity} key={index}>
+                                                <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+                                                    {handleIcon(amenity)}
+                                                </span>
+                                            </Tooltip>
+                                        ))
+                                    )}
+                                </div>
+                                </CardBody>
+                                <CardFooter className="pt-3">
+                                <Button size="lg" fullWidth={true} className='bg-orange-800'>
+                                    Reserve
+                                </Button>
+                                </CardFooter>
+                            </Card>
                         ))}
                     </div>
                 </div>
