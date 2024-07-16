@@ -73,6 +73,7 @@ const sampleProducts = [
       <div className='w-full bg-gray-900'>
         <Footer/>
       </div>
+      <button onClick={handleLogout} className='w-full p-5'>Logout</button>
     </div>
   );
 }
