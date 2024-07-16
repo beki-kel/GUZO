@@ -4,8 +4,9 @@
   "description": "Travel Guide",
   "main": "index.js",
   "scripts": {
+    "start": "node backend/index.js",
     "client": "npm start --prefix frontend",
-    "server": "npm install && nodemon backend/index.js",
+    "server": "nodemon backend/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Baslael and Bereket",
@@ -16,7 +17,6 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "colors": "^1.4.0",
-    "cookie": "^0.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
