@@ -59,7 +59,7 @@ const App = () => {
           {/* Only render Admin route if user is logged in and is admin */}
           {isLoggedIn && isAdmin && <Route path="/admin" element={<Admin />} />}
           {/* Private Route for Home */}
-          <Route path="/" element={isLoggedIn ? <Home isLoggedIn={isLoggedIn} /> : <LandingPage />} />
+          <Route path="/" element={<LandingPage isLoggedIn={isLoggedIn} />} />
         </Routes>
       </Router>
     </div>

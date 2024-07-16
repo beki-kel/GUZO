@@ -39,8 +39,9 @@ import Typed from 'typed.js';
 
 function LandingPage({isLoggedIn}) {
   const navigate = useNavigate();
-  const handleClick = () => {
-    navigate('/register');
+  const handleClick = (isLoggedIn) => {
+    isLoggedIn? navigate('/home') : navigate('/register');
+    
   };
   
   const cardData = [
@@ -192,7 +193,7 @@ function LandingPage({isLoggedIn}) {
         <div className='w-full flex flex-col text-center items-center justify-center h-1/3 mb-14'>
           <h1 className='text-4xl text-orange-800 font-semibold w-full'>Discover Your Adventure</h1>
           <span ref={typedRef} className='text-white text-xl inline-block' ></span>
-          <button className="bg-orange-800 text-white font-bold p-2 mt-6 rounded-xl w-1/12" onClick={handleClick}>Get Started</button>
+          <button className="bg-orange-800 text-white font-bold p-2 mt-6 rounded-xl w-1/12" onClick={handleClick (isLoggedIn)}>Get Started</button>
         </div>
         <FontAwesomeIcon icon={faArrowCircleDown} className='absolute bottom-0 mb-2 h-10 text-orange-800' onClick={scrollToNextSection}/>
       </div>
