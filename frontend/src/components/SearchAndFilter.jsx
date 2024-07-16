@@ -5,7 +5,7 @@ import axios from 'axios';
 import { AutoComplete } from "primereact/autocomplete";
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
-import StayFilterSection from './StayFilterSection'
+import StayFilterSection from './stayFilterSection'
 import FlightFillter from './FlightFillter';
 import RideFilter from './RideFilter';
 import Select from 'react-select';
