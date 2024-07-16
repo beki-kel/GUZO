@@ -17,6 +17,7 @@ const register = async (req, res, next) => {
         await newUser.save();
         res.status(201).json({ message: 'User created successfully', user: newUser });
     } catch (err) {
+        console.log(err)
         if (err.code === 11000) {
             // Duplicate key error
             if (err.keyPattern.username) {
