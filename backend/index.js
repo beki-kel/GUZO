@@ -30,7 +30,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-    origin: 'http://localhost:5173', // Allow requests from localhost:3000
+    origin: 'http://localhost:5173'|| "https://exopia.vercel.app/", // Allow requests from localhost:3000
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true, // Enable this if you need to include cookies in requests
