@@ -31,7 +31,7 @@ const app = express();
 
 const prodOrigins = [process.env.ORIGIN];
 const devOrigins = ['http://localhost:5173'];
-const allowedOrigin = process.env.NODE_ENV === 'product' ?  prodOrigins : devOrigins ;
+const allowedOrigin = process.env.NODE_ENV === 'production' ?  prodOrigins : devOrigins ;
 
 app.use(cors({
     origin: (origin, callback) => {
