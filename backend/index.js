@@ -34,14 +34,15 @@ const whitelist = ['https://exopia.vercel.app', 'http://localhost:5173']
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true)
+            callback(null, true)
         } else {
-        callback(new Error('Not allowed by CORS'))
-        }},
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
-    }
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
 app.use(cors(corsOptions));
 
