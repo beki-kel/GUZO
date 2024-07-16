@@ -29,22 +29,21 @@ connectDB()
 const app = express();
 
 
-const prodOrigins = [process.env.ORIGIN];
-const devOrigins = ['http://localhost:5173'];
-const allowedOrigin = process.env.NODE_ENV === 'production' ?  prodOrigins : devOrigins ;
+const whitelist = ['https://exopia.vercel.app', 'http://localhost:5173']
 
-app.use(cors({
-    origin: (origin, callback) => {
-        if (allowedOrigin.includes(origin) || !origin) {
-            callback(null, true);
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true)
         } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+        callback(new Error('Not allowed by CORS'))
+        }},
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
-}));
+    }
+
+app.use(cors(corsOptions));
 
 app.get("/",(req,res)=>{
     res.json("Server is running");
