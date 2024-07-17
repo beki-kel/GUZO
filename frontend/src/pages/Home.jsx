@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState , useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchAndFilter from '../components/SearchAndFilter';
-import CircularCarousel from '../components/CircularCarousel';
 import Subscribe from '../components/Subscribe';
 import cardImage3 from '../assets/wenchi 2.webp';
 import Navigation from '../components/Navigation';
@@ -9,20 +8,11 @@ import HomePricingCard from '../components/HomePricingCard';
 import Gallery from '../components/Gallery';
 import { CarouselCustomNavigation } from '../components/blogCarousal';
 import Footer from '../components/Footer';
+import { Spinner } from "@material-tailwind/react";
 
 function Home({isLoggedIn}) {
-  const navigate = useNavigate()
-  // Function to remove JWT token from browser storage
-const removeTokenFromStorage = () => {
-  localStorage.removeItem('token');
-};
+  const[isLoaded,setIsLoaded]=useState(null)
 
-  // Function to handle logout
-const handleLogout = () => {
-  removeTokenFromStorage();
-  // Redirect to login page
-  navigate('/login');
-};
 
 const sampleProducts = [
   {
@@ -58,9 +48,24 @@ const sampleProducts = [
   // Add more products as needed
 ];
 
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setIsLoaded(true);
+  }, 5000);
+
+  return () => clearTimeout(timer);
+}, []);
+
+if (!isLoaded) {
+  return (
+    <div className='w-full min-h-screen flex justify-center items-center mb-2 p-2'>
+      <Spinner className="h-50 w-50 text-orange-800" />
+    </div>
+  );
+}
   return (
     <div className='flex flex-col w-full min-h-screen bg-white'>
-      <Navigation list={['Home', 'Blog', 'Bookings', 'Packages', 'Notification','Become a Partner',]} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
+      <Navigation list={['Home', 'Blog', 'Bookings', 'Packages']} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
       <div className='h-20'></div>
       <div className='w-full flex '>
         <SearchAndFilter/>
@@ -73,7 +78,6 @@ const sampleProducts = [
       <div className='w-full bg-gray-900'>
         <Footer/>
       </div>
-      <button onClick={handleLogout} className='w-full p-5'>Logout</button>
     </div>
   );
 }

@@ -194,6 +194,7 @@ function LandingPage({ isLoggedIn }) {
       };
     }
   }, [isLoaded]);
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
