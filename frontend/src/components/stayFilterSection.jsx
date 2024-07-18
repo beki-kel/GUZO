@@ -2,9 +2,32 @@ import React, { useState, useEffect } from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
 import sheraton from '../assets/Sheraton_Hotel,_Addis_Ababa_(2058298419).jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBed, faClose, faFireAlt, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBed, faClose, faFireAlt, faStar, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faWifi,faTemperatureArrowUp,faTelevision,faMartiniGlass, faBellConcierge, faCouch, faEarDeaf, faSmokingBan, faDoorOpen, faEye, faPhone} from '@fortawesome/free-solid-svg-icons';
 import {Card,CardHeader,CardBody,CardFooter,Typography,Button,Tooltip,IconButton,} from "@material-tailwind/react";
+import {Dialog,DialogHeader,DialogBody,DialogFooter,Avatar, List,ListItem,ListItemPrefix,} from "@material-tailwind/react";
+import Sherton2 from '../assets/sheraton.jpg';
+import SheratonDb from '../assets/sheratonDouble.jpg';
+import sheraton3 from '../assets/sheratonSuite.avif';
+import sheraton4 from '../assets/SheratoRoom.jpg'
+
+const data = [
+    {
+        imgelink:Sherton2,
+    },
+    {
+        imgelink:sheraton3,
+    },
+    {
+        imgelink:sheraton4,
+    },
+    {
+        imgelink:SheratonDb,
+    },
+    {
+        imgelink:sheraton,
+    },
+];
 
 function StayFilterSection({ stayResponse, stayLoading, stayError, setStayResponse,setFilterState }) {
     const [nocities, setnoCities] = useState('some');
@@ -16,6 +39,11 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
         roomType: '',
         rating:0
     });
+    const [open, setOpen] = React.useState(false);
+    const [isFavorite, setIsFavorite] = React.useState(false);
+   
+    const handleOpen = () => setOpen((cur) => !cur);
+    const handleIsFavorite = () => setIsFavorite((cur) => !cur)
 
     const handleClick = () => setFilterState('')
 
@@ -92,10 +120,12 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
         });
     };
 
+    const [active, setActive] = useState(sheraton);
+
     const handleIcon = (tyu) => {
         switch(tyu) {
             case 'Free Wi-Fi':
-                return (<FontAwesomeIcon icon={faWifi} className='p-1'/>);
+                return (<FontAwesomeIcon icon={faWifi} className='p-1 '/>);
             case 'Air Conditioning':
                 return (<FontAwesomeIcon icon={faTemperatureArrowUp} className="p-1"/>);
             case 'TV':
@@ -142,7 +172,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                         <FontAwesomeIcon icon={faClose} className='h-6 w-6'>close</FontAwesomeIcon>
                         </div>
                     </div>
-                    <div className='w-full flex space-x-10 justify-center'>
+                    <div className='w-full flex'>
                         <div className='w-3/12 flex flex-col items-start justify-start text-center px-10 border-r-2 border-orange-500'>
                             <p className='text-2xl text-center m-2 mb-0 font-medium'> Filter By </p>
                             <p className='text-md mt-3 mx-2 font-medium text-center text-orange-500'>Cities </p>
@@ -253,7 +283,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                             onChange={() => handleFilterChange('rating', rating)} checked={selectedFilters.rating === rating} />
                                         <label htmlFor={`rating-${rating}`} className='flex items-center'>
                                             {Array(rating).fill().map((_, i) => (
-                                                <FontAwesomeIcon icon={faStar} className='mr-1 text-orange-500' key={i} />
+                                                <FontAwesomeIcon icon={faStar} className='mr-1 text-orange-800' key={i} />
                                             ))}
                                         </label>
                                     </div>
@@ -261,17 +291,17 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                             </form>
                         </div>
 
-                        <div className='w-7/12 flex flex-col bg-white'>
+                        <div className='w-9/12 pl-10 flex flex-col bg-white'>
                             <p className='text-2xl text-center m-2 mb-4'> Found {stayResponse.length === 1 ? "1 Result in Stays" : `${stayResponse.length} Results in Stays`} </p>
                             <div className='w-full mb-3 rounded-md flex flex-wrap'>
                                 {Object.entries(selectedFilters).map(([type, value]) => (
                                     (type === 'amenities' ? value.map((amenity) => (
-                                        <div className='bg-orange-500 text-white rounded-2xl px-3 py-2 flex items-center m-2' key={amenity}>
+                                        <div className='bg-gray-300 text-black rounded-2xl px-3 py-2 flex items-center m-2' key={amenity}>
                                             <p>{amenity}</p>
                                             <FontAwesomeIcon icon={faXmark} className='ml-3' onClick={() => handleRemoveFilter(type, amenity)} />
                                         </div>
                                     )) : (value ?
-                                        <div className='bg-orange-500 text-white rounded-2xl px-3 py-2 flex items-center m-2' key={value}>
+                                        <div className='bg-gray-300 text-black rounded-2xl px-3 py-2 flex items-center m-2' key={value}>
                                             {value ? <p>{value}</p> : <></>  }
                                             <FontAwesomeIcon icon={faXmark} className='ml-3' onClick={() => handleRemoveFilter(type, value)} />
                                         </div>:<></>
@@ -280,70 +310,127 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                             </div>
 
                             {stayResponse.map((stay, index) => (
-                                    <Card className="w-full max-w-[26rem] shadow-lg "  key={`${index}`}>
-                                    <CardHeader floated={false} color="blue-gray">
-                                    <img src={sheraton} alt="Loading" className="h-60 w-full rounded-l-2xl" />
-                                    <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 "/>
-                                    </CardHeader>
-                                    <CardBody>
-                                    <div className="mb-3 flex items-center justify-between">
-                                        <Typography variant="h5" color="blue-gray" className="font-medium">
-                                        {stay.name}
-                                        </Typography>
-                                        <Typography color="blue-gray" className="flex items-center gap-1.5 font-normal">
-                                        {parseInt(stay.rating)}
-                                        <FontAwesomeIcon icon={faStar} className='text-orange-700' />
-                                        </Typography>
-                                    </div>
-                                    <Typography color="gray">
-                                    {stay.city},{stay.location}
-                                    </Typography>
-                            
-                                    <Typography color="gray">
-                                        {stay.description}
-                                    </Typography>
-                                        
-                                    <Typography>
-                                        <div className='w-full flex space-x-5 pl-3 py-2'>
-                                            {stay.rooms.map((room, index) => (<div className=' text-sm text-orange-700' key={index}> <FontAwesomeIcon icon={faBed}></FontAwesomeIcon> <span className='text-gray-600'>{room.type !== "other"? room.type : room.otherType}</span> </div>))}
-                                        </div>
-                                    </Typography>
-                                    <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
-                                        <Tooltip content={`${Math.min(...stay.rooms.map(room => room.price))} - ${Math.max(...stay.rooms.map(room => room.price))} birr`}>
-                                        <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                                            <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            fill="currentColor"
-                                            className="h-5 w-5"
-                                            >
-                                            <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z" />
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z"
-                                                clipRule="evenodd"
-                                            />
-                                            <path d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z" />
-                                            </svg>
-                                        </span>
-                                        </Tooltip>
-                                        {stay.rooms.flatMap((room) => 
-                                            room.amenities.map((amenity, index) => (
-                                                <Tooltip content={amenity} key={index}>
-                                                    <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                                                        {handleIcon(amenity)}
-                                                    </span>
+                                <div className='w-full flex flex-wrap justify-start mb-4'>
+                                    <Card className="w-5/12  shadow-lg mx-2 mb-5 border-[3px] bg-gray-50"  key={`${index}`} onClick={handleOpen}>
+                                        <CardHeader floated={false} color="blue-gray" className='shadow-none'>
+                                        <img src={sheraton} alt="Loading" className="h-50 w-full "/>
+                                        <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 "/>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <div className="mb-3 flex items-center justify-between">
+                                                <Typography variant="h4" color="white" className="font-bold font-serif flex flex-col text-black w-10/12 text-wrap">
+                                                <span className='text-black pb-0'>{stay.name}</span> <p className='text-black text-sm font-medium'> {stay.city},{stay.location}</p>
+                                                </Typography>
+                                                <Typography className="flex items-center justify-center gap-1.5 font-normal text-black w-2/12">
+                                                    {parseInt(stay.rating)}
+                                                    <FontAwesomeIcon icon={faStar} className='text-orange-800' />
+                                                </Typography>
+                                            </div>
+                                            
+
+                                            <p className='text-black text-lg font-serif'> {stay.description} </p>
+
+                                                <div className='w-full flex space-x-5 pl-3 py-2'>
+                                                    {stay.rooms.map((room, index) => (<div className=' text-sm text-black' key={index}> <FontAwesomeIcon icon={faBed} className='text-orange-800'></FontAwesomeIcon> <span className='text-black'>{room.type !== "other"? room.type : room.otherType}</span> </div>))}
+                                                </div>
+                                            <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
+                                                <Tooltip content={`${Math.min(...stay.rooms.map(room => room.price))} - ${Math.max(...stay.rooms.map(room => room.price))} birr`}>
+                                                <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-300 p-3 text-gray-900 transition-colors hover:border-gray-100/10 hover:bg-gray-100 hover:!opacity-100 group-hover:opacity-70">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                                                    <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z" />
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                    <path d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z" />
+                                                    </svg>
+                                                </span>
                                                 </Tooltip>
-                                            ))
-                                        )}
-                                    </div>
+                                                {stay.rooms.flatMap((room) => 
+                                                    room.amenities.map((amenity, index) => (
+                                                        <Tooltip content={amenity} key={index}>
+                                                            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-300 p-3 text-black transition-colors hover:border-gray-100/10 hover:bg-gray-100 hover:!opacity-100 group-hover:opacity-70">
+                                                                {handleIcon(amenity)}
+                                                            </span>
+                                                        </Tooltip>
+                                                    ))
+                                                )}
+                                            </div>
                                     </CardBody>
-                                    <CardFooter className="pt-3">
-                                    <Button size="lg" fullWidth={true} className='bg-orange-800'>
-                                        Reserve
-                                    </Button>
-                                    </CardFooter>
-                                </Card>
+                                    </Card>
+
+                                    <Dialog size="xl" open={open} handler={handleOpen}>
+                                        <DialogHeader className="justify-between">
+                                        <div className="w-full flex items-end justify-end">
+                                            <Button size="sm" onClick={handleOpen} className='bg-orange-700'>
+                                                <FontAwesomeIcon icon={faClose}/>
+                                            </Button>
+                                        </div>
+                                        </DialogHeader>
+                                        <DialogBody>
+                                        <div className='w-full flex flex-col p-3'>
+                                            <Typography variant="h2" color="blue-gray" className="font-medium font-serif w-full text-center mb-4">
+                                                {stay.name}
+                                            </Typography>
+                                            <div className='w-full flex'>
+                                            <div className="grid gap-4 w-1/3  border-2 p-2 rounded-lg shadow-lg">
+                                                <div>
+                                                    <img
+                                                    className="h-60 w-full max-w-full rounded-lg object-cover object-center"
+                                                    src={active}
+                                                    alt=""
+                                                    />
+                                                </div>
+                                                <div className="grid grid-cols-5 gap-4">
+                                                    {data.map(({ imgelink }, index) => (
+                                                    <div key={index}>
+                                                        <img
+                                                        onClick={() => setActive(imgelink)}
+                                                        src={imgelink}
+                                                        className="h-20 max-w-full cursor-pointer rounded-lg object-cover object-center"
+                                                        alt="gallery-image"
+                                                        />
+                                                    </div>
+                                                    ))}
+                                                </div>
+                                                </div>
+                                                <div className='w-8/12 flex flex-col justify-center'>
+                                                    {stay.rooms.map((room, index) =>
+                                                        <List className='w-full '>
+                                                        <ListItem key={index} className='w-full px-4 border-2 shadow-md'>
+                                                            <ListItemPrefix className='flex gap-4 text-xl w-1/6 text-black'>
+                                                                <FontAwesomeIcon icon={faBed} className='text-orange-800'></FontAwesomeIcon>
+                                                                <span className='text-gray-600'>{room.type !== "other"? room.type : room.otherType}</span>
+                                                            </ListItemPrefix>
+                                                            <p className='w-2/6 px-3 mr-3 text-center'>{room.description}</p>
+                                                            <div className="w-2/6  group inline-flex items-center gap-1">
+                                                                {room.amenities.map((amenity, index) => (
+                                                                        <Tooltip content={amenity} key={index}>
+                                                                            <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
+                                                                                {handleIcon(amenity)}
+                                                                            </span>
+                                                                        </Tooltip>
+                                                                    ))
+                                                                }
+                                                            </div>
+                                                            <p className='flex items-center justify-center pr-4'>
+                                                                <FontAwesomeIcon icon={faUser} className='mr-1'/> {room.capacity}
+                                                            </p>
+                                                            <div className='w-1/6 flex font-sans'>
+                                                            Birr <span className='text-orange-600 text-2xl font-serif ml-1'>{room.price}</span>
+                                                            </div>
+                                                            <Button size="sm" className='bg-orange-700'> Book </Button>
+                                                            </ListItem>
+                                                        </List>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            </div>
+                                        </DialogBody>
+                                    </Dialog>
+                                </div>
                             ))}
                         </div>
                     </div>
