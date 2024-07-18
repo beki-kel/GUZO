@@ -25,7 +25,7 @@ const Login = ({ handleLogin }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('https://guzo-x4ue.onrender.com/auth/login', { username, password },{
+      const response = await axios.post('http://localhost:5000/auth/login', { username, password },{
         headers: {
           'Content-Type': 'application/json',}});
       if (response.status === 201) {

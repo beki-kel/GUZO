@@ -2,12 +2,14 @@ import React from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
 import Kebero from '../assets/Kebero.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faLocationDot, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faLocationDot, faStar ,faClose} from '@fortawesome/free-solid-svg-icons';
 import HoverCard from "@darenft/react-3d-hover-card";
 import "@darenft/react-3d-hover-card/dist/style.css";
 
-function EventFilter({ eventResponse, eventLoading, eventError }) {
+function EventFilter({ eventResponse, eventLoading, eventError,setFilterState }) {
+    const handleClick = () => setFilterState('')
     return (
+        
         <div>
             <div className='w-full my-10 flex flex-col'>
                 {eventLoading && (
@@ -22,6 +24,11 @@ function EventFilter({ eventResponse, eventLoading, eventError }) {
 
                 {eventResponse && (
                     <div className='w-full my-10 flex flex-col'>
+                        <div className='w-full p-6 pt-0 flex justify-end items-end'>
+                            <div className='w-6' onClick={handleClick}>
+                                <FontAwesomeIcon icon={faClose} className='h-6 w-6'>close</FontAwesomeIcon>
+                            </div>
+                        </div>
                         <p className="text-3xl font-serif w-full text-center text-black">Found results for Events</p>
                         <div className='w-full mb-36 flex flex-wrap items-center justify-center'>
                             {eventResponse.map((event, index) => (

@@ -70,11 +70,11 @@ const handleLogout = () => {
                 <FontAwesomeIcon icon={faDownload} style={{ color: "#ff622e" }} className='mr-2' />
                 <p> Get App</p>
             </button> : <div> </div>}
-            <ul className='flex w-7/12 space-x-10 justify-end text-lg'>
+            <ul className='flex w-7/12 space-x-10 justify-center ml-6 text-lg'>
                 {menuItems}
             </ul>
 
-            <div className='ml-32'>
+            <div className='ml-80'>
                 {isDrawerOpen ? (
                     <XMarkIcon className="h-8 w-8" onClick={openDrawer}/>
                 ) : (
@@ -92,13 +92,6 @@ const handleLogout = () => {
                         <UserCircleIcon className="h-8 w-8" />
                       </ListItemPrefix>
                       <span className='text-orange-800 font-serif text-xl'>Profile</span>
-                    </ListItem>
-
-                    <ListItem >
-                      <ListItemPrefix className='text-black'>
-                        <Cog6ToothIcon className="h-8 w-8" />
-                      </ListItemPrefix>
-                      <span className='text-orange-800 text-xl font-serif'>Settings</span>
                     </ListItem>
 
                     <ListItem >

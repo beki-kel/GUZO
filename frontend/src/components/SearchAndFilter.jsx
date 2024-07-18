@@ -37,10 +37,10 @@ function SearchAndFilter( ) {
     const [rideLoading, setRideLoading] = useState(false);
     const [rideError, setRideError] = useState(null);
     const [eventDate, seteventDate] = useState('');
-    const[eventCata,setEventCata]= useState('');
-    const[eventResponse,setEventResponse]=useState('');
-    const[eventLoading,setEventLoading]=useState(false);
-    const[eventError,setEventError]=useState(null);
+    const [eventCata,setEventCata]= useState('');
+    const [eventResponse,setEventResponse]=useState('');
+    const [eventLoading,setEventLoading]=useState(false);
+    const [eventError,setEventError]=useState(null);
 
     const cities = [
         'Addis Ababa', 'Arba Minch', 'Assosa', 'Axum', 'Bahir Dar', 'Bale Robe', 'Dembidollo', 'Dire Dawa', 
@@ -95,7 +95,7 @@ function SearchAndFilter( ) {
             try {
                 setTimeout(async () => {
                     try {
-                        const response = await axios.post('https://guzo-x4ue.onrender.com/search/filter/Accomadation', {stayLocation,stayTravllers});
+                        const response = await axios.post('http://localhost:5000/search/filter/Accomadation', {stayLocation,stayTravllers});
                         if (response.status === 200 && response.data[0]) {
                             setStayResponse(response.data);
                             setStayLoading(false);
@@ -145,7 +145,7 @@ function SearchAndFilter( ) {
         setFlightError(null);
 
         try {
-            const response = await axios.post('https://guzo-x4ue.onrender.com/search/flight', {
+            const response = await axios.post('http://localhost:5000/search/flight', {
                 flightArrLocation,
                 flightDepLocation,
                 flightDepdates,
@@ -186,7 +186,7 @@ function SearchAndFilter( ) {
         setRideError(null);
 
             try {
-                const response = await axios.post("https://guzo-x4ue.onrender.com/search/transportation", 
+                const response = await axios.post("http://localhost:5000/search/transportation", 
                     {rideArrLocation,rideDepLocation,Ridetravllers});
                 if (response.status === 200 && response.data[0]) {
                     console.log('Response status:', response.status);
@@ -222,7 +222,7 @@ function SearchAndFilter( ) {
         setEventResponse(null);
         setEventError(null);
         try{
-            const response = await axios.post("https://guzo-x4ue.onrender.com/search/Event",
+            const response = await axios.post("http://localhost:5000/search/Event",
                 {eventDate,category});
             if(response.status === 200 && response.data[0]){
                 console.log('Response status:', response.status);
@@ -476,10 +476,10 @@ function SearchAndFilter( ) {
 const filterSection = () =>{
     switch (filterState){
         case '' : return <></>
-        case 'stays': return <StayFilterSection stayResponse={stayResponse} stayLoading={stayLoading} stayError={stayError} setStayResponse={setStayResponse}/>
-        case 'flight': return <FlightFillter flightResponse={flightResponse} flightLoading={flightLoading} flightError={flightError}/>
-        case 'ride': return <RideFilter rideResponse={rideResponse} rideLoading={rideLoading} rideError={rideError}></RideFilter>
-        case 'event': return <EventFilter eventResponse={eventResponse} eventLoading={eventLoading} eventError={eventError}></EventFilter>
+        case 'stays': return <StayFilterSection stayResponse={stayResponse} stayLoading={stayLoading} stayError={stayError} setStayResponse={setStayResponse} setFilterState={setFilterState}/>
+        case 'flight': return <FlightFillter flightResponse={flightResponse} flightLoading={flightLoading} flightError={flightError} setFilterState={setFilterState}/>
+        case 'ride': return <RideFilter rideResponse={rideResponse} rideLoading={rideLoading} rideError={rideError} setFilterState={setFilterState}></RideFilter>
+        case 'event': return <EventFilter eventResponse={eventResponse} eventLoading={eventLoading} eventError={eventError} setFilterState={setFilterState}></EventFilter>
         default: <></>
     }
         

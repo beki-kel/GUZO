@@ -211,8 +211,6 @@ function LandingPage({ isLoggedIn }) {
     );
   }
 
-    
-
   return (
     <div className='flex flex-col w-full min-h-screen '>
       <div className='flex flex-col justify-center items-center w-full min-h-screen bg-background1 bg-cover'>
@@ -283,7 +281,7 @@ function LandingPage({ isLoggedIn }) {
         </div>
         </div>
 
-      <div className='w-full bg-gradient-to-bl from-orange-200 to-red-300'>
+      {/* <div className='w-full bg-gradient-to-bl from-orange-200 to-red-300'>
         <div className='flex justify-center items-center w-full pt-6 '>
             <FontAwesomeIcon icon={faDownload} className='mr-3 h-8 text-white' />
             <h2 className='text-center text-4xl font-thin text-black font-serif'>
@@ -323,8 +321,7 @@ function LandingPage({ isLoggedIn }) {
         </div>
       </div>
         </div>
-
-      </div>
+      </div> */}
       <div className='w-full bg-gray-900'>
         <Footer/>
       </div>

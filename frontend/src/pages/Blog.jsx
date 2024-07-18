@@ -42,7 +42,7 @@ function Blog({isLoggedIn}) {
 
     return (
         <div className='flex flex-col w-full min-h-screen bg-white'>
-            <Navigation list={['Home', 'Blog', 'Bookings', 'Packages', 'Notification','Become a Partner',]} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
+            <Navigation list={['Home', 'Blog', 'Bookings', 'Packages']} title='Exopia' isLoggedIn={isLoggedIn} App={false} />
             {
                 blogResponse? <div className=" w-full flex flex-wrap space-x-4  items-center px-20 py-10 mt-20">
                 <p className='w-full text-center font-serif text-3xl text-black p-6'>Blogs</p>

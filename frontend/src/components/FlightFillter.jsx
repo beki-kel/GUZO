@@ -1,14 +1,15 @@
 import React from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faPlane, faRightLeft } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faPlane, faRightLeft,faClose } from '@fortawesome/free-solid-svg-icons';
 import EthiopianAirlines from '../assets/Ethiopian_Airlines12.jpg';
 import QRCode from "react-qr-code";
 
-function FlightFilter({ flightResponse, flightLoading, flightError }) {
+function FlightFilter({ flightResponse, flightLoading, flightError,setFilterState }) {
     const totalResults = (flightResponse?.outboundFlights?.length || 0) + (flightResponse?.returnFlights?.length || 0);
     const fromAirport = flightResponse?.outboundFlights[0]?.departure?.airport || '';
     const toAirport = flightResponse?.outboundFlights[0]?.arrival?.airport || '';
+    const handleClick = () => setFilterState('')
 
     return (
         <div className='w-full my-10 flex flex-col'>
@@ -24,10 +25,14 @@ function FlightFilter({ flightResponse, flightLoading, flightError }) {
 
             {flightResponse && (
                 <div className='w-full flex flex-col space-y-6 justify-center items-center px-24'>
+                    <div className='w-full p-6 pb-0 flex justify-end items-end'>
+                        <div className='w-6' onClick={handleClick}>
+                            <FontAwesomeIcon icon={faClose} className='h-6 w-6'>close</FontAwesomeIcon>
+                        </div>
+                    </div>
                     <p className='py-5 text-3xl font-serif'>
                         Found flights from {fromAirport} to {toAirport}
                     </p>
-
                     {flightResponse.outboundFlights && flightResponse.outboundFlights.length > 0 && (
                         flightResponse.outboundFlights.map((flight, index) => {
                             const qrValueOutbound = `Outbound City: ${flight.departure.airport}\nReturn City: ${flight.arrival.airport}\nFlight Number: ${flight.flightNumber}\nFlight Date: ${flight.flightDate}`;

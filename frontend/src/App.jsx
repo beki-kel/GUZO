@@ -9,6 +9,7 @@ import Admin from './pages/Admin';
 import LandingPage from './pages/landingPage';
 import Blog from './pages/Blog';
 import './index.css';
+import Packages from './pages/Packages';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null); // Set initial state to null
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={isLoggedIn ? <Home isLoggedIn={isLoggedIn} /> : <Navigate to="/login" />} />
           <Route path="/blog" element={<Blog isLoggedIn={isLoggedIn} />} />
+          <Route path="/packages" element= {<Packages isLoggedIn={isLoggedIn} />}/>
           {isLoggedIn && isAdmin && <Route path="/admin" element={<Admin />} />}
         </Routes>
       </BrowserRouter>

@@ -2,9 +2,10 @@ import React from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
 import blackCar from '../assets/black-sedan-car-isolated-white-vector.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser,faClose } from '@fortawesome/free-solid-svg-icons';
 
-const RideFilter = ({ rideResponse, rideLoading, rideError }) => {
+const RideFilter = ({ rideResponse, rideLoading, rideError ,setFilterState}) => {
+    const handleClick = () => setFilterState('')
     return (
         <div className='w-full my-10 flex flex-col'>
             {rideLoading && (
@@ -18,7 +19,14 @@ const RideFilter = ({ rideResponse, rideLoading, rideError }) => {
             )}
 
             {rideResponse && (
-                <p className="text-3xl font-serif w-full text-center text-gray-800  mb-4">Found results for Rides</p>
+                                <div className='w-full flex flex-col'>
+                                    <div className='w-full p-6 flex justify-end items-end'>
+                                        <div className='w-6' onClick={handleClick}>
+                                            <FontAwesomeIcon icon={faClose} className='h-6 w-6'>close</FontAwesomeIcon>
+                                        </div>
+                                    </div>
+                                    <p className="text-3xl font-serif w-full text-center text-gray-800  mb-4">Found results for Rides</p>
+                                </div>
             )}
 
             {rideResponse && rideResponse.map((ride) => (

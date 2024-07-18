@@ -11,8 +11,6 @@ import Footer from '../components/Footer';
 import { Spinner } from "@material-tailwind/react";
 
 function Home({isLoggedIn}) {
-  const[isLoaded,setIsLoaded]=useState(null)
-
 
 const sampleProducts = [
   {
@@ -48,30 +46,15 @@ const sampleProducts = [
   // Add more products as needed
 ];
 
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setIsLoaded(true);
-  }, 5000);
-
-  return () => clearTimeout(timer);
-}, []);
-
-if (!isLoaded) {
-  return (
-    <div className='w-full min-h-screen flex justify-center items-center mb-2 p-2'>
-      <Spinner className="h-50 w-50 text-orange-800" />
-    </div>
-  );
-}
   return (
     <div className='flex flex-col w-full min-h-screen bg-white'>
-      <Navigation list={['Home', 'Blog', 'Bookings', 'Packages']} title='Exopia' isLoggedIn={isLoggedIn} App={true} />
+      <Navigation list={['Home', 'Blog', 'Bookings', 'Packages']} title='Exopia' isLoggedIn={isLoggedIn} App={false} />
       <div className='h-20'></div>
       <div className='w-full flex '>
         <SearchAndFilter/>
       </div>
       <Gallery/>
-      <HomePricingCard/>
+      <HomePricingCard isLoggedIn={isLoggedIn}/>
       <div className='w-full h-[36rem] '>
         <CarouselCustomNavigation/>
       </div>

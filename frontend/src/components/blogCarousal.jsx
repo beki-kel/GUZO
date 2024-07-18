@@ -18,7 +18,7 @@ return (
         </div>
     )}
     >
-        <div className="h-full w-full flex space-x-4  items-center px-20 py-10">
+        <div className="h-full w-full flex space-x-4  items-center px-20 pb-10">
             <Card shadow={false} className="relative grid h-[30rem] w-1/4 max-w-[24rem] items-end justify-center overflow-hidden text-center">
             <CardHeader
                 floated={false}
