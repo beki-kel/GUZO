@@ -23,6 +23,7 @@ const dinningRoute=require('./routes/dining');
 const userRoute=require('./routes/users');
 const eventRoute=require('./routes/event');
 const blogRoute=require('./routes/blog');
+const booking= require('./routes/Booking')
 
 connectDB()
 
@@ -65,6 +66,7 @@ app.use('/', packages)
 app.use('/', thingsToDo)
 app.use('/', eventRoute)
 app.use('/', blogRoute)
+app.use('/', booking)
 
 //error handler middleware
 app.use( (err,req,res,next) => {
