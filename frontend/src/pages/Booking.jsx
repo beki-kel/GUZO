@@ -3,6 +3,8 @@ import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
 import { Placeholder } from 'rsuite';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus, faDoorOpen, faHotel, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 
 function Booking({ isLoggedIn }) {
     const [fetchData, setFetchData] = useState(null);
@@ -89,11 +91,11 @@ function Booking({ isLoggedIn }) {
         <div>
             <div className='flex flex-col w-full bg-white'>
                 <Navigation list={['Home', 'Blog', 'Bookings', 'Packages']} title='Exopia' isLoggedIn={isLoggedIn} App={false} />
-                <div className='w-full mt-28 px-32 min-h-screen'>
-                    <Tabs id="custom-animation" value={tabsData[0]?.value || ""} >
+                <div className='w-full mt-28 px-32 min-h-screen '>
+                    <Tabs id="custom-animation" value={tabsData[0]?.value || ""}  >
                         <TabsHeader>
                             {tabsData.map(({ label, value }) => (
-                                <Tab key={value} value={value} className='text-orange-700 text-xl '>
+                                <Tab key={value} value={value} className='text-orange-700 text-xl font-serif'>
                                     {label}
                                 </Tab>
                             ))}
@@ -104,24 +106,24 @@ function Booking({ isLoggedIn }) {
                                 mount: { y: 0 },
                                 unmount: { y: 250 },
                             }}
-                            className="mt-8"
+                            className="mt-8 "
                         >
                             {tabsData.map(({ value, desc }) => (
                                 <TabPanel key={value} value={value}>
-                                    <div className='w-full flex flex-wrap gap-10 justify-center items-center'>
+                                    <div className='w-full flex flex-wrap gap-10 justify-center items-center '>
                                         {desc.length > 0 ? (
                                             desc.map((item, index) => (
-                                                <div key={index} className="p-3 mb-4 border-2 rounded-lg shadow-md w-1/4">
-                                                    <p className='font-serif text-xl'>Status: {item.status === "pending" ? <span className="text-red-700">pending</span> : <span>Booked</span>}</p>
+                                                <div key={index} className="p-3 mb-4 border-2 rounded-lg shadow-md w-1/4  hover:scale-x-105 hover:scale-y-105 cursor-pointer">
+                                                    <p className='font-serif text-xl'><FontAwesomeIcon icon={faCartPlus} className='text-orange-800'/> Status: {item.status === "pending" ? <span className="text-red-500">Pending</span> : <span>Booked</span>}</p>
                                                     {/* Check if details exist and render accordingly */}
                                                     {item.details ? (
                                                         <>
-                                                            <p className='font-serif text-xl'>Hotel: <span className='font-serif'>{item.details.hotelId.name || 'No hotel available'}</span></p>
-                                                            <p className='font-serif text-xl'>Room Type: <span className='font-serif'>{item.details.roomType || 'No room type available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faHotel} className='text-orange-800'/> Hotel: <span className='font-serif font-bold'>{item.details.hotelId.name || 'No hotel available'}</span></p>
+                                                            <p className='font-serif text-lg'> <FontAwesomeIcon icon={faDoorOpen} className='text-orange-800 mr-1'/>Room Type: <span className='font-serif font-bold'>{item.details.roomType || 'No room type available'}</span></p>
                                                             {item.details.roomPrice ? (
-                                                                <p className='font-serif text-lg'>Price: <span className='font-serif text-xl font-bold'>{item.details.roomPrice || 'Price not available'} Birr </span> </p>
+                                                                <p className='font-serif text-lg'><FontAwesomeIcon icon={faMoneyBill} className='text-orange-800 mr-1'/>Price: <span className='font-serif text-xl font-bold'>{item.details.roomPrice || 'Price not available'} Birr </span> </p>
                                                             ) : (
-                                                                <p className='font-serif text-xl'>Price: <span className='font-serif'>Price not available</span></p>
+                                                                <p className='font-serif text-xl'>Price: <span className='font-serif font-bold'>Price not available</span></p>
                                                             )}
                                                         </>
                                                     ) : (
