@@ -31,8 +31,21 @@ function Booking({ isLoggedIn }) {
             return response.json();
         })
         .then(data => {
-            setFetchData(data);
-            console.log('Fetched data:', data);
+            // Update the data to include room price based on roomId
+            const updatedData = data.map(item => {
+                if (item.type === 'hotel' && item.details && item.details.hotelId && item.details.roomId) {
+                    const hotel = item.details.hotelId;
+                    const room = hotel.rooms.find(room => room._id.toString() === item.details.roomId.toString());
+                    if (room) {
+                        // Add the room's price to the booking details
+                        return { ...item, details: { ...item.details, roomPrice: room.price, roomType: room.type } };
+                    }
+                }
+                return item;
+            });
+
+            setFetchData(updatedData);
+            console.log('Fetched data:', updatedData);
         })
         .catch(error => {
             setError(error);
@@ -74,7 +87,7 @@ function Booking({ isLoggedIn }) {
                     <Tabs id="custom-animation" value={tabsData[0]?.value || ""}>
                         <TabsHeader>
                             {tabsData.map(({ label, value }) => (
-                                <Tab key={value} value={value}>
+                                <Tab key={value} value={value} className='text-orange-700 text-xl '>
                                     {label}
                                 </Tab>
                             ))}
@@ -91,18 +104,23 @@ function Booking({ isLoggedIn }) {
                                     <div className='w-full flex flex-wrap gap-10 justify-center items-center'>
                                         {desc.length > 0 ? (
                                             desc.map((item, index) => (
-                                                <div key={index} className="p-3 mb-4 border-2 rounded-lg shadow-sm w-1/4">
-                                                    <p className='font-serif text-xl'>Status: {item.status === "pending"? <span className="text-red-600">pending </span>:<span>Booked</span>}</p>
+                                                <div key={index} className="p-3 mb-4 border-2 rounded-lg shadow-md w-1/4">
+                                                    <p className='font-serif text-xl'>Status: {item.status === "pending" ? <span className="text-red-700">pending</span> : <span>Booked</span>}</p>
                                                     {/* Check if details exist and render accordingly */}
                                                     {item.details ? (
                                                         <>
-                                                            <p className='font-serif text-xl'>Hotel: <span className='font-serif '> {item.details.hotelId.name || 'No hotel available'} </span></p>
-                                                            <p className='font-serif text-xl'>Room Type: <span className=' font-serif '> {item.details.roomType || 'No room type available'}</span></p>
+                                                            <p className='font-serif text-xl'>Hotel: <span className='font-serif'>{item.details.hotelId.name || 'No hotel available'}</span></p>
+                                                            <p className='font-serif text-xl'>Room Type: <span className='font-serif'>{item.details.roomType || 'No room type available'}</span></p>
+                                                            {item.details.roomPrice ? (
+                                                                <p className='font-serif text-lg'>Price: <span className='font-serif text-xl font-bold'>{item.details.roomPrice || 'Price not available'} Birr </span> </p>
+                                                            ) : (
+                                                                <p className='font-serif text-xl'>Price: <span className='font-serif'>Price not available</span></p>
+                                                            )}
                                                         </>
                                                     ) : (
                                                         <p>No details available</p>
                                                     )}
-                                                    <p className='font-serif text-lg text-orange-600'>Created At: {new Date(item.createdAt).toLocaleString()}</p>
+                                                    <p className='font-sans text-orange-600'>Created At: {new Date(item.createdAt).toLocaleString()}</p>
                                                 </div>
                                             ))
                                         ) : (
