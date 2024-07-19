@@ -4,7 +4,6 @@ const transportBookingSchema =  new mongoose.Schema({
   booking: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Booking',
-    required: true
   },
   carId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,6 +20,9 @@ const transportBookingSchema =  new mongoose.Schema({
   },
   pickupDate: {
     type: Date,
+  },
+  finalPrice:{
+    type: Number,
     required: true
   }
 });
