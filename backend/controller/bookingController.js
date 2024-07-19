@@ -87,8 +87,36 @@ const GetBookingById = async (req, res) => {
 const GetUserBookings = async (req, res) => {
     try {
         const userId = req.params.userId;
-        const bookings = await Booking.find({ user: userId }).populate('details');
-        res.status(200).json(bookings);
+
+        // Fetch bookings for the user
+        const bookings = await Booking.find({ user: userId });
+
+        // Populate details based on type
+        const populatedBookings = await Promise.all(bookings.map(async (booking) => {
+            let populatedDetail;
+            switch (booking.type) {
+                case 'hotel':
+                    populatedDetail = await HotelBooking.findById(booking.details).populate('hotelId').exec();
+                    break;
+                case 'flight':
+                    populatedDetail = await FlightBooking.findById(booking.details).exec();
+                    break;
+                case 'transportation':
+                    populatedDetail = await TransportationBooking.findById(booking.details).exec();
+                    break;
+                case 'event':
+                    populatedDetail = await EventBooking.findById(booking.details).exec();
+                    break;
+                case 'package':
+                    populatedDetail = await PackageBooking.findById(booking.details).exec();
+                    break;
+                default:
+                    throw new Error('Unknown booking type');
+            }
+            return { ...booking.toObject(), details: populatedDetail };
+        }));
+
+        res.status(200).json(populatedBookings);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
