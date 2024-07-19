@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
+import { Placeholder } from 'rsuite';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
 
 function Booking({ isLoggedIn }) {
@@ -58,7 +59,12 @@ function Booking({ isLoggedIn }) {
     }
 
     if (!fetchData) {
-        return <div>Loading...</div>;
+        return(
+            <div className='w-full min-h-screen flex p-10 mt-20'>
+                <Placeholder.Graph active />
+            </div>
+        )
+
     }
 
     const types = ["hotel", "transportation", "flight", "events", "packages"];
@@ -81,10 +87,10 @@ function Booking({ isLoggedIn }) {
 
     return (
         <div>
-            <div className='flex flex-col w-full min-h-screen bg-white'>
+            <div className='flex flex-col w-full bg-white'>
                 <Navigation list={['Home', 'Blog', 'Bookings', 'Packages']} title='Exopia' isLoggedIn={isLoggedIn} App={false} />
-                <div className='w-full mt-32 px-32 min-h-screen'>
-                    <Tabs id="custom-animation" value={tabsData[0]?.value || ""}>
+                <div className='w-full mt-28 px-32 min-h-screen'>
+                    <Tabs id="custom-animation" value={tabsData[0]?.value || ""} >
                         <TabsHeader>
                             {tabsData.map(({ label, value }) => (
                                 <Tab key={value} value={value} className='text-orange-700 text-xl '>
@@ -98,6 +104,7 @@ function Booking({ isLoggedIn }) {
                                 mount: { y: 0 },
                                 unmount: { y: 250 },
                             }}
+                            className="mt-8"
                         >
                             {tabsData.map(({ value, desc }) => (
                                 <TabPanel key={value} value={value}>
