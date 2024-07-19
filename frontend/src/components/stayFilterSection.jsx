@@ -48,7 +48,11 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
     const [bookErr,SetBookErr]=useState(false);
     const [isAlerted, setIsAlerted] =useState(false);
 
-    const handleAltOpen = () => {setAltOpen(!altopen),setIsAlerted(false),SetBookErr(false)};
+    const handleAltOpen = (hotelId, roomTyp, roomI) => {setAltOpen(!altopen);setIsAlerted(false);SetBookErr(false);
+        setHotel(hotelId);
+        setRoom(roomTyp);
+        setRoomId(roomI);
+    };
     const handleOpen = () => {setOpen((cur) => !cur),setIsAlerted(false),SetBookErr(false)};
     const handleIsAlerted = () => setIsAlerted(true)
 
@@ -115,11 +119,9 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
         });
     };
 
-    const handleBooking = async( hotelId, roomTyp, roomI) =>{
+    const handleBooking = async( ) =>{
         const userID = localStorage.getItem('_id');
-        setHotel(hotelId);
-        setRoom(roomTyp);
-        setRoomId(roomI);
+
         const reqBody={
             userId: userID,
             type:"hotel",
@@ -352,9 +354,9 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                 ))}
                             </div>
 
-                            {stayResponse.map((stay, index) => (
+                            {stayResponse.map((stay) => (
                                 <div className='w-full flex flex-wrap justify-start mb-4'>
-                                    <Card className="w-5/12  shadow-lg mx-2 mb-5 border-[3px] bg-gray-50"  key={`${index}`} onClick={handleOpen}>
+                                    <Card className="w-5/12  shadow-lg mx-2 mb-5 border-[3px] bg-gray-50"  key={`${stay._id}`} onClick={handleOpen}>
                                         <CardHeader floated={false} color="blue-gray" className='shadow-none'>
                                         <img src={sheraton} alt="Loading" className="h-50 w-full "/>
                                         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 "/>
@@ -374,7 +376,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                             <p className='text-black text-lg font-serif'> {stay.description} </p>
 
                                                 <div className='w-full flex space-x-5 pl-3 py-2'>
-                                                    {stay.rooms.map((room, index) => (<div className=' text-sm text-black' key={index}> <FontAwesomeIcon icon={faBed} className='text-orange-800'></FontAwesomeIcon> <span className='text-black'>{room.type !== "other"? room.type : room.otherType}</span> </div>))}
+                                                    {stay.rooms.map((room) => (<div className=' text-sm text-black' key={room._id}> <FontAwesomeIcon icon={faBed} className='text-orange-800'></FontAwesomeIcon> <span className='text-black'>{room.type !== "other"? room.type : room.otherType}</span> </div>))}
                                                 </div>
                                             <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
                                                 <Tooltip content={`${Math.min(...stay.rooms.map(room => room.price))} - ${Math.max(...stay.rooms.map(room => room.price))} birr`}>
@@ -391,8 +393,8 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                                 </span>
                                                 </Tooltip>
                                                 {stay.rooms.flatMap((room) => 
-                                                    room.amenities.map((amenity, index) => (
-                                                        <Tooltip content={amenity} key={index}>
+                                                    room.amenities.map((amenity) => (
+                                                        <Tooltip content={amenity}>
                                                             <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-300 p-3 text-black transition-colors hover:border-gray-100/10 hover:bg-gray-100 hover:!opacity-100 group-hover:opacity-70">
                                                                 {handleIcon(amenity)}
                                                             </span>
@@ -445,7 +447,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                                 </div>
                                                 <div className="grid grid-cols-5 gap-4">
                                                     {data.map(({ imgelink }, index) => (
-                                                    <div key={index}>
+                                                    <div key={`${index}23`}>
                                                         <img
                                                         onClick={() => setActive(imgelink)}
                                                         src={imgelink}
@@ -457,7 +459,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                                 </div>
                                                 </div>
                                                 <div className='w-8/12 flex flex-col justify-center'>
-                                                    {stay.rooms.map((room, index) =>
+                                                    {stay.rooms.map((room) =>
                                                         <>
                                                         <Dialog
                                                             open={altopen}
@@ -477,14 +479,14 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                                             >
                                                                 <span>Cancel</span>
                                                             </Button>
-                                                            <Button variant="gradient" color="green" onClick={()=> handleBooking(stay._id, room.type, room._id)}>
+                                                            <Button variant="gradient" color="green" onClick={handleBooking}>
                                                                 <span>Confirm</span>
                                                             </Button>
                                                             </DialogFooter>
                                                         </Dialog>
 
-                                                        <List className='w-full ' onClick={handleAltOpen}>
-                                                        <ListItem key={index} className='w-full px-4 border-2 shadow-md'>
+                                                        <List className='w-full ' onClick={() => handleAltOpen(stay._id, room.type, room._id)}>
+                                                        <ListItem className='w-full px-4 border-2 shadow-md'>
                                                             <ListItemPrefix className='flex gap-4 text-xl w-1/6 text-black'>
                                                                 <FontAwesomeIcon icon={faBed} className='text-orange-800'></FontAwesomeIcon>
                                                                 <span className='text-gray-600'>{room.type !== "other"? room.type : room.otherType}</span>
