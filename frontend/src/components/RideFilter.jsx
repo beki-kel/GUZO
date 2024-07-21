@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
 import blackCar from '../assets/black-sedan-car-isolated-white-vector.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faClose } from '@fortawesome/free-solid-svg-icons';
-import { Dialog, DialogHeader, DialogBody, DialogFooter, Typography, Button, Alert } from "@material-tailwind/react";
+import { faUser, faClose, faListCheck, faListAlt } from '@fortawesome/free-solid-svg-icons';
+import { Dialog, DialogHeader, DialogBody, DialogFooter, Typography, Button, Alert, Avatar } from "@material-tailwind/react";
 
 const RideFilter = ({ rideResponse, rideLoading, rideError, setFilterState }) => {
     const handleClick = () => setFilterState('');
@@ -131,12 +131,12 @@ const RideFilter = ({ rideResponse, rideLoading, rideError, setFilterState }) =>
                                 <p className='font-semibold text-white'> Capacity <span className='text-black font-mono'>{ride.capacity}</span></p>
                                 <p className='font-semibold text-white'> Driver Rating <span className='text-black font-mono'>{ride.driverrating}</span></p>
                                 <p className='font-semibold text-white'> Driver Location <span className='text-black font-mono'>{ride.pickUp}</span></p>
-                                <p className='font-semibold text-black'><span className='text-black font-bold text-xl font-mono'>{ride.finalPrice.toFixed(2)} </span>birr</p>
+                                <p className='font-semibold text-black'><span className='text-black font-bold text-xl font-mono'>{Number(ride.finalPrice).toFixed(2)} </span>birr</p>
                             </div>
                         </div>
                     </div>
 
-                    <Dialog size="xl" open={open} handler={() => handleOpen}>
+                        <Dialog size="xl" open={open} handler={() => handleOpen}>
 
                         <DialogHeader className="justify-between flex-col">
                             <div className="w-full flex items-end justify-end">
@@ -166,14 +166,37 @@ const RideFilter = ({ rideResponse, rideLoading, rideError, setFilterState }) =>
                                 <Typography variant="h2" color="blue-gray" className="font-medium font-serif w-full text-center mb-4">
                                     Ride Details
                                 </Typography>
-                                <div className='w-full flex justify-around'>
-                                    <div>
-                                        <p><strong>Pickup Location:</strong> {pick}</p>
-                                        <p><strong>Dropoff Location:</strong> {drop}</p>
-                                        <p><strong>Final Price:</strong> {finalPrice} birr</p>
+                                <div className='w-full flex flex-col justify-around'>
+
+                                    <div className='w-full flex items-center justify-center p-5'>
+                                        <div className='w-1/2 flex font-serif'>
+                                        <div className='w-1/3 flex flex-col  items-center'>
+                                            <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" className='w-40 h-40' />
+                                            <p className='w-full text-center text-2xl text-black font-serif'> {ride.drivername}</p>
+                                        </div>
+                                        <div className='w-2/3 px-6'>
+                                            <p className='text-xl text-black'>Driver Rating: <span className='text-gray-500'>{ride.driverrating}</span></p>
+                                            <p className='text-xl text-black'>Owner: <span className='text-gray-500'>{ride.owner}</span></p>
+                                            <p className='text-xl text-black'>Car: <span className='text-gray-500'>{ride.brand} - ({ride.color})</span></p>
+                                            <p className='text-xl text-black'>Plate No: <span className='text-gray-500'>{ride.plateNo}</span></p>
+                                            <p className='text-xl text-black'>Capacity: <span className='text-gray-500'>{ride.capacity}</span></p>
+                                        </div>
+                                        </div>
+                                        <div className='w-2/3 flex  shadow-lg rounded-xl border py-3'>
+                                            <div className='w-1/3 flex justify-center items-center py-6'>
+                                                <FontAwesomeIcon icon={faListCheck} className='h-12 text-orange-700'/>
+                                            </div>
+                                            <div className='w-2/3 flex flex-col text-xl text-black font-serif font-thin'>
+                                                <p><strong className='text-orange-700 '>Pickup Location:</strong> {pick}</p>
+                                                <p><strong className='text-orange-700'>Dropoff Location:</strong> {drop}</p>
+                                                <p className='font-extrabold'><strong className='text-orange-700 '>Final Price:</strong> {Number(ride.finalPrice).toFixed(2)} birr</p>
+                                            </div>
+                                        </div>
+                                        
+                                        
                                     </div>
-                                    <div>
-                                        <Button size="sm" className="bg-green-500" onClick={() => handleAltOpen(ride._id, ride.pickUp, ride.dropOff, ride.finalPrice)}>Confirm Booking</Button>
+                                    <div className='w-full flex justify-center'>
+                                        <Button size="sm" className="bg-orange-800 p-3" onClick={() => handleAltOpen(ride._id, ride.pickUp, ride.dropOff, ride.finalPrice)}>Confirm Booking</Button>
                                     </div>
                                 </div>
                             </div>
