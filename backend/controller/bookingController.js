@@ -115,7 +115,7 @@ const GetUserBookings = async (req, res) => {
                     populatedDetail = await TransportationBooking.findById(booking.details).populate('carId').exec();
                     break;
                 case 'event':
-                    populatedDetail = await EventBooking.findById(booking.details).exec();
+                    populatedDetail = await EventBooking.findById(booking.details).populate('eventId').exec();
                     break;
                 case 'package':
                     populatedDetail = await PackageBooking.findById(booking.details).exec();
