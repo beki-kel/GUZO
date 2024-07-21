@@ -4,7 +4,8 @@ import Navigation from '../components/Navigation';
 import { Placeholder } from 'rsuite';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faDoorOpen, faHotel,faMapPin, faLocationDot, faMoneyBill, faCarAlt, faHashtag, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faDoorOpen, faHotel,faMapPin, faLocationDot, faMoneyBill, faCarAlt, faHashtag, faUser, faFerry, faTicket, faCalendar, faCalendarAlt, faPlaneDeparture, faPlaneArrival, faList12 } from '@fortawesome/free-solid-svg-icons';
+import { faEvernote } from '@fortawesome/free-brands-svg-icons';
 
 function Booking({ isLoggedIn }) {
     const [fetchData, setFetchData] = useState(null);
@@ -68,7 +69,7 @@ function Booking({ isLoggedIn }) {
         )
     }
 
-    const types = ["hotel", "transportation", "flight", "event", "packages"];
+    const types = ["hotel", "transportation", "flight", "event"];
 
     // Group fetched data by type
     const groupedData = types.reduce((acc, type) => {
@@ -132,16 +133,34 @@ function Booking({ isLoggedIn }) {
                                                             <p className='font-serif text-lg'><FontAwesomeIcon icon={faCarAlt} className='text-orange-800 mr-2'/> Brand: <span className='font-serif font-bold '>{item.details.carId.brand|| 'Not available'}</span></p>
                                                             <p className='font-serif text-lg'><FontAwesomeIcon icon={faHashtag} className='text-orange-800 mr-2'/> PlateNo: <span className='font-serif font-bold '>{item.details.carId.plateNo|| 'Not available'}</span></p>
                                                             <p className='font-serif text-lg'><FontAwesomeIcon icon={faUser} className='text-orange-800 mr-2'/> Driver Name: <span className='font-serif font-bold '>{item.details.carId.drivername|| 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faMoneyBill} className='text-orange-800 mr-1'/>Price: <span className='font-serif text-xl font-bold'>{item.details.carId.finalPrice || 'Price not available'} Birr </span> </p>
                                                         </>
                                                     )}
                                                     {item.type === 'flight' && item.details && (
                                                         <>
-
+                                                            <p className='font-serif text-lg w-full text-center'><span className='font-serif font-bold'>{item.details.depflight.airline || 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faPlaneDeparture} className='text-orange-800 mr-2'/> From: <span className='font-serif font-bold'>{item.details.depflight.departure.airport || 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faPlaneArrival} className='text-orange-800 mr-2'/> To: <span className='font-serif font-bold'>{item.details.depflight.arrival.airport || 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faList12} className='text-orange-800 mr-2'/> Flight Number: <span className='font-serif font-bold'>{item.details.depflight.flightNumber|| 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faCalendarAlt} className='text-orange-800 mr-2'/> Date: <span className='font-serif font-bold'>{item.details.depflight.flightDate || 'Not available'}</span></p>
+                                                            {item.details.retflight? 
+                                                                <>
+                                                                    <p className='font-serif text-lg'><FontAwesomeIcon icon={faCalendarAlt} className='text-orange-800 mr-2'/>Return Date: <span className='font-serif font-bold'>{item.details.retflight.flightDate || 'Not available'}</span></p>
+                                                                    <p className='font-serif text-lg'><FontAwesomeIcon icon={faMoneyBill} className='text-orange-800 mr-1'/>Price: <span className='font-serif text-xl font-bold'>{Number(item.details.depflight.price) + Number(item.details.retflight.price) || 'Price not available'} Birr </span> </p>
+                                                                </>
+                                                            :<>
+                                                                <p className='font-serif text-lg '><FontAwesomeIcon icon={faMoneyBill} className='text-orange-800 mr-1'/>Price: <span className='font-serif text-xl font-bold'>{item.details.depflight.price || 'Price not available'} Birr </span> </p>
+                                                                <p className='font-serif text-xl font-semibold'>No Return Flight</p>
+                                                            </>}
+                                                            
                                                         </>
                                                     )}
                                                     {item.type === 'event' && item.details && (
                                                         <>
-                                                        
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faTicket} className='text-orange-800 mr-2'/> Name: <span className='font-serif font-bold'>{item.details.eventId.title || 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faLocationDot} className='text-orange-800 mr-2'/> Location: <span className='font-serif font-bold'>{item.details.eventId.location || 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faCalendarAlt} className='text-orange-800 mr-2'/>Event Date: <span className='font-serif text-xl font-bold'>{item.details.eventId.date || 'not available'} </span> </p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faMoneyBill} className='text-orange-800 mr-2'/>Price: <span className='font-serif text-xl font-bold'>{item.details.eventId.price || 'Price not available'} Birr </span> </p>
                                                         </>
                                                     )}
                                                     {item.type === 'packages' && item.details && (
