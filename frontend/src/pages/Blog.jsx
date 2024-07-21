@@ -10,7 +10,7 @@ function Blog({ isLoggedIn }) {
     useEffect(() => {
         const fetchFilteredResults = async () => {
             try {
-                const response = await fetch('http://localhost:5000/search/blogs', {
+                const response = await fetch('https://guzo-x4ue.onrender.com/search/blogs', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

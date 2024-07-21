@@ -18,7 +18,7 @@ function Booking({ isLoggedIn }) {
             return;
         }
 
-        const url = `http://localhost:5000/book/user/${userId}`;
+        const url = `https://guzo-x4ue.onrender.com/book/user/${userId}`;
 
         console.log('Fetching data from:', url);
 

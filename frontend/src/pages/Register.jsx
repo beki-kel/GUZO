@@ -27,7 +27,7 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/auth/register', formData);
+      const response = await axios.post('https://guzo-x4ue.onrender.com/auth/register', formData);
 
       if (response.status === 201) {
         console.log(response.data);

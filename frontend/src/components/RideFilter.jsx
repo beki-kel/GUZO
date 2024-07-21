@@ -35,7 +35,7 @@ const RideFilter = ({ rideResponse, rideLoading, rideError, setFilterState }) =>
         setErr(false);
     
         try {
-            const response = await fetch("http://localhost:5000/add/book", {
+            const response = await fetch("https://guzo-x4ue.onrender.com/add/book", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
