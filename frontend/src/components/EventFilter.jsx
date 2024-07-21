@@ -2,10 +2,10 @@ import React ,{useState} from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
 import Kebero from '../assets/Kebero.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faLocationDot, faStar ,faClose} from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faLocationDot, faStar ,faClose,faListCheck} from '@fortawesome/free-solid-svg-icons';
 import HoverCard from "@darenft/react-3d-hover-card";
 import "@darenft/react-3d-hover-card/dist/style.css";
-import { Dialog, DialogHeader, DialogBody, DialogFooter, Typography, Button, Alert } from "@material-tailwind/react";
+import { Dialog, DialogHeader, DialogBody, DialogFooter, Typography, Button, Alert,Avatar } from "@material-tailwind/react";
 
 function EventFilter({ eventResponse, eventLoading, eventError,setFilterState }) {
     const handleClick = () => setFilterState('')
@@ -145,15 +145,28 @@ function EventFilter({ eventResponse, eventLoading, eventError,setFilterState })
                                     <DialogBody>
                                         <div className='w-full flex flex-col p-3'>
                                             <Typography variant="h2" color="blue-gray" className="font-medium font-serif w-full text-center mb-4">
-                                                flight Details
+                                                Event Details
                                             </Typography>
-                                            <div className='w-full flex justify-around'>
-                                                <div>
-                                                    <p><strong>Dropoff Location:</strong> {eventname}</p>
-                                                    <p><strong>Final Price:</strong> {eventDate} birr</p>
+                                            <div className='w-full flex flex-col  justify-around'>
+                                            <div className='w-full flex items-center justify-center p-5'>
+                                                <div className='w-1/3 flex flex-col  items-center'>
+                                                    <Avatar src={Kebero} alt="avatar" className='w-56 h-56 rounded-lg' variant="square" />
+                                                    <p className='w-full text-center text-2xl text-black font-serif'> {event.title}</p>
                                                 </div>
-                                                <div>
-                                                    <Button size="sm" className="bg-green-500" onClick={() => handleAltOpen(event._id,event.date)}>Confirm Booking</Button>
+                                                
+                                                <div className='w-2/3 flex  shadow-lg rounded-xl border py-3'>
+                                                    <div className='w-1/3 flex justify-center items-center py-6'>
+                                                        <FontAwesomeIcon icon={faListCheck} className='h-12 text-orange-700'/>
+                                                    </div>
+                                                    <div className='w-2/3 flex flex-col text-xl text-black font-serif font-thin'>
+                                                        <p><strong className='text-orange-700 '> Location:</strong>{event.location} </p>
+                                                        <p><strong className='text-orange-700'>Date:</strong>{event.date}</p>
+                                                        <p className='font-extrabold'><strong className='text-orange-700 '>Final Price:</strong>{event.price} birr</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <div className='w-full flex justify-center'>
+                                                    <Button size="sm" className="bg-orange-800 p-4" onClick={() => handleAltOpen(event._id,event.date)}>Confirm Booking</Button>
                                                 </div>
                                             </div>
                                         </div>
@@ -162,7 +175,7 @@ function EventFilter({ eventResponse, eventLoading, eventError,setFilterState })
                                     <Dialog open={altopen} handler={handleAltOpen} animate={{ mount: { scale: 1, y: 0 }, unmount: { scale: 0.9, y: -100 } }}>
                                     <DialogHeader>Confirmation</DialogHeader>
                                     <DialogBody>
-                                        Confirm if you want to Book this ride?
+                                        Confirm if you want to Book this Event?
                                     </DialogBody>
                                     <DialogFooter>
                                     <Button variant="text" color="red" onClick={() => handleAltOpen(event._id,event.date)} className="mr-1">
