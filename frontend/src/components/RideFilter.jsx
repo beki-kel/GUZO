@@ -171,7 +171,7 @@ const RideFilter = ({ rideResponse, rideLoading, rideError, setFilterState }) =>
                                     <div className='w-full flex items-center justify-center p-5'>
                                         <div className='w-1/2 flex font-serif'>
                                         <div className='w-1/3 flex flex-col  items-center'>
-                                            <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" className='w-40 h-40' />
+                                            <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" withBorder={true} className='w-40 h-40'/>
                                             <p className='w-full text-center text-2xl text-black font-serif'> {ride.drivername}</p>
                                         </div>
                                         <div className='w-2/3 px-6'>
