@@ -1,15 +1,79 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faPlane, faRightLeft,faClose } from '@fortawesome/free-solid-svg-icons';
 import EthiopianAirlines from '../assets/Ethiopian_Airlines12.jpg';
 import QRCode from "react-qr-code";
+import { Dialog, DialogHeader, DialogBody, DialogFooter, Typography, Button, Alert } from "@material-tailwind/react";
 
 function FlightFilter({ flightResponse, flightLoading, flightError,setFilterState }) {
     const totalResults = (flightResponse?.outboundFlights?.length || 0) + (flightResponse?.returnFlights?.length || 0);
     const fromAirport = flightResponse?.outboundFlights[0]?.departure?.airport || '';
     const toAirport = flightResponse?.outboundFlights[0]?.arrival?.airport || '';
     const handleClick = () => setFilterState('')
+
+    const [dep, setDep] = useState('');
+    const [ret, setRet] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [altopen, setAltOpen] = useState(false);
+    const [isAlerted, setIsAlerted] = useState(false);
+    const [err, setErr] = useState(false);
+
+    const handleBooking = async () => {
+        const userID = localStorage.getItem('_id');
+    
+        const reqBody = {
+            userId: userID,
+            type: "flight",
+            details: {
+                depflightId: dep,
+                retflightId: ret,
+            }
+        };
+
+        console.log(reqBody)
+    
+        setAltOpen(false);
+        setIsAlerted(false);
+        setErr(false);
+    
+        try {
+            const response = await fetch("http://localhost:5000/add/book", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reqBody),
+            });
+    
+            if (response.status === 201) {
+                const data = await response.json();
+                console.log("Booking Successful", data);
+                setIsAlerted(true);
+            } else {
+                console.log('Failed to book the flight');
+                setErr(true);
+            }
+        } catch (error) {
+            console.error('Error booking the flight:', error);
+            setErr(true);
+        }
+    };
+
+    const handleOpen = ( flyDep) => {
+        setOpen(!open)
+        setDep(flyDep);
+        setIsAlerted(false);
+        setErr(false);
+    };
+
+    const handleAltOpen = (flyDep) => {
+        setDep(flyDep)
+        setAltOpen(!altopen);
+        setIsAlerted(false);
+        setErr(false);
+    };
+
 
     return (
         <div className='w-full my-10 flex flex-col'>
@@ -42,8 +106,8 @@ function FlightFilter({ flightResponse, flightLoading, flightError,setFilterStat
                             const totalPrice = returnFlight ? flight.price + returnFlight.price : flight.price;
 
                             return (
-                                <div key={flight._id} className='w-full flex flex-col space-y-6'>
-                                    <div className='w-full flex justify-center p-5 py-8 shadow-lg border-2 rounded-xl transform hover:scale-105 hover:translate-x-2 hover:-translate-y-2 transition duration-300 ease-in-out'>
+                                <div key={flight._id} className='w-full flex flex-col space-y-6' p>
+                                    <div className='w-full flex justify-center p-5 py-8 shadow-lg border-2 rounded-xl transform hover:scale-105 hover:translate-x-2 hover:-translate-y-2 transition duration-300 ease-in-out' onClick={() => {handleOpen(flight._id),setRet(null)}}>
                                         <div className='w-1/2 py-6 h-64 bg-gradient-to-r from-orange-700 to-orange-500 rounded-md mr-2 flex items-center justify-center'>
                                             <div className='text-center'>
                                                 <img src={EthiopianAirlines} className='w-14 h-14 rounded-full bg-cover mx-auto mb-2' />
@@ -73,13 +137,14 @@ function FlightFilter({ flightResponse, flightLoading, flightError,setFilterStat
                                     </div>
 
                                     {returnFlight && (
-                                        <div className='w-full flex justify-center p-5 py-8 shadow-lg border-2 rounded-xl transform hover:scale-105 hover:translate-x-2 hover:-translate-y-2 transition duration-300 ease-in-out'>
-                                            <div className='w-1/2 py-6 h-64 bg-orange-700 to-orange-400 rounded-md mr-2 flex items-center justify-center'>
+                                        <div className='w-full flex justify-center p-5 py-8 shadow-lg border-2 rounded-xl transform hover:scale-105 hover:translate-x-2 hover:-translate-y-2 transition duration-300 ease-in-out' onClick={() => {handleOpen(flight._id),setRet(returnFlight._id)}}>
+                                            
+                                            <div className='w-1/2 py-6 h-64 bg-gradient-to-r from-orange-700 to-orange-500 rounded-md mr-2 flex items-center justify-center'>
                                                 <div className='text-center'>
                                                     <img src={EthiopianAirlines} className='w-14 h-14 rounded-full bg-cover mx-auto mb-2' />
-                                                    <p className='text-xl font-semibold text-white'>{returnFlight.airline}</p>
-                                                    <p className='text-sm text-white'>Flight Number: {returnFlight.flightNumber}</p>
-                                                    <p className='text-sm text-white'>Date: {returnFlight.flightDate}</p>
+                                                    <p className='text-xl font-semibold text-white'>{flight.airline}</p>
+                                                    <p className='text-sm text-white'>Flight Number: {flight.flightNumber}</p>
+                                                    <p className='text-sm text-white'>Date: {flight.flightDate}</p>
                                                 </div>
                                             </div>
 
@@ -127,6 +192,64 @@ function FlightFilter({ flightResponse, flightLoading, flightError,setFilterStat
                                             </div>
                                         </div>
                                     )}
+
+                                    <Dialog size="xl" open={open} handler={() => handleOpen}>
+
+                                    <DialogHeader className="justify-between flex-col">
+                                        <div className="w-full flex items-end justify-end">
+                                            <Button size="sm" onClick={handleOpen} className='bg-orange-700'>
+                                                <FontAwesomeIcon icon={faClose} />
+                                            </Button>
+                                        </div>
+
+                                        {isAlerted &&
+                                            <div className='w-full flex px-20'>
+                                                <Alert open={isAlerted} onClose={() => setIsAlerted(false)} className='rounded-none border-l-4 border-[#2ec946] bg-[#018715]/10 font-medium text-[#18b52f]'>
+                                                    Booked successfully. Go check on the Booking page.
+                                                </Alert>
+                                            </div>
+                                        }
+
+                                        {err &&
+                                            <div className='w-full flex px-20'>
+                                                <Alert open={err} onClose={() => setErr(false)} className='rounded-none border-l-4 border-[#b90000] bg-[#870101]/10 font-medium text-[#b51818]'>
+                                                    Booking failed. Please try again!
+                                                </Alert>
+                                            </div>
+                                        }
+                                    </DialogHeader>
+                                    <DialogBody>
+                                        <div className='w-full flex flex-col p-3'>
+                                            <Typography variant="h2" color="blue-gray" className="font-medium font-serif w-full text-center mb-4">
+                                                flight Details
+                                            </Typography>
+                                            <div className='w-full flex justify-around'>
+                                                <div>
+                                                    <p><strong>Dropoff Location:</strong> {dep}</p>
+                                                    <p><strong>Final Price:</strong> {ret} birr</p>
+                                                </div>
+                                                <div>
+                                                    <Button size="sm" className="bg-green-500" onClick={() => handleAltOpen(flight._id)}>Confirm Booking</Button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </DialogBody>
+                                    </Dialog>
+
+                                    <Dialog open={altopen} handler={handleAltOpen} animate={{ mount: { scale: 1, y: 0 }, unmount: { scale: 0.9, y: -100 } }}>
+                                        <DialogHeader>Confirmation</DialogHeader>
+                                        <DialogBody>
+                                            Confirm if you want to Book this room?
+                                        </DialogBody>
+                                        <DialogFooter>
+                                        <Button variant="text" color="red" onClick={() => handleAltOpen(flight._id)} className="mr-1">
+                                                <span>Cancel</span>
+                                            </Button>
+                                            <Button variant="gradient" color="green" onClick={handleBooking}>
+                                                <span>Confirm</span>
+                                            </Button>
+                                        </DialogFooter>
+                                    </Dialog>
                                 </div>
                             );
                         })
