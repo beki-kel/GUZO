@@ -68,7 +68,7 @@ function Booking({ isLoggedIn }) {
         )
     }
 
-    const types = ["hotel", "transportation", "flight", "events", "packages"];
+    const types = ["hotel", "transportation", "flight", "event", "packages"];
 
     // Group fetched data by type
     const groupedData = types.reduce((acc, type) => {
@@ -139,9 +139,9 @@ function Booking({ isLoggedIn }) {
 
                                                         </>
                                                     )}
-                                                    {item.type === 'events' && item.details && (
+                                                    {item.type === 'event' && item.details && (
                                                         <>
-                                                            {/* Add events specific details here */}
+                                                        
                                                         </>
                                                     )}
                                                     {item.type === 'packages' && item.details && (
