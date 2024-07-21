@@ -68,8 +68,12 @@ const RideFilter = ({ rideResponse, rideLoading, rideError, setFilterState }) =>
         setErr(false);
     };
 
-    const handleOpen = () => {
+    const handleOpen = (rideId, ridePick, rideDrop, ridePrice) => {
         setOpen(!open)
+        setCar(rideId);
+        setPick(ridePick);
+        setDrop(rideDrop);
+        setFinalPrice(ridePrice);
         setIsAlerted(false);
         setErr(false);
     };
@@ -105,7 +109,7 @@ const RideFilter = ({ rideResponse, rideLoading, rideError, setFilterState }) =>
 
             {rideResponse && rideResponse.map((ride) => (
                 <div key={ride._id} className='w-[45%] p-3 m-4 rounded-3xl shadow-md shadow-gray-300 hover:scale-110 transform transition duration-700' >
-                    <div className='bg-gradient-to-br from-red-500 to-orange-500 py-2 px-3 m-3 rounded-xl shadow-lg shadow-orange-800 z-20 flex flex-col' onClick={ handleOpen}>
+                    <div className='bg-gradient-to-br from-red-500 to-orange-500 py-2 px-3 m-3 rounded-xl shadow-lg shadow-orange-800 z-20 flex flex-col' onClick={ () => handleOpen (ride._id, ride.pickUp, ride.dropOff, ride.finalPrice)}>
                         <div className='w-full h-7/12 flex items-center justify-center'>
                             <img className='w-1/2 h-7/12 z-30' src={blackCar} alt="Car" />
                             <div className='w-1/2 h-7/12 flex items-center justify-center z-30'>
