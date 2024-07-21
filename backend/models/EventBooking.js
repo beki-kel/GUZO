@@ -4,7 +4,6 @@ const eventBookingSchema =  new mongoose.Schema({
   booking: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Booking',
-    required: true
   },
   eventId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -14,9 +13,6 @@ const eventBookingSchema =  new mongoose.Schema({
   eventDate: {
     type: Date,
     required: true
-  },
-  seatNumber: {
-    type: String
   }
 });
 
