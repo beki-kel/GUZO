@@ -4,7 +4,7 @@ import Navigation from '../components/Navigation';
 import { Placeholder } from 'rsuite';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faDoorOpen, faHotel, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faDoorOpen, faHotel,faMapPin, faLocationDot, faMoneyBill, faCarAlt, faHashtag, faUser } from '@fortawesome/free-solid-svg-icons';
 
 function Booking({ isLoggedIn }) {
     const [fetchData, setFetchData] = useState(null);
@@ -66,7 +66,6 @@ function Booking({ isLoggedIn }) {
                 <Placeholder.Graph active />
             </div>
         )
-
     }
 
     const types = ["hotel", "transportation", "flight", "events", "packages"];
@@ -114,9 +113,8 @@ function Booking({ isLoggedIn }) {
                                         {desc.length > 0 ? (
                                             desc.map((item, index) => (
                                                 <div key={index} className="p-3 mb-4 border-2 rounded-lg shadow-md w-1/4  hover:scale-x-105 hover:scale-y-105 cursor-pointer">
-                                                    <p className='font-serif text-xl'><FontAwesomeIcon icon={faCartPlus} className='text-orange-800'/> Status: {item.status === "pending" ? <span className="text-red-500">Pending</span> : <span>Booked</span>}</p>
-                                                    {/* Check if details exist and render accordingly */}
-                                                    {item.details ? (
+                                                    <p className='font-serif text-xl w-full text-end'>{item.status === "pending" ? <span className="text-red-500">Pending</span> : <span>Booked</span>}</p>
+                                                    {item.type === 'hotel' && item.details && (
                                                         <>
                                                             <p className='font-serif text-lg'><FontAwesomeIcon icon={faHotel} className='text-orange-800'/> Hotel: <span className='font-serif font-bold'>{item.details.hotelId.name || 'No hotel available'}</span></p>
                                                             <p className='font-serif text-lg'> <FontAwesomeIcon icon={faDoorOpen} className='text-orange-800 mr-1'/>Room Type: <span className='font-serif font-bold'>{item.details.roomType || 'No room type available'}</span></p>
@@ -126,8 +124,30 @@ function Booking({ isLoggedIn }) {
                                                                 <p className='font-serif text-xl'>Price: <span className='font-serif font-bold'>Price not available</span></p>
                                                             )}
                                                         </>
-                                                    ) : (
-                                                        <p>No details available</p>
+                                                    )}
+                                                    {item.type === 'transportation' && item.details && (
+                                                        <>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faLocationDot} className='text-orange-800 mr-2'/> PickUp: <span className='font-serif font-bold'>{item.details.pickupLocation || 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faMapPin} className='text-orange-800 mr-2'/> PickUp: <span className='font-serif font-bold'>{item.details.dropoffLocation|| 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faCarAlt} className='text-orange-800 mr-2'/> Brand: <span className='font-serif font-bold '>{item.details.carId.brand|| 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faHashtag} className='text-orange-800 mr-2'/> PlateNo: <span className='font-serif font-bold '>{item.details.carId.plateNo|| 'Not available'}</span></p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faUser} className='text-orange-800 mr-2'/> Driver Name: <span className='font-serif font-bold '>{item.details.carId.drivername|| 'Not available'}</span></p>
+                                                        </>
+                                                    )}
+                                                    {item.type === 'flight' && item.details && (
+                                                        <>
+
+                                                        </>
+                                                    )}
+                                                    {item.type === 'events' && item.details && (
+                                                        <>
+                                                            {/* Add events specific details here */}
+                                                        </>
+                                                    )}
+                                                    {item.type === 'packages' && item.details && (
+                                                        <>
+                                                            {/* Add packages specific details here */}
+                                                        </>
                                                     )}
                                                     <p className='font-sans text-orange-600'>Created At: {new Date(item.createdAt).toLocaleString()}</p>
                                                 </div>
