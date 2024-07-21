@@ -1,7 +1,7 @@
 import React ,{useState}from 'react';
 import orangeLoading from '../assets/orange-gif.gif';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faPlane, faRightLeft,faClose } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faPlane, faRightLeft,faClose, faPlaneDeparture, faPlaneArrival, faCalendarAlt, faMoneyBill1Wave } from '@fortawesome/free-solid-svg-icons';
 import EthiopianAirlines from '../assets/Ethiopian_Airlines12.jpg';
 import QRCode from "react-qr-code";
 import { Dialog, DialogHeader, DialogBody, DialogFooter, Typography, Button, Alert } from "@material-tailwind/react";
@@ -193,7 +193,7 @@ function FlightFilter({ flightResponse, flightLoading, flightError,setFilterStat
                                         </div>
                                     )}
 
-                                    <Dialog size="xl" open={open} handler={() => handleOpen}>
+                                    <Dialog size="xl" open={open} handler={() => handleOpen }>
 
                                     <DialogHeader className="justify-between flex-col">
                                         <div className="w-full flex items-end justify-end">
@@ -223,13 +223,37 @@ function FlightFilter({ flightResponse, flightLoading, flightError,setFilterStat
                                             <Typography variant="h2" color="blue-gray" className="font-medium font-serif w-full text-center mb-4">
                                                 flight Details
                                             </Typography>
-                                            <div className='w-full flex justify-around'>
-                                                <div>
-                                                    <p><strong>Dropoff Location:</strong> {dep}</p>
-                                                    <p><strong>Final Price:</strong> {ret} birr</p>
+                                            <div className='w-full flex flex-col justify-center items-center'>
+                                                <div className='w-full  flex justify-center p-8'>
+                                                    <div className='w-1/2 text-2xl font-serif  p-4 text-black flex flex-col'>
+                                                    <p className='text-start'><FontAwesomeIcon icon={faPlane} className='text-black mr-3'/><strong className='text-orange-700'>Air Lines:</strong> {flight.airline}</p>
+                                                    <p className='text-start'><FontAwesomeIcon icon={faPlaneDeparture} className='text-black mr-3'/><strong className='text-orange-700'>From:</strong> {flight.departure.airport}</p>
+                                                    <p className='text-start'><FontAwesomeIcon icon={faPlaneArrival} className='text-black mr-3'/><strong className='text-orange-700'> To:</strong> {flight.arrival.airport}</p>
+                                                    <p className='text-start'><FontAwesomeIcon icon={faCalendarAlt} className='text-black mr-3'/><strong className='text-orange-700'> Date:</strong> {flight.flightDate}</p>
+                                                    {ret?
+                                                        <>
+                                                            <p><FontAwesomeIcon icon={faMoneyBill1Wave} className='text-black mr-3'/><strong className='text-orange-700'> price</strong> ${totalPrice}</p>
+                                                            <p><strong className='text-orange-700'> Return Flight:</strong> {returnFlight.flightDate}</p>
+                                                        </>:<>
+                                                        <p><FontAwesomeIcon icon={faMoneyBill1Wave} className='text-black mr-3'/><strong className='text-orange-700'> price</strong> ${flight.price}</p>
+                                                        <p> No Return Flight</p>
+                                                        </>
+                                                            
+                                                            }
+                                                    </div>
+                                                    <div className='w-1/2 flex flex-col items-center'>
+                                                        <p className='text-black text-2xl'> More Info</p>
+                                                        <QRCode
+                                                            size={256}
+                                                            value={ret? qrValue:qrValueOutbound}
+                                                            viewBox={`0 0 256 256`}
+                                                            fgColor='#e87431'
+                                                        />
+                                                    </div>
+                                                    
                                                 </div>
-                                                <div>
-                                                    <Button size="sm" className="bg-green-500" onClick={() => handleAltOpen(flight._id)}>Confirm Booking</Button>
+                                                <div className='pt-4'>
+                                                    <Button size="sm" className="bg-orange-800" onClick={() => handleAltOpen(flight._id)}>Confirm Booking</Button>
                                                 </div>
                                             </div>
                                         </div>
@@ -239,7 +263,7 @@ function FlightFilter({ flightResponse, flightLoading, flightError,setFilterStat
                                     <Dialog open={altopen} handler={handleAltOpen} animate={{ mount: { scale: 1, y: 0 }, unmount: { scale: 0.9, y: -100 } }}>
                                         <DialogHeader>Confirmation</DialogHeader>
                                         <DialogBody>
-                                            Confirm if you want to Book this room?
+                                            Confirm if you want to Book this flight?
                                         </DialogBody>
                                         <DialogFooter>
                                         <Button variant="text" color="red" onClick={() => handleAltOpen(flight._id)} className="mr-1">
