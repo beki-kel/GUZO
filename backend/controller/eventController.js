@@ -19,7 +19,7 @@ const searchEvent = async (req, res ) =>{
 }
 
 const addEvent = async (req,res) =>{
-    const { title, category, date, location, description } = req.body;
+    const { title, category, date, location, description,price } = req.body;
 
     const newEvent = new Event({
         title,
@@ -27,6 +27,7 @@ const addEvent = async (req,res) =>{
         date,
         location,
         description,
+        price,
     });
 
     try{
