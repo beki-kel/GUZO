@@ -12,16 +12,16 @@ const PricingCards = (props) => {
           <div key={index} className={`w-full shadow-sm flex flex-col p-4 mb-28 rounded-3xl hover:scale-105 duration-300   shadow-orange-600 bg-gradient-to-br from-red-300 to-orange-200`}>
             <img className="w-10/12 h-44 rounded-t-xl mx-auto mt-[-8rem] bg-white" src={card.image} alt="/"
             />
-            <h2 className="text-2xl text-black  font-medium text-center pt-4 ">
+            <h2 className="text-2xl text-black  font-medium text-center pt-4 font-serif">
               {card.title}
             </h2>
-            <p className="text-center text-white text-3xl font-medium pt-2">{card.price} Birr</p>
+            <p className="text-center text-white text-3xl font-medium font-sans pt-2">{card.price} Birr</p>
             <div className="justify-center items-center font-medium ">
               {card.features.map((feature, index) => (
                 
                 <p
                   key={index}
-                  className={`py-2 mx-6 border-b text-lg text-black items-center justify-center ${index === 0 ? "mt-8" : ""}`}>
+                  className={`py-2 mx-6 border-b text-lg text-black font-serif items-center justify-center ${index === 0 ? "mt-8" : ""}`}>
                     <FontAwesomeIcon icon={faCheck} className="text-white mr-2 items-center justify-center" />
                   {feature}
                 </p>
