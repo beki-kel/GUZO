@@ -206,7 +206,7 @@ const RideFilter = ({ rideResponse, rideLoading, rideError, setFilterState }) =>
                         <Dialog open={altopen} handler={handleAltOpen} animate={{ mount: { scale: 1, y: 0 }, unmount: { scale: 0.9, y: -100 } }}>
                             <DialogHeader>Confirmation</DialogHeader>
                             <DialogBody>
-                                Confirm if you want to Book this room?
+                                Confirm if you want to Book this ride?
                             </DialogBody>
                             <DialogFooter>
                                 <Button variant="text" color="red" onClick={() => handleAltOpen(ride._id, ride.pickUp, ride.dropOff, ride.finalPrice)} className="mr-1">

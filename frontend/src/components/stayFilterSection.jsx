@@ -461,30 +461,6 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                                 <div className='w-8/12 flex flex-col justify-center'>
                                                     {stay.rooms.map((room) =>
                                                         <>
-                                                        <Dialog
-                                                            open={altopen}
-                                                            handler={handleAltOpen}
-                                                            animate={{mount: { scale: 1, y: 0 },unmount: { scale: 0.9, y: -100 },}}
-                                                        >
-                                                            <DialogHeader>Confirmation</DialogHeader>
-                                                            <DialogBody>
-                                                                Confirm if you want to Book this room?
-                                                            </DialogBody>
-                                                            <DialogFooter>
-                                                            <Button
-                                                                variant="text"
-                                                                color="red"
-                                                                onClick={handleAltOpen}
-                                                                className="mr-1"
-                                                            >
-                                                                <span>Cancel</span>
-                                                            </Button>
-                                                            <Button variant="gradient" color="green" onClick={handleBooking}>
-                                                                <span>Confirm</span>
-                                                            </Button>
-                                                            </DialogFooter>
-                                                        </Dialog>
-
                                                         <List className='w-full ' onClick={() => handleAltOpen(stay._id, room.type, room._id)}>
                                                         <ListItem className='w-full px-4 border-2 shadow-md'>
                                                             <ListItemPrefix className='flex gap-4 text-xl w-1/6 text-black'>
@@ -511,6 +487,30 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                                                             <Button size="sm" className='bg-orange-700'> Book </Button>
                                                             </ListItem>
                                                         </List>
+
+                                                        <Dialog
+                                                            open={altopen}
+                                                            handler={handleAltOpen}
+                                                            animate={{mount: { scale: 1, y: 0 },unmount: { scale: 0.9, y: -100 },}}
+                                                        >
+                                                            <DialogHeader>Confirmation</DialogHeader>
+                                                            <DialogBody>
+                                                                Confirm if you want to Book this room?
+                                                            </DialogBody>
+                                                            <DialogFooter>
+                                                            <Button
+                                                                variant="text"
+                                                                color="red"
+                                                                onClick={handleAltOpen}
+                                                                className="mr-1"
+                                                            >
+                                                                <span>Cancel</span>
+                                                            </Button>
+                                                            <Button variant="gradient" color="green" onClick={handleBooking}>
+                                                                <span>Confirm</span>
+                                                            </Button>
+                                                            </DialogFooter>
+                                                        </Dialog>
                                                         </>
                                                     )}
                                                 </div>
