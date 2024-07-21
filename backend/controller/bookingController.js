@@ -98,11 +98,21 @@ const GetUserBookings = async (req, res) => {
                 case 'hotel':
                     populatedDetail = await HotelBooking.findById(booking.details).populate('hotelId').exec();
                     break;
-                case 'flight':
-                    populatedDetail = await FlightBooking.findById(booking.details).populate('carId').exec();
-                    break;
+                    case 'flight':
+                        const flightBooking = await FlightBooking.findById(booking.details)
+                            .populate('depflightId') // Populate departure flight
+                            .populate({
+                                path: 'retflightId',
+                                match: { _id: { $ne: null } }
+                            }) // Populate return flight if it exists
+                            .exec();
+                        populatedDetail = {
+                            depflight: flightBooking.depflightId,
+                            retflight: flightBooking.retflightId || null
+                        };
+                        break;
                 case 'transportation':
-                    populatedDetail = await TransportationBooking.findById(booking.details).exec();
+                    populatedDetail = await TransportationBooking.findById(booking.details).populate('carId').exec();
                     break;
                 case 'event':
                     populatedDetail = await EventBooking.findById(booking.details).exec();
@@ -113,7 +123,7 @@ const GetUserBookings = async (req, res) => {
                 default:
                     throw new Error('Unknown booking type');
             }
-            return { ...booking.toObject(), details: populatedDetail };
+            return {...booking.toObject(), details: populatedDetail };
         }));
 
         res.status(200).json(populatedBookings);
