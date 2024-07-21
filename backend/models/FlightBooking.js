@@ -4,24 +4,17 @@ const flightBookingSchema =  new mongoose.Schema({
   booking: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Booking',
-    required: true
   },
-  flightId: {
+  depflightId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Flight',
     required: true
   },
-  departureDate: {
-    type: Date,
-    required: true
+  retflightId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Flight',
+    default: null,
   },
-  returnDate: {
-    type: Date
-  },
-  seatClass: {
-    type: String,
-    required: true
-  }
 });
 
 const FlightBooking = mongoose.model('FlightBooking', flightBookingSchema);
