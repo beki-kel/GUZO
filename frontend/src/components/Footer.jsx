@@ -51,7 +51,7 @@ function Footer() {
       <div className='flex flex-col w-9/12 bg-black mb-4 justify-center items-center'>
         <div className='flex w-full justify-center items-center mb-2'>
           <FontAwesomeIcon icon={faPlaneDeparture} style={{ color: "#ff622e" }} className='mr-2 h-6 mt-2' />
-          <h2 className='text-4xl font-thin text-orange-600'>Exopia</h2>
+          <h2 className='text-4xl font-thin text-orange-800'>Exopia</h2>
         </div>
         <div className='flex flex-col w-full text-center justify-center items-center'>
           <p className='w-full text-xl text-white'>book your flights, rides, events and more!</p>
@@ -70,7 +70,7 @@ function Footer() {
       </div>
 
       <div className='absolute top-0 right-0 m-4' onClick={() => handleClick()}>
-        <FontAwesomeIcon icon={faCircleArrowUp} className='h-14 text-orange-600' />
+        <FontAwesomeIcon icon={faCircleArrowUp} className='h-14 text-orange-800' />
       </div>
     </div>
   )
