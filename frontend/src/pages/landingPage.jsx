@@ -30,6 +30,7 @@ import zoya from '../assets/Zoya.jpg';
 import MobilePhone from '../components/MobilePhone';
 import techEvent from '../assets/Tech Event.jpg';
 import kebero from '../assets/Kebero.jpg';
+import HomePricingCard from '../components/HomePricingCard';
 import orangeLoading from '../assets/orange-gif.gif';
 import screenshoot from '../assets/Image (1).png'
 import playstore from '../assets/PlayStore.webp'
@@ -43,7 +44,6 @@ import Typed from 'typed.js';
 import '../components/styles/gallery.css'
 
 function LandingPage({ isLoggedIn }) {
-  const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
   const nextSectionRef = useRef(null);
   const typedRef = useRef(null);
@@ -193,23 +193,8 @@ function LandingPage({ isLoggedIn }) {
         typed.destroy();
       };
     }
-  }, [isLoaded]);
+  }, [ ]);
   
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!isLoaded) {
-    return (
-      <div className='w-full min-h-screen flex justify-center items-center mb-2 p-2'>
-        <img src={orangeLoading} alt="Loading" className="w-50 h-20 rounded-t-lg" />
-      </div>
-    );
-  }
 
   return (
     <div className='flex flex-col w-full min-h-screen '>
@@ -233,7 +218,7 @@ function LandingPage({ isLoggedIn }) {
         <h2 className='text-center text-2xl pt-5 text-black font-serif pb-5'>
           Discover the beauty of exotic destinations with best values in our Top Packages.
         </h2>
-        <PricingCards cardData={cardData} />
+        <HomePricingCard isLoggedIn={isLoggedIn}/>
       </div>
 
       

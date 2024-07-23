@@ -133,7 +133,7 @@ function Booking({ isLoggedIn }) {
                                                             <p className='font-serif text-lg'><FontAwesomeIcon icon={faCarAlt} className='text-orange-800 mr-2'/> Brand: <span className='font-serif font-bold '>{item.details.carId.brand|| 'Not available'}</span></p>
                                                             <p className='font-serif text-lg'><FontAwesomeIcon icon={faHashtag} className='text-orange-800 mr-2'/> PlateNo: <span className='font-serif font-bold '>{item.details.carId.plateNo|| 'Not available'}</span></p>
                                                             <p className='font-serif text-lg'><FontAwesomeIcon icon={faUser} className='text-orange-800 mr-2'/> Driver Name: <span className='font-serif font-bold '>{item.details.carId.drivername|| 'Not available'}</span></p>
-                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faMoneyBill} className='text-orange-800 mr-1'/>Price: <span className='font-serif text-xl font-bold'>{item.details.carId.finalPrice || 'Price not available'} Birr </span> </p>
+                                                            <p className='font-serif text-lg'><FontAwesomeIcon icon={faMoneyBill} className='text-orange-800 mr-1'/>Price: <span className='font-serif text-xl font-bold'>{Number(item.details.carId.finalPrice).toFixed(2) || 'Price not available'} Birr </span> </p>
                                                         </>
                                                     )}
                                                     {item.type === 'flight' && item.details && (
