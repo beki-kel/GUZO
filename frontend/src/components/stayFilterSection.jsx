@@ -74,7 +74,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
                     })
                 );
     
-                const response = await fetch('https://guzo-x4ue.onrender.com/search/filter/Accomadation', {
+                const response = await fetch('https://guzo-jet.vercel.app/search/filter/Accomadation', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ function StayFilterSection({ stayResponse, stayLoading, stayError, setStayRespon
 
         console.log(JSON.stringify(reqBody))
         try{
-            const response = await fetch("https://guzo-x4ue.onrender.com/add/book", {
+            const response = await fetch("https://guzo-jet.vercel.app/add/book", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

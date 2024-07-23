@@ -36,7 +36,7 @@ function EventFilter({ eventResponse, eventLoading, eventError,setFilterState })
         setErr(false);
     
         try {
-            const response = await fetch("https://guzo-x4ue.onrender.com/add/book", {
+            const response = await fetch("https://guzo-jet.vercel.app/add/book", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

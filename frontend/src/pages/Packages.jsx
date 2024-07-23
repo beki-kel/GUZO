@@ -17,7 +17,7 @@ function Packages({isLoggedIn}) {
       const fetchCards = async () => {
           const trending = true;
           try {
-              const response = await axios.post('https://guzo-x4ue.onrender.com/search/packages');
+              const response = await axios.post('https://guzo-jet.vercel.app/search/packages');
               const data = response.data.packages;
               console.log(data);
               setCardData(data);

@@ -14,7 +14,7 @@ function HomePricingCard({isLoggedIn}) {
             const trending = true;
             try {
                 
-                const response = await axios.post('https://guzo-x4ue.onrender.com/search/packages', { trending });
+                const response = await axios.post('https://guzo-jet.vercel.app/search/packages', { trending });
                 const data = response.data.packages;
                 console.log(data);
                 setCardData(data);

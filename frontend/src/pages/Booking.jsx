@@ -18,7 +18,7 @@ function Booking({ isLoggedIn }) {
             return;
         }
 
-        const url = `https://guzo-x4ue.onrender.com/book/user/${userId}`;
+        const url = `https://guzo-jet.vercel.app/book/user/${userId}`;
 
         console.log('Fetching data from:', url);
 

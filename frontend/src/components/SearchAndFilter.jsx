@@ -95,7 +95,7 @@ function SearchAndFilter( ) {
             try {
                 setTimeout(async () => {
                     try {
-                        const response = await axios.post('https://guzo-x4ue.onrender.com/search/filter/Accomadation', {stayLocation,stayTravllers});
+                        const response = await axios.post('https://guzo-jet.vercel.app/search/filter/Accomadation', {stayLocation,stayTravllers});
                         if (response.status === 200 && response.data[0]) {
                             setStayResponse(response.data);
                             setStayLoading(false);
@@ -145,7 +145,7 @@ function SearchAndFilter( ) {
         setFlightError(null);
 
         try {
-            const response = await axios.post('https://guzo-x4ue.onrender.com/search/flight', {
+            const response = await axios.post('https://guzo-jet.vercel.app/search/flight', {
                 flightArrLocation,
                 flightDepLocation,
                 flightDepdates,
@@ -186,7 +186,7 @@ function SearchAndFilter( ) {
         setRideError(null);
 
             try {
-                const response = await axios.post("https://guzo-x4ue.onrender.com/search/transportation", 
+                const response = await axios.post("https://guzo-jet.vercel.app/search/transportation", 
                     {rideArrLocation,rideDepLocation,Ridetravllers});
                 if (response.status === 200 && response.data[0]) {
                     console.log('Response status:', response.status);
@@ -222,7 +222,7 @@ function SearchAndFilter( ) {
         setEventResponse(null);
         setEventError(null);
         try{
-            const response = await axios.post("https://guzo-x4ue.onrender.com/search/Event",
+            const response = await axios.post("https://guzo-jet.vercel.app/search/Event",
                 {eventDate,category});
             if(response.status === 200 && response.data[0]){
                 console.log('Response status:', response.status);
