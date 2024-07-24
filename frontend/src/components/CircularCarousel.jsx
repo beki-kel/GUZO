@@ -34,16 +34,13 @@ export default function CircularCarousel(props) {
         }
 
         return (
-            <div className="border shadow-xl rounded-lg m-2 text-center pb-5  mb-8 flex flex-col">
+            <div className="border-2 shadow-xl  rounded-lg m-2 text-center pb-5  mb-8 flex flex-col">
                 <div className="mb-3 w-full h-1/2 object-contain">
                     <img src={product.image} alt={product.Title} className="shadow-lg w-full h-72 rounded-t-lg" />
                 </div>
                 <div>
-                    <h4 className="mb-1 text-orange-600 font-medium">{product.Title}</h4>
-                    <h6 className="mt-0 mb-3 text-gray-700">{product.Description}</h6>
-                    <div className="mt-5 flex flex-wrap gap-2 justify-center">
-                        <Button icon="pi pi-star-fill" className="p-button-success p-button-rounded" />
-                    </div>
+                    <h4 className="mb-1 text-orange-800 text-xl font-serif font-medium">{product.Title}</h4>
+                    <h6 className="mt-0 mb-3 text-gray-900 ">{product.Description}</h6>
                 </div>
             </div>
         );
@@ -56,10 +53,9 @@ export default function CircularCarousel(props) {
                     value={products}
                     numVisible={3}
                     numScroll={3}
-
                     className="custom-carousel"
                     circular
-                    autoplayInterval={5000}
+                    autoplayInterval={3000}
                     itemTemplate={productTemplate}
                 />
             ) : (
