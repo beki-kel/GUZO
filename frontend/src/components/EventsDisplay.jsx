@@ -9,7 +9,7 @@ export default function EventDisplay(props) {
     const islogged= props.isLoggedIn;
 
   return (
-    <div className='w-full p-6 flex flex-wrap justify-center items-center bg-gray-50'>
+    <div className='w-full p-6 flex flex-wrap justify-center items-center '>
         { items.map((item , index) => (
             <Link to="/login" key={index} className='w-1/6 mx-5 mt-2 hover:scale-105'>
                     <img src={item.image} className='w-full h-56 rounded-t-md  '/>
